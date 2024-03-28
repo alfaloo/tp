@@ -1,0 +1,26 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+:User enters command to appointment;
+
+if () then ([command is invalid])
+    :Show error message\nfor invalid command;
+else ([else])
+    if () then ([missing required fields])
+        :Show error message\nfor missing required fields;
+    else ([else])
+        if () then ([Invalid appointment index detected])
+            :Show error message\nindicating invalid Appointment index;
+            else ([else])
+                 :Remove appointment\nfrom the appointment list;
+                 :Update the 'appointment' panel\nin the GUI;
+                 :Show success message\nwith removed appointment information;
+        endif;
+    endif
+endif
+
+stop
+@enduml
