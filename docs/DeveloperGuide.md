@@ -316,7 +316,7 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 4. The `parse` command in `deleteAppointmentCommandParser` return an instance of `deleteAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `deleteAppointmentCommand`.
 * Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
-* Step 8. Success message gets printed onto the results display to notify user.
+* Step 7. Success message gets printed onto the results display to notify user.
 
 Why is this implemented this way?
 1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
