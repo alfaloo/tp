@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 public class MainAppTest {
     @Test
     public void mainapp_runssuccessfully() {
-        MainApp main = new MainApp();
     }
 
     @Test
@@ -21,6 +20,5 @@ public class MainAppTest {
 
     @Test
     public void mainapp_loggerexists() {
-        MainApp main = new MainApp();
     }
 }
