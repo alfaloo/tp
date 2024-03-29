@@ -40,9 +40,9 @@
 }
 
 .table-view {
-    -fx-base: #e2e5ef;
-    -fx-control-inner-background: #e2e5ef;
-    -fx-background-color: #e2e5ef;
+    -fx-base: white;
+    -fx-control-inner-background: white;
+    -fx-background-color: white;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -95,18 +95,18 @@
     -fx-padding: 0 0 0 0;
     -fx-background-radius: 15px;
     -fx-border-radius: 15px;
+    -fx-background-insets: 0px, 2px;
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #f1f4f4;
+    -fx-background-color: white;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #e2e5ef;
+    -fx-background-color: white;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #bfdcf4;
 }
 
 .list-cell:filled:selected #cardPane {
@@ -134,14 +134,38 @@
     -fx-background-color: white;
 }
 
+.person-list-pane {
+    -fx-background-color: white;
+}
+
 .pane-with-border {
     -fx-background-color: white;
     /*-fx-border-color: #052a3a;*/
     -fx-border-top-width: 1px;
 }
 
+#commandResult {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    /*-fx-background-color: #fdfdfd;*/
+
+    /*-fx-background-radius: 15px;*/
+    /*-fx-border-radius: 15px;*/
+}
+
+#resultDisplay {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    /*-fx-text-fill: #052a3a;*/
+    /*-fx-border-radius: 10 10 0 0;*/
+    /*-fx-background-radius: 10 10 0 0;*/
+    /*-fx-background-color: black;*/
+    /*-fx-background-radius: 15px;*/
+    /*-fx-border-radius: 15px;*/
+}
+
 .status-bar {
-    -fx-background-color: #f1f4f4;
+    /*-fx-background-color: #f1f4f4;*/
 }
 
 .result-display {
@@ -174,7 +198,7 @@
 
 .grid-pane {
     -fx-background-color: #e2e5ef;
-    -fx-border-color: #052a3a;
+    -fx-border-color: #e2e5ef;
     -fx-border-width: 1px;
 }
 
@@ -284,7 +308,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #bfdcf4;
+    -fx-background-color: #f5f5f5;
     -fx-background-insets: 3;
 }
 
@@ -306,9 +330,11 @@
 }
 
 #cardPane {
+    -fx-background-insets: 0px, 0px, 5px, 0px;
     -fx-background-color: transparent;
-    -fx-border-width: 0;
-
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #e2e5ef;
 }
 
 #commandTypeLabel {
@@ -317,7 +343,8 @@
 }
 
 #commandTextField {
-    -fx-background-color: #e2e5ef;
+    -fx-fill-height: 20px;
+    -fx-background-color: #f5f5f5;
     -fx-background-insets: 0;
     /*-fx-border-color: #052a3a;*/
     /*-fx-border-insets: 0;*/
@@ -325,19 +352,14 @@
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: #052a3a;
-    -fx-background-radius: 15px;
-    -fx-border-radius: 15px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
 }
 
 #filterField, #personListPanel, #personWebpage {
     /*-fx-effect: innershadow(gaussian, #e2e5ef, 10, 0, 0, 0);*/
 }
 
-#resultDisplay .content {
-    -fx-background-color: #e2e5ef;
-    -fx-background-radius: 15px;
-    -fx-border-radius: 15px;
-}
 
 #tags {
     -fx-hgap: 7;
@@ -346,7 +368,7 @@
 
 #tags .label {
     -fx-text-fill: #052a3a;
-    -fx-background-color: #3e7b91;
+    /*-fx-background-color: #3e7b91;*/
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
@@ -355,4 +377,44 @@
 
 #personListPanelPlaceholder, #appointmentListPanelPlaceholder {
     -fx-background-color: white;
+}
+
+/* Textarea */
+
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-border-color: #e2e5ef;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused {
+    -fx-highlight-fill: #7ecfff;
+}
+
+.text-area .content {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-text-fill: gray;
+    -fx-highlight-fill: #7ecfff;
+}
+
+/* Others */
+
+#typeText {
+    -fx-background-color: #dcdcdc;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-radius: 10px;
 }
