@@ -14,7 +14,7 @@ import seedu.address.model.person.DoctorContainsKeywordsPredicate;
  */
 public class QueryDoctorCommand extends Command {
 
-    public static final String COMMAND_WORD = "querydoctor";
+    public static final String COMMAND_WORD = "doctor";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all doctors whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
