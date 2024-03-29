@@ -16,7 +16,7 @@ import seedu.address.model.appointment.AppointmentContainsDoctorPredicate;
  */
 public class QueryDoctorAppointmentCommand extends Command {
 
-    public static final String COMMAND_WORD = "appfordoctor";
+    public static final String COMMAND_WORD = "apptfordoctor";
     private static final Logger logger = Logger.getLogger(QueryDoctorAppointmentCommand.class.getName());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all appointments of doctors whose "
