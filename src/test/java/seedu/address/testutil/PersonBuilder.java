@@ -3,73 +3,59 @@
 //import java.util.HashSet;
 //import java.util.Set;
 //
-//import seedu.address.model.person.Address;
-//import seedu.address.model.person.Email;
+//import seedu.address.model.person.Type;
+//import seedu.address.model.person.Nric;
 //import seedu.address.model.person.Name;
-//import seedu.address.model.person.Person;
+//import seedu.address.model.person.DoB;
 //import seedu.address.model.person.Phone;
-//import seedu.address.model.tag.Tag;
+//import seedu.address.model.person.Person;
 //import seedu.address.model.util.SampleDataUtil;
 //
 ///**
 // * A utility class to help with building Person objects.
 // */
-//public class PersonBuilder {
+//public class PatientBuilder {
 //
+//    public static final Type DEFAULT_TYPE = "Patient";
 //    public static final String DEFAULT_NAME = "Amy Bee";
 //    public static final String DEFAULT_PHONE = "85355255";
-//    public static final String DEFAULT_EMAIL = "amy@gmail.com";
-//    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+//    public static final String DEFAULT_NRIC = "T0294883F";
+//    public static final String DEFAULT_DOB = "2002-03-03";
 //
-//    private Name name;
-//    private Phone phone;
-//    private Email email;
-//    private Address address;
-//    private Set<Tag> tags;
+//    private final Type type;
+//    private final Nric nric;
+//    private final Name name;
+//    private final DoB dob;
+//    private final Phone phone;
+//
 //
 //    /**
 //     * Creates a {@code PersonBuilder} with the default details.
 //     */
 //    public PersonBuilder() {
+//        type = new Type.PATIENT;
+//        nric = new Nric(DEFAULT_NRIC);
 //        name = new Name(DEFAULT_NAME);
+//        dob = new DoB(DEFAULT_DOB)
 //        phone = new Phone(DEFAULT_PHONE);
-//        email = new Email(DEFAULT_EMAIL);
-//        address = new Address(DEFAULT_ADDRESS);
-//        tags = new HashSet<>();
 //    }
 //
 //    /**
 //     * Initializes the PersonBuilder with the data of {@code personToCopy}.
 //     */
 //    public PersonBuilder(Person personToCopy) {
+//        type = personToCopy.getType();
+//        nric = personToCopy.getNric();
 //        name = personToCopy.getName();
+//        dob = personToCopy.getDoB();
 //        phone = personToCopy.getPhone();
-//        email = personToCopy.getEmail();
-//        address = personToCopy.getAddress();
-//        tags = new HashSet<>(personToCopy.getTags());
 //    }
 //
 //    /**
 //     * Sets the {@code Name} of the {@code Person} that we are building.
 //     */
-//    public PersonBuilder withName(String name) {
+//    public PatientBuilder withName(String name) {
 //        this.name = new Name(name);
-//        return this;
-//    }
-//
-//    /**
-//     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
-//     */
-//    public PersonBuilder withTags(String ... tags) {
-//        this.tags = SampleDataUtil.getTagSet(tags);
-//        return this;
-//    }
-//
-//    /**
-//     * Sets the {@code Address} of the {@code Person} that we are building.
-//     */
-//    public PersonBuilder withAddress(String address) {
-//        this.address = new Address(address);
 //        return this;
 //    }
 //
@@ -81,16 +67,8 @@
 //        return this;
 //    }
 //
-//    /**
-//     * Sets the {@code Email} of the {@code Person} that we are building.
-//     */
-//    public PersonBuilder withEmail(String email) {
-//        this.email = new Email(email);
-//        return this;
-//    }
-//
 //    public Person build() {
-//        return new Person(name, phone, email, address, tags);
+//        return new Patient(type, nric, name, dob, phone);
 //    }
 //
 //}
