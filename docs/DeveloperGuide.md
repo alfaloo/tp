@@ -274,7 +274,7 @@ The sequence diagram below closely describes the interaction between the various
 
 #### Context and thought process behind implementation:
 
-* One key focus of the appoitment implementation was to keep it as similar to the implementation of patients and doctors. 
+* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors. 
 * The idea is that at the end of the day, the appointment is simply another type of entry being tracked. 
 * Nevertheless, looking at it from a UI perspective, we would want to differentiate the appointment entries from the person entries.
 * Hence, while similar in terms of the code and functionality, a lot of the infrastructure to handle appointments was built parallel to the one for persons.
@@ -298,7 +298,36 @@ The sequence diagram below closely describes the interaction between the various
 * Furthermore, it might get confusing for the user if everything was dumped into the same list of them to sieve through. Perhaps the user was only concerned with looking up patients in which case the appointments would simple be added clutter.
 * The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
 
+### Delete `Appointment`
+Deletes an `Appointment` entry by indicating their `Index`.
+This command is implemented through the `DeleteAppointmentCommand` class which extend the `Command` class.
 
+* Step 1. User enters an `deleteappt` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteAppointmentCommandParser`.
+* Step 3. The `parse` command in `deleteAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+    * If there are any missing fields, a `CommandException` is thrown.
+    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+    * If the provided `index` is invalid, a `CommandException` is thrown.
+
+The activity diagram below demonstrates this error handling process in more detail.
+
+<img src="images/DeleteAppointmentActivityDiagram.png" width="800" />
+
+* Step 4. The `parse` command in `deleteAppointmentCommandParser` return an instance of `deleteAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `deleteAppointmentCommand`.
+* Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
+* Step 7. Success message gets printed onto the results display to notify user.
+
+Why is this implemented this way?
+1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
+2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
+3. This parallelism is also reflected in the backend code, and hence is very similar to how deleting a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `DeletePerson`, such as `DeleteAppointment`
+4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
+
+Alternative implementation for consideration
+1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle deletions.
+2. This will centralise the behaviours, and reduce the amount of code needed to perform the delete function.
+3. A further extension is to do so with all other overlapping functionalities, such as `add` or `edit`, however we leave that possibility for future discussion and refinement.
 
 
 ### Query `doctor` and `patient`
