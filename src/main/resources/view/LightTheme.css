@@ -119,12 +119,19 @@
 }
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
+    -fx-font-family: "Segoe UI SemiBold";
+    -fx-font-size: 18px;
     -fx-text-fill: #052a3a;
+    -fx-font-weight: bold;
 }
 
 .cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #414141 !important;
+}
+
+.cell_type_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
     -fx-text-fill: #052a3a;
@@ -156,12 +163,7 @@
 #resultDisplay {
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    /*-fx-text-fill: #052a3a;*/
-    /*-fx-border-radius: 10 10 0 0;*/
-    /*-fx-background-radius: 10 10 0 0;*/
-    /*-fx-background-color: black;*/
-    /*-fx-background-radius: 15px;*/
-    /*-fx-border-radius: 15px;*/
+    -fx-font-size: 11pt;
 }
 
 .status-bar {

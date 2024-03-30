@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -29,18 +29,25 @@
                   <Region fx:constant="USE_PREF_SIZE" />
                 </minWidth>
               </Label>
-              <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+              <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+                    </Label>
                   <Region prefHeight="17.0" prefWidth="48.0" HBox.hgrow="ALWAYS" />
-               <Label id="typeText" fx:id="type" styleClass="cell_small_label" text="\$type" textAlignment="RIGHT">
+               <Label id="typeText" fx:id="type" styleClass="cell_type_label" text="\$type" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <VBox.margin>
+                     <Insets bottom="6.0" />
+                  </VBox.margin>
             </HBox>
             <FlowPane fx:id="tags" />
             <Label fx:id="nric" styleClass="cell_small_label" text="\$nric" />
-            <Label fx:id="dob" styleClass="cell_small_label" text="\$dob" />
             <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
+            <Label fx:id="dob" styleClass="cell_small_label" text="\$dob" />
           </VBox>
             <rowConstraints>
                <RowConstraints />
