@@ -15,6 +15,7 @@ import java.util.List;
 
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Patient;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -23,7 +24,6 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PatientBuilder().withNric("S1234567A").withName("Alice Pauline")
             .withDoB("2000-01-03").withPhone("94351253").build();
-
     public static final Person BENSON = new PatientBuilder().withNric("S8734985A").withName("Benson Chen")
             .withDoB("2002-01-03").withPhone("88927639").build();
     public static final Person CAM = new PatientBuilder().withNric("S8834985A").withName("CAM SENG")
