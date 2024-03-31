@@ -20,11 +20,11 @@ public class AddAppointmentCommand extends Command {
 
     public static final String COMMAND_WORD = "addappt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to the MediCLI system. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to the MediCLI system.\n"
             + "Parameters: "
             + PREFIX_DATE + "DATE "
             + PREFIX_DOCTORNRIC + "DOCTOR NRIC "
-            + PREFIX_PATIENTNRIC + "PATIENT NRIC "
+            + PREFIX_PATIENTNRIC + "PATIENT NRIC\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_DATE + "2024-04-09 "
             + PREFIX_DOCTORNRIC + "S7777888T "
