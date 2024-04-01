@@ -43,7 +43,12 @@ import seedu.address.model.person.DoctorContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Patient;
 import seedu.address.model.person.PatientContainsKeywordsPredicate;
-import seedu.address.testutil.*;
+import seedu.address.testutil.AppointmentBuilder;
+import seedu.address.testutil.AppointmentUtil;
+import seedu.address.testutil.DoctorBuilder;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.PatientBuilder;
+import seedu.address.testutil.PersonUtil;
 
 public class AddressBookParserTest {
 

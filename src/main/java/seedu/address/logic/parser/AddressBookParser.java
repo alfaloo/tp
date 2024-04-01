@@ -25,7 +25,6 @@ import seedu.address.logic.commands.QueryDoctorAppointmentCommand;
 import seedu.address.logic.commands.QueryDoctorCommand;
 import seedu.address.logic.commands.QueryPatientAppointmentCommand;
 import seedu.address.logic.commands.QueryPatientCommand;
-//import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
