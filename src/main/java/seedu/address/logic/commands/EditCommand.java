@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -16,16 +18,16 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.DoB;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Patient;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
-
+/**
+ * Editcommand class enables user to edit a doctor or patient in the person list
+ */
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
