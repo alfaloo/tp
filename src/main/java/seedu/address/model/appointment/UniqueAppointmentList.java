@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
@@ -56,9 +57,6 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void add(Appointment toAdd) {
         requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateAppointmentException();
-        }
         internalList.add(toAdd);
     }
 
@@ -72,13 +70,6 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         requireAllNonNull(target, editedAppointment);
 
         int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new AppointmentNotFoundException();
-        }
-
-        if (!target.isSameAppointment(editedAppointment) && contains(editedAppointment)) {
-            throw new DuplicateAppointmentException();
-        }
 
         internalList.set(index, editedAppointment);
     }
@@ -89,9 +80,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void remove(Appointment toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
-            throw new AppointmentNotFoundException();
-        }
+//        if (!internalList.remove(toRemove)) {
+//            throw new AppointmentNotFoundException();
+//        }
     }
 
     public void setPersons(UniqueAppointmentList replacement) {
@@ -103,12 +94,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      * Replaces the contents of this list with {@code appointments}.
      * {@code appointments} must not contain duplicate appointments.
      */
-    public void setAppointments(List<Appointment> appointments) {
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
         requireAllNonNull(appointments);
         if (!appointmentsAreUnique(appointments)) {
             throw new DuplicateAppointmentException();
         }
 
+        internalList.setAll(appointments);
+    }
+
+    public void setAppointmentsExistingBook(List<Appointment> appointments) {
+        requireAllNonNull(appointments);
         internalList.setAll(appointments);
     }
 

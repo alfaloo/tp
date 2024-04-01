@@ -10,6 +10,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 
 /**
  * Deletes an appointment identified using it's displayed index from mediCLI.
@@ -42,6 +43,11 @@ public class DeleteAppointmentCommand extends Command {
         }
 
         Appointment appointmentToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!model.hasAppointment(appointmentToDelete)) {
+            throw new AppointmentNotFoundException();
+        }
+
         model.deleteAppointment(appointmentToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS,
