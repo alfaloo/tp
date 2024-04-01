@@ -1,12 +1,11 @@
 package seedu.address.testutil;
 
-        import seedu.address.model.person.DoB;
-        import seedu.address.model.person.Name;
-        import seedu.address.model.person.Nric;
-        import seedu.address.model.person.Patient;
-        import seedu.address.model.person.Person;
-        import seedu.address.model.person.Phone;
-        import seedu.address.model.person.Type;
+import seedu.address.model.person.DoB;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.person.Patient;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 
 /**
  * A utility class to help with building Person objects.

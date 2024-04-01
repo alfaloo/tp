@@ -1,7 +1,11 @@
 package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
-import seedu.address.model.person.*;
+import seedu.address.model.person.DoB;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -27,7 +31,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setNric(person.getNric());
         descriptor.setDob(person.getDoB());
-//        descriptor.setTags(person.getTags());
     }
 
     /**
@@ -61,16 +64,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setDob(new DoB(dob));
         return this;
     }
-//
-//    /**
-//     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
-//     * that we are building.
-//     */
-//    public EditPersonDescriptorBuilder withTags(String... tags) {
-//        Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
-//        descriptor.setTags(tagSet);
-//        return this;
-//    }
 
     public EditPersonDescriptor build() {
         return descriptor;
