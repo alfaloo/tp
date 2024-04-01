@@ -36,14 +36,11 @@ public class PersonBuilder {
     /**
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
-    public PersonBuilder(Person patientToCopy) {
-        if (patientToCopy.getType() != Type.PATIENT) {
-            throw new RuntimeException();
-        }
-        nric = patientToCopy.getNric();
-        name = patientToCopy.getName();
-        dob = patientToCopy.getDoB();
-        phone = patientToCopy.getPhone();
+    public PersonBuilder(Person personToCopy) {
+        nric = personToCopy.getNric();
+        name = personToCopy.getName();
+        dob = personToCopy.getDoB();
+        phone = personToCopy.getPhone();
     }
 
     /**
@@ -79,7 +76,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(nric, name, dob, phone);
+        return new Patient(nric, name, dob, phone);
     }
 
 }
