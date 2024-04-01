@@ -1,17 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-//import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
 //import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_AMY;
 //import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.*;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -60,16 +57,16 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 o/string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         assertParseFailure(parser, "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_NRIC_DESC, Nric.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_DOB_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, "1" + INVALID_NRIC_DESC, Nric.MESSAGE_CONSTRAINTS); // invalid nric
+        assertParseFailure(parser, "1" + INVALID_DOB_DESC, DoB.MESSAGE_CONSTRAINTS); // invalid dob
+//        assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + NRIC_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
@@ -88,8 +85,8 @@ public class EditCommandParserTest {
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-                + NRIC_DESC_AMY + DOB_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND;
+        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB
+                + NRIC_DESC_AMY + DOB_DESC_AMY + NAME_DESC_AMY;
 
         EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withNric(VALID_NRIC_AMY).withDob(VALID_DOB_AMY).build();
@@ -166,24 +163,13 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + DOB_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_NRIC, PREFIX_DOB));
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_DOB_DESC + INVALID_NRIC_DESC
                 + INVALID_PHONE_DESC + INVALID_DOB_DESC + INVALID_NRIC_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_NRIC, PREFIX_DOB));
     }
-
-//    @Test
-//    public void parse_resetTags_success() {
-//        Index targetIndex = INDEX_THIRD_PERSON;
-//        String userInput = targetIndex.getOneBased() + TAG_EMPTY;
-//
-//        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
-//        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-//
-//        assertParseSuccess(parser, userInput, expectedCommand);
-//    }
 }
