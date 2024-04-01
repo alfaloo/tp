@@ -6,12 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -19,12 +16,15 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.DoB;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Nric;
+import seedu.address.model.person.Patient;
+import seedu.address.model.person.Phone;
 
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 
 public class EditCommand extends Command {
 
@@ -45,7 +45,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON =  "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -89,12 +89,11 @@ public class EditCommand extends Command {
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
-                Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-                Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-                Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
-                DoB updatedDob = editPersonDescriptor.getDob().orElse(personToEdit.getDoB());
-//                Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-                return new Patient(updatedNric, updatedName,  updatedDob, updatedPhone);
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
+        DoB updatedDob = editPersonDescriptor.getDob().orElse(personToEdit.getDoB());
+        return new Patient(updatedNric, updatedName, updatedDob, updatedPhone);
     }
 
     @Override
@@ -130,7 +129,6 @@ public class EditCommand extends Command {
         private Phone phone;
         private Nric nric;
         private DoB dob;
-        private Set<Tag> tags;
 
         public EditPersonDescriptor() {
         }
@@ -144,14 +142,13 @@ public class EditCommand extends Command {
             setPhone(toCopy.phone);
             setNric(toCopy.nric);
             setDob(toCopy.dob);
-            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, nric, dob, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, nric, dob);
         }
 
         public void setName(Name name) {
@@ -186,23 +183,6 @@ public class EditCommand extends Command {
             return Optional.ofNullable(dob);
         }
 
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -218,8 +198,7 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPatientDescriptor.name)
                     && Objects.equals(phone, otherEditPatientDescriptor.phone)
                     && Objects.equals(nric, otherEditPatientDescriptor.nric)
-                    && Objects.equals(dob, otherEditPatientDescriptor.dob)
-                    && Objects.equals(tags, otherEditPatientDescriptor.tags);
+                    && Objects.equals(dob, otherEditPatientDescriptor.dob);
         }
 
         @Override
@@ -229,7 +208,6 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("nric", nric)
                     .add("dob", dob)
-                    .add("tags", tags)
                     .toString();
         }
     }
