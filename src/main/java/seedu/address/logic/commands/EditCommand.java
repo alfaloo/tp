@@ -18,12 +18,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.DoB;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Nric;
-import seedu.address.model.person.Patient;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.*;
 
 /**
  * Editcommand class enables user to edit a doctor or patient in the person list
@@ -95,7 +90,13 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         DoB updatedDob = editPersonDescriptor.getDob().orElse(personToEdit.getDoB());
-        return new Patient(updatedNric, updatedName, updatedDob, updatedPhone);
+        if (personToEdit instanceof Patient) {
+            return new Patient(updatedNric, updatedName, updatedDob, updatedPhone);
+        } else if (personToEdit instanceof Doctor) {
+            return new Doctor(updatedNric, updatedName, updatedDob, updatedPhone);
+        } else {
+            return null;
+        }
     }
 
     @Override
