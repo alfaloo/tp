@@ -14,7 +14,8 @@ import java.time.format.FormatStyle;
 public class DoB {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Date of births should only contain numeric characters in the format yyyy-mm-dd";
+            "Date of births should only contain numeric characters in the format yyyy-mm-dd. "
+                    + "Acceptable date range is from 1900 Janurary 1st to today's date.";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -38,9 +39,11 @@ public class DoB {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidDoB(String test) {
+        LocalDate first = LocalDate.parse("1900-01-01");
+        LocalDate last = LocalDate.now();
         try {
-            LocalDate.parse(test);
-            return true;
+            LocalDate date = LocalDate.parse(test);
+            return !date.isBefore(first) && !date.isAfter(last);
         } catch (java.time.format.DateTimeParseException e) {
             return false;
         }

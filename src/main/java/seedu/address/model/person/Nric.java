@@ -56,7 +56,7 @@ public class Nric {
         }
 
         Nric otherNric = (Nric) other;
-        return nric.equals(otherNric.nric);
+        return nric.toLowerCase().equals(otherNric.nric.toLowerCase());
     }
 
     @Override
