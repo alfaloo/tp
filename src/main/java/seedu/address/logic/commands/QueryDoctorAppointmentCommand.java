@@ -22,7 +22,7 @@ public class QueryDoctorAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all appointments of doctors whose "
             + "nrics/names contain any of the specified keywords (case-insensitive) and displays them as a "
             + "list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n (Keywords can either be NRICs or Names)"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]...(Keywords can either be NRICs or Names)\n"
             + "Example: " + COMMAND_WORD + " alice bob T1234567A S7654321A";
 
     private final AppointmentContainsDoctorPredicate predicate;
