@@ -2,7 +2,14 @@
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patients and Doctors">
+      <font>
+         <Font name="Noto Sans Oriya Bold" size="13.0" />
+      </font>
+   </Text>
+  <ListView fx:id="personListView" styleClass="person-list-pane" VBox.vgrow="ALWAYS" />
 </VBox>
