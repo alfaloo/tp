@@ -9,8 +9,6 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
-import javax.script.ScriptEngine;
-
 /**
  * Appointment class that describes an appointment
  */
