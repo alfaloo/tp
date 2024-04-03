@@ -160,7 +160,7 @@ public class UniquePersonList implements Iterable<Person> {
         return true;
     }
 
-    public Person getPersonByNric(Nric nricObj) {
+    public Person getPersonByNric(Nric nricObj) throws PersonNotFoundException {
         ArrayList<Person> personList = new ArrayList<Person>(internalList);
 
         for (Person p : personList) {
