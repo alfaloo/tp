@@ -13,7 +13,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.testutil.AppointmentBuilder;
 
@@ -55,11 +54,11 @@ public class UniqueAppointmentListTest {
         assertThrows(NullPointerException.class, () -> uniqueAppointmentList.add(null));
     }
 
-//    @Test
-//    public void add_duplicateAppointment_throwsDuplicateAppointmentException() {
-//        uniqueAppointmentList.add(VALID_APPT);
-//        assertThrows(DuplicateAppointmentException.class, () -> uniqueAppointmentList.add(VALID_APPT));
-//    }
+    //    @Test
+    //    public void add_duplicateAppointment_throwsDuplicateAppointmentException() {
+    //        uniqueAppointmentList.add(VALID_APPT);
+    //        assertThrows(DuplicateAppointmentException.class, () -> uniqueAppointmentList.add(VALID_APPT));
+    //    }
 
     @Test
     public void setAppointment_nullTargetAppointment_throwsNullPointerException() {
@@ -72,11 +71,11 @@ public class UniqueAppointmentListTest {
                 VALID_APPT, null));
     }
 
-//     @Test
-//    public void setAppointment_targetAppointmentNotInList_throwsAppointmentNotFoundException() {
-//        assertThrows(AppointmentNotFoundException.class, () ->
-//                uniqueAppointmentList.setAppointment(VALID_APPT, VALID_APPT));
-//    }
+    //     @Test
+    //    public void setAppointment_targetAppointmentNotInList_throwsAppointmentNotFoundException() {
+    //        assertThrows(AppointmentNotFoundException.class, () ->
+    //                uniqueAppointmentList.setAppointment(VALID_APPT, VALID_APPT));
+    //    }
 
     @Test
     public void setAppointment_editedAppointmentIsSameAppointment_success() {
@@ -115,19 +114,19 @@ public class UniqueAppointmentListTest {
         assertEquals(expectedUniqueAppointmentList, uniqueAppointmentList);
     }
 
-//    @Test
-//    public void setAppointment_editedAppointmentHasNonUniqueIdentity_throwsDuplicateAppointmentException()
-//            throws ParseException {
-//        uniqueAppointmentList.add(VALID_APPT);
-//        Appointment editedAppt = new Appointment(
-//                BROWN.getNric(),
-//                VALID_APPT.getPatientNric(),
-//                VALID_APPT.getAppointmentDate()
-//        );
-//        uniqueAppointmentList.add(editedAppt);
-//        assertThrows(DuplicateAppointmentException.class, () ->
-//                uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt));
-//    }
+    //    @Test
+    //    public void setAppointment_editedAppointmentHasNonUniqueIdentity_throwsDuplicateAppointmentException()
+    //            throws ParseException {
+    //        uniqueAppointmentList.add(VALID_APPT);
+    //        Appointment editedAppt = new Appointment(
+    //                BROWN.getNric(),
+    //                VALID_APPT.getPatientNric(),
+    //                VALID_APPT.getAppointmentDate()
+    //        );
+    //        uniqueAppointmentList.add(editedAppt);
+    //        assertThrows(DuplicateAppointmentException.class, () ->
+    //                uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt));
+    //    }
 
     @Test
     public void remove_nullAppointment_throwsNullPointerException() {
