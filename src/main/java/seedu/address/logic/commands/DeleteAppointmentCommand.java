@@ -44,10 +44,6 @@ public class DeleteAppointmentCommand extends Command {
 
         Appointment appointmentToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        if (!model.hasAppointment(appointmentToDelete)) {
-            throw new AppointmentNotFoundException();
-        }
-
         model.deleteAppointment(appointmentToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS,
