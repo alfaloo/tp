@@ -11,6 +11,7 @@ import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -81,7 +82,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(person);
     }
 
-    public Person getPersonByNric(Nric nricObj) {
+    public Person getPersonByNric(Nric nricObj) throws PersonNotFoundException {
         requireNonNull(nricObj);
         return persons.getPersonByNric(nricObj);
     }
