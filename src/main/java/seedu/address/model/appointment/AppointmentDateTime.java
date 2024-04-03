@@ -3,7 +3,7 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
@@ -11,32 +11,33 @@ import java.time.format.FormatStyle;
 /**
  * Class encapsulating an appointment's date and corresponding methods
  */
-public class AppointmentDate {
+public class AppointmentDateTime {
 
     // Message to output in case constraints are not met
     public static final String MESSAGE_CONSTRAINTS =
-            "Appointment date should be in the format of yyyy-MM-dd.";
+            "Appointment date should be in the format of yyyy-MM-dd HH:mm.";
 
-    // Variable storing appointment date in a local date instance
-    public final LocalDate appointmentDate;
+    // Variable storing appointment date in a local datetime instance
+    public final LocalDateTime appointmentDateTime;
 
     /**
-     * Constructs new AppointmentDate object using an input date string in yyyy-MM-dd format
+     * Constructs new AppointmentDate object using an input date string in yyyy-MM-dd HH:mm format
      * @param dateStr input string to be stored
      */
-    public AppointmentDate(String dateStr) {
+    public AppointmentDateTime(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         requireNonNull(dateStr);
         checkArgument(isValidDate(dateStr), MESSAGE_CONSTRAINTS);
-        this.appointmentDate = LocalDate.parse(dateStr);
+        this.appointmentDateTime = LocalDateTime.parse(dateStr, formatter);
     }
 
     /**
-     * Overloaded constructor that constructs a new instance using a LocalDate rather than date string
-     * @param date LocalDate instance to construct AppointmentDate around
+     * Overloaded constructor that constructs a new instance using a LocalDateTime rather than datetime string
+     * @param dateTime LocalDateTime instance to construct AppointmentDate around
      */
-    public AppointmentDate(LocalDate date) {
-        requireNonNull(date);
-        this.appointmentDate = date;
+    public AppointmentDateTime(LocalDateTime dateTime) {
+        requireNonNull(dateTime);
+        this.appointmentDateTime = dateTime;
     }
 
     /**
@@ -45,8 +46,9 @@ public class AppointmentDate {
      * @return boolean indicating if format is valid or not
      */
     public static boolean isValidDate(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
-            LocalDate temp = LocalDate.parse(dateStr);
+            LocalDateTime temp = LocalDateTime.parse(dateStr, formatter);
             //LocalDate today = LocalDate.now();
             //return temp.isAfter(today);
         } catch (DateTimeParseException e) {
@@ -61,7 +63,8 @@ public class AppointmentDate {
      */
     @Override
     public String toString() {
-        return DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(this.appointmentDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.LONG).format(this.appointmentDateTime);
     }
 
     /**
@@ -76,12 +79,12 @@ public class AppointmentDate {
         }
 
         // instanceof handles nulls
-        if (!(obj instanceof AppointmentDate)) {
+        if (!(obj instanceof AppointmentDateTime)) {
             return false;
         }
 
-        AppointmentDate ad = (AppointmentDate) obj;
-        return appointmentDate.equals(ad.appointmentDate);
+        AppointmentDateTime ad = (AppointmentDateTime) obj;
+        return appointmentDateTime.equals(ad.appointmentDateTime);
     }
 
     /**
@@ -90,7 +93,7 @@ public class AppointmentDate {
      */
     @Override
     public int hashCode() {
-        return appointmentDate.hashCode();
+        return appointmentDateTime.hashCode();
     }
 
     /**
@@ -98,8 +101,8 @@ public class AppointmentDate {
      * @param compareValue value to compare with current instance
      * @return integer reflecting whether compareValue is greater, less, or equal
      */
-    public int compareTo(AppointmentDate compareValue) {
-        return this.appointmentDate.compareTo(compareValue.appointmentDate);
+    public int compareTo(AppointmentDateTime compareValue) {
+        return this.appointmentDateTime.compareTo(compareValue.appointmentDateTime);
     }
 
 }

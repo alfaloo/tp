@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Nric;
 
 /**
@@ -34,12 +34,12 @@ public class AddAppointmentCommandParser {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_DATE, PREFIX_DOCTORNRIC, PREFIX_PATIENTNRIC);
-        AppointmentDate appointmentDate = ParserUtil.parseAppointmentDate(argMultimap.getValue(PREFIX_DATE).get());
+        AppointmentDateTime appointmentDateTime =
+                ParserUtil.parseAppointmentDateTime(argMultimap.getValue(PREFIX_DATE).get());
         Nric doctorNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_DOCTORNRIC).get());
         Nric patientNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_PATIENTNRIC).get());
 
-        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDate);
-
+        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDateTime);
         return new AddAppointmentCommand(appointment);
     }
 

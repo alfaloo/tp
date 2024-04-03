@@ -84,7 +84,7 @@
                   <padding>
                     <Insets left="5" top="5" />
                   </padding>
-                  <Label fx:id="appointmentDate" styleClass="cell_big_label" text="\$appointmentDate" />
+                  <Label fx:id="appointmentDateTime" styleClass="cell_big_label" text="\$appointmentDateTime" />
                 </HBox>
               </VBox>
     <!--          <Label fx:id="appointmentId" text="\$appointmentId" styleClass="cell_small_label" />-->
