@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 
 /**
@@ -50,9 +51,12 @@ public class AddAppointmentCommand extends Command {
         if (model.hasAppointment(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
-
-        if (!model.isValidAppointment(toAdd)) {
-            throw new InvalidAppointmentException();
+        try {
+            if (!model.isValidAppointment(toAdd)) {
+                throw new InvalidAppointmentException();
+            }
+        } catch (PersonNotFoundException e) {
+            throw new CommandException("The provided Doctor / Patient is not registered in the system");
         }
 
         model.addAppointment(toAdd);
