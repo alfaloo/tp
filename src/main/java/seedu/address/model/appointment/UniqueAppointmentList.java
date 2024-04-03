@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Person;
 
@@ -80,9 +78,10 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void remove(Appointment toRemove) {
         requireNonNull(toRemove);
-//        if (!internalList.remove(toRemove)) {
-//            throw new AppointmentNotFoundException();
-//        }
+        //        if (!internalList.remove(toRemove)) {
+        //            throw new AppointmentNotFoundException();
+        //        }
+        internalList.remove(toRemove);
     }
 
     public void setPersons(UniqueAppointmentList replacement) {

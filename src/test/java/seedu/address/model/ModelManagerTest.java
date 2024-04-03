@@ -16,6 +16,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDate;
 import seedu.address.model.person.Doctor;
@@ -179,7 +180,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void isValidAppointment_invalidAppointment_returnsFalse() {
+    public void isValidAppointment_invalidAppointment_returnsFalse() throws ParseException {
         Doctor d = (Doctor) TypicalPersons.BROWN;
         Patient p = (Patient) ALICE;
         modelManager.addPerson(d);
