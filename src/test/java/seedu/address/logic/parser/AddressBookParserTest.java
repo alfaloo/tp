@@ -24,6 +24,7 @@ import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditAppointmentCommand;
 import seedu.address.logic.commands.EditAppointmentCommand.EditAppointmentDescriptor;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -45,6 +46,7 @@ import seedu.address.model.person.PatientContainsKeywordsPredicate;
 import seedu.address.testutil.AppointmentBuilder;
 import seedu.address.testutil.AppointmentUtil;
 import seedu.address.testutil.DoctorBuilder;
+import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PatientBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -112,14 +114,14 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
-    //    @Test
-    //    public void parseCommand_edit() throws Exception {
-    //        Person person = new PatientBuilder().build();
-    //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
-    //        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-    //                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-    //        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
-    //    }
+    @Test
+    public void parseCommand_edit() throws Exception {
+        Patient person = new PatientBuilder().build();
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+    }
 
     @Test
     public void parseCommand_editAppointment() throws Exception {

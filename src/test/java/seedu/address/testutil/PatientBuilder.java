@@ -24,7 +24,7 @@ public class PatientBuilder {
     private Phone phone;
 
     /**
-     * Creates a {@code PersonBuilder} with the default details.
+     * Creates a {@code PatientBuilder} with the default details.
      */
     public PatientBuilder() {
         nric = new Nric(DEFAULT_NRIC);
@@ -34,7 +34,7 @@ public class PatientBuilder {
     }
 
     /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
+     * Initializes the PatientBuilder with the data of {@code personToCopy}.
      */
     public PatientBuilder(Person patientToCopy) {
         if (patientToCopy.getType() != Type.PATIENT) {
@@ -47,7 +47,7 @@ public class PatientBuilder {
     }
 
     /**
-     * Sets the {@code Nric} of the {@code Person} that we are building.
+     * Sets the {@code Nric} of the {@code Patient} that we are building.
      */
     public PatientBuilder withNric(String nric) {
         this.nric = new Nric(nric);
@@ -55,7 +55,7 @@ public class PatientBuilder {
     }
 
     /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
+     * Sets the {@code Name} of the {@code Patient} that we are building.
      */
     public PatientBuilder withName(String name) {
         this.name = new Name(name);
@@ -63,7 +63,7 @@ public class PatientBuilder {
     }
 
     /**
-     * Sets the {@code DoB} of the {@code Person} that we are building.
+     * Sets the {@code DoB} of the {@code Patient} that we are building.
      */
     public PatientBuilder withDoB(String dob) {
         this.dob = new DoB(dob);
@@ -71,7 +71,7 @@ public class PatientBuilder {
     }
 
     /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code Patient} that we are building.
      */
     public PatientBuilder withPhone(String phone) {
         this.phone = new Phone(phone);
