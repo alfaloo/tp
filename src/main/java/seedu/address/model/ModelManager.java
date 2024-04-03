@@ -136,7 +136,6 @@ public class ModelManager implements Model {
     @Override
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireAllNonNull(target, editedAppointment);
-
         addressBook.setAppointment(target, editedAppointment);
     }
 

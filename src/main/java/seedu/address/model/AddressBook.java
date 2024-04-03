@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
@@ -58,8 +59,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the appointment list with {@code appointments}.
      * {@code appointments} must not contain duplicate appointments.
      */
-    public void setAppointments(List<Appointment> appointments) {
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
         this.appointments.setAppointments(appointments);
+    }
+
+    public void setAppointmentsExistingBook(List<Appointment> appointments) {
+        this.appointments.setAppointmentsExistingBook(appointments);
     }
 
     /**
@@ -68,7 +73,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setPersons(newData.getPersonList());
-        setAppointments(newData.getAppointmentList());
+
+        setAppointmentsExistingBook(newData.getAppointmentList());
     }
 
     //// person-level operations
