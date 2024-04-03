@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
@@ -70,6 +71,28 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
+    /**
+     * constructs a new appointment instance
+     * @param doctorNric doctor in charge
+     * @param patientNric patient of the appointment
+     * @param appointmentDate date of the appointment
+     * @param isInitialised a boolean value indication whether this was initialised by the json file
+     * @throws ParseException
+     */
+    public Appointment(
+            Nric doctorNric, Nric patientNric,
+            AppointmentDate appointmentDate, AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
+        requireAllNonNull(doctorNric, patientNric, appointmentDate);
+        try {
+            checkArgument(isInitialised);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
+        this.doctorNric = doctorNric;
+        this.patientNric = patientNric;
+        this.appointmentDate = appointmentDate;
+        this.appointmentId = new AppointmentId();
+    }
     /**
      * Checks if appointment is valid by comparing appointment date against current date.
      * A valid new appointment can only be in the future, not the past.

@@ -31,6 +31,15 @@ public class AppointmentDate {
     }
 
     /**
+     * Constructs new AppointmentDate object using an input date string in yyyy-MM-dd format for initialisation
+     * @param dateStr input string to be stored
+     */
+    public AppointmentDate(String dateStr, Boolean isInitialised) {
+        requireNonNull(dateStr);
+        this.appointmentDate = LocalDate.parse(dateStr);
+    }
+
+    /**
      * Overloaded constructor that constructs a new instance using a LocalDate rather than date string
      * @param date LocalDate instance to construct AppointmentDate around
      */
