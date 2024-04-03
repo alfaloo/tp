@@ -9,6 +9,7 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.DoctorBuilder;
@@ -17,7 +18,7 @@ import seedu.address.testutil.PatientBuilder;
 class AppointmentTest {
 
     @Test
-    void getDoctorNric() {
+    void getDoctorNric() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Appointment appointment = new Appointment(doctorNric, new Nric("T1234567A"),
                 new AppointmentDate(LocalDate.now()));
@@ -25,7 +26,7 @@ class AppointmentTest {
     }
 
     @Test
-    void getPatientNric() {
+    void getPatientNric() throws ParseException {
         Nric patientNric = new Nric("T1234567A");
         Appointment appointment = new Appointment(new Nric("S1234567A"), patientNric,
                 new AppointmentDate(LocalDate.now()));
@@ -41,14 +42,14 @@ class AppointmentTest {
     }
 
     @Test
-    void getAppointmentDate() {
+    void getAppointmentDate() throws ParseException {
         AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
         Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), appointmentDate);
         assertEquals(appointmentDate, appointment.getAppointmentDate());
     }
 
     @Test
-    void isValidAppointment_validDate_returnsTrue() {
+    void isValidAppointment_validDate_returnsTrue() throws ParseException {
         AppointmentDate futureDate = new AppointmentDate(LocalDate.now().plusDays(1));
         Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), futureDate);
 
@@ -59,13 +60,13 @@ class AppointmentTest {
     void isValidAppointment_pastDate_returnsFalse() {
         AppointmentDate pastDate = new AppointmentDate(LocalDate.now().minusDays(1));
         // Use assertThrows to check if IllegalArgumentException is thrown
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(ParseException.class, () -> {
             new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), pastDate);
         });
     }
 
     @Test
-    void isSameAppointment() {
+    void isSameAppointment() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
         AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
@@ -75,7 +76,7 @@ class AppointmentTest {
     }
 
     @Test
-    void appointmentContainsPerson() {
+    void appointmentContainsPerson() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
         AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
@@ -95,7 +96,7 @@ class AppointmentTest {
     }
 
     @Test
-    void testEquals() {
+    void testEquals() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
         AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());

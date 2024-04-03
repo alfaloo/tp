@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_1;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -133,6 +136,28 @@ public class AddressBookTest {
     @Test
     public void getPersonByNric_addressbookIsEmpty_throwsPersonNotFoundException() {
         assertThrows(PersonNotFoundException.class, () -> addressBook.getPersonByNric(ALICE.getNric()));
+    }
+
+    @Test
+    public void hasPersonNric_validNric_returnsTrue() {
+        addressBook.addPerson(ALICE);
+        assertTrue(addressBook.hasPersonNric(ALICE.getNric().toString()));
+    }
+
+    @Test
+    public void setAppointments_validSet_setsAppointments() throws DuplicateAppointmentException {
+        List<Appointment> appts = new ArrayList<>();
+        appts.add(APPOINTMENT_1);
+        addressBook.setAppointments(appts);
+        assertTrue(addressBook.hasAppointment(APPOINTMENT_1));
+    }
+
+    @Test
+    public void equalsMethod() {
+        // same object
+        assertTrue(addressBook.equals(addressBook));
+        // different class
+        assertFalse(addressBook.equals(APPOINTMENT_1));
     }
 
 }

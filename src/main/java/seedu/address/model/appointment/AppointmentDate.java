@@ -46,7 +46,9 @@ public class AppointmentDate {
      */
     public static boolean isValidDate(String dateStr) {
         try {
-            LocalDate.parse(dateStr);
+            LocalDate temp = LocalDate.parse(dateStr);
+            //LocalDate today = LocalDate.now();
+            //return temp.isAfter(today);
         } catch (DateTimeParseException e) {
             return false;
         }

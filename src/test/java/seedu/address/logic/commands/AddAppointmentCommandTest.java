@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.BROWN;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ModelManager;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDate;
@@ -20,7 +21,7 @@ class AddAppointmentCommandTest {
     private ModelManager modelManager = new ModelManager();
 
     @Test
-    void execute_validCommand_executesCommand() throws CommandException {
+    void execute_validCommand_executesCommand() throws CommandException, ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
@@ -30,7 +31,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void execute_invalidCommand_throwsInvalidAppointmentException() {
+    void execute_invalidCommand_throwsInvalidAppointmentException() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(ALICE.getNric(), BROWN.getNric(), new AppointmentDate("2024-09-01"));
@@ -39,7 +40,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void execute_invalidCommandAppointmentExists_throwsCommandException() {
+    void execute_invalidCommandAppointmentExists_throwsCommandException() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
@@ -49,7 +50,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void equals_sameCommandButDifferentObject_returnsTrue() {
+    void equals_sameCommandButDifferentObject_returnsTrue() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
@@ -59,7 +60,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void equals_sameCommandSameObject_returnsTrue() {
+    void equals_sameCommandSameObject_returnsTrue() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
@@ -68,7 +69,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void equals_differentClass_returnsFalse() {
+    void equals_differentClass_returnsFalse() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
@@ -77,7 +78,7 @@ class AddAppointmentCommandTest {
     }
 
     @Test
-    void toString_returnsValidString() {
+    void toString_returnsValidString() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));

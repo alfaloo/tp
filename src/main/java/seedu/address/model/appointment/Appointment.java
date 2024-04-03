@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.LocalDate;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
@@ -36,9 +37,16 @@ public class Appointment {
      * @param patientNric patient of the appointment
      * @param appointmentDate date of the appointment
      */
-    public Appointment(Nric doctorNric, Nric patientNric, AppointmentDate appointmentDate) {
+    public Appointment(
+            Nric doctorNric, Nric patientNric, AppointmentDate appointmentDate) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDate);
-        checkArgument(isValidAppointment(appointmentDate), MESSAGE_CONSTRAINTS_INVALID_DATE);
+
+        try {
+            checkArgument(isValidAppointment(appointmentDate), MESSAGE_CONSTRAINTS_INVALID_DATE);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
+
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
         this.appointmentDate = appointmentDate;

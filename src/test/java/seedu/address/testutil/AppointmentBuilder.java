@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDate;
 import seedu.address.model.person.Doctor;
@@ -63,8 +64,17 @@ public class AppointmentBuilder {
         return this;
     }
 
+    /**
+     * Builds appointment with specified attributes.
+     * If parameters are incorrect, or invalid, returns null.
+     * @return Appointment with specified attributes
+     */
     public Appointment build() {
-        return new Appointment(doctorNric, patientNric, appointmentDate);
+        try {
+            return new Appointment(doctorNric, patientNric, appointmentDate);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
 }

@@ -19,12 +19,12 @@ public class AddPatientCommand extends Command {
 
     public static final String COMMAND_WORD = "addpatient";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient to the address book.\n"
             + "Parameters: "
             + PREFIX_NRIC + "NRIC "
             + PREFIX_NAME + "NAME "
             + PREFIX_DOB + "DOB "
-            + PREFIX_PHONE + "PHONE "
+            + PREFIX_PHONE + "PHONE\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NRIC + "S1234567A "
             + PREFIX_NAME + "John Doe "

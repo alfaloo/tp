@@ -13,6 +13,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDate;
@@ -29,7 +30,7 @@ public class EditAppointmentCommand extends Command {
             + "by the index number used in the displayed appointment list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_DATE + "DATE] "
+            + "[" + PREFIX_DATE + "DATE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "2024-04-09";
 
@@ -62,9 +63,9 @@ public class EditAppointmentCommand extends Command {
         }
 
         Appointment appointmentToEdit = lastShownList.get(index.getZeroBased());
-        Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
 
-        if (!appointmentToEdit.isSameAppointment(editedAppointment) && model.hasAppointment(editedAppointment)) {
+        Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+        if (appointmentToEdit.isSameAppointment(editedAppointment) && model.hasAppointment(editedAppointment)) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
 
@@ -77,8 +78,9 @@ public class EditAppointmentCommand extends Command {
      * Creates and returns a {@code Appointment} with the details of {@code appointmentToEdit}
      * edited with {@code editAppointmentDescriptor}.
      */
-    private static Appointment createEditedAppointment(Appointment appointmentToEdit,
-                                                       EditAppointmentDescriptor editAppointmentDescriptor) {
+    private static Appointment createEditedAppointment(
+            Appointment appointmentToEdit,
+            EditAppointmentDescriptor editAppointmentDescriptor) throws CommandException {
         assert appointmentToEdit != null;
 
         Nric doctorNric = appointmentToEdit.getDoctorNric();
@@ -86,7 +88,11 @@ public class EditAppointmentCommand extends Command {
         AppointmentDate updatedDate = editAppointmentDescriptor
                 .getDate().orElse(appointmentToEdit.getAppointmentDate());
 
-        return new Appointment(doctorNric, patientNric, updatedDate);
+        try {
+            return new Appointment(doctorNric, patientNric, updatedDate);
+        } catch (ParseException e) {
+            throw new CommandException("Unable to edit appointment due to invalid inputs");
+        }
     }
 
     @Override
