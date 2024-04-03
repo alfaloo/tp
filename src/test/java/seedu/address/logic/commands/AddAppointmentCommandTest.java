@@ -31,6 +31,13 @@ class AddAppointmentCommandTest {
     }
 
     @Test
+    void execute_invalidCommand_missingPerson() throws CommandException, ParseException {
+        Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-09-01"));
+        AddAppointmentCommand ad = new AddAppointmentCommand(appt);
+        assertThrows(CommandException.class, () -> ad.execute(modelManager));
+    }
+
+    @Test
     void execute_invalidCommand_throwsInvalidAppointmentException() throws ParseException {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
