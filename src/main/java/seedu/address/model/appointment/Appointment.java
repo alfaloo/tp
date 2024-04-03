@@ -3,6 +3,7 @@ package seedu.address.model.appointment;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -79,6 +80,7 @@ public class Appointment {
      * @return boolean if appointment is valid or not
      */
     public boolean isValidAppointment(AppointmentDateTime appointmentDate) {
+        System.out.println("hi");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         AppointmentDateTime currentDateTime = new AppointmentDateTime(LocalDateTime.now().format(formatter));
         return appointmentDate.compareTo(currentDateTime) > -1;

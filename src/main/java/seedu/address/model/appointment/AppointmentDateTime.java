@@ -63,8 +63,7 @@ public class AppointmentDateTime {
      */
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.LONG).format(this.appointmentDateTime);
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT).format(this.appointmentDateTime);
     }
 
     /**

@@ -76,7 +76,7 @@ class JsonAdaptedAppointment {
             throw new IllegalValueException(AppointmentDateTime.MESSAGE_CONSTRAINTS);
         }
 
-        final AppointmentDateTime modelAppointmentDate = new AppointmentDateTime(appointmentDateTime);
+        final AppointmentDateTime modelAppointmentDateTime = new AppointmentDateTime(appointmentDateTime);
 
 
         if (appointmentId == null) {
@@ -89,7 +89,7 @@ class JsonAdaptedAppointment {
 
         final AppointmentId modelAppointmentId = new AppointmentId(appointmentId);
 
-        return new Appointment(modelDoctorNric, modelPatientNric, modelAppointmentDate, modelAppointmentId);
+        return new Appointment(modelDoctorNric, modelPatientNric, modelAppointmentDateTime, modelAppointmentId);
     }
 
 
