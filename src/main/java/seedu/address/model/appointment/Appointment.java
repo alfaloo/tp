@@ -80,7 +80,6 @@ public class Appointment {
      * @return boolean if appointment is valid or not
      */
     public boolean isValidAppointment(AppointmentDateTime appointmentDate) {
-        System.out.println("hi");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         AppointmentDateTime currentDateTime = new AppointmentDateTime(LocalDateTime.now().format(formatter));
         return appointmentDate.compareTo(currentDateTime) > -1;

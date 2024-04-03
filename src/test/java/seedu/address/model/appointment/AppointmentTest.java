@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class AppointmentTest {
     void getDoctorNric() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Appointment appointment = new Appointment(doctorNric, new Nric("T1234567A"),
-                new AppointmentDate(LocalDate.now()));
+                new AppointmentDateTime(LocalDateTime.now()));
         assertEquals(doctorNric, appointment.getDoctorNric());
     }
 
@@ -29,7 +29,7 @@ class AppointmentTest {
     void getPatientNric() throws ParseException {
         Nric patientNric = new Nric("T1234567A");
         Appointment appointment = new Appointment(new Nric("S1234567A"), patientNric,
-                new AppointmentDate(LocalDate.now()));
+                new AppointmentDateTime(LocalDateTime.now()));
         assertEquals(patientNric, appointment.getPatientNric());
     }
 
@@ -37,31 +37,31 @@ class AppointmentTest {
     void getAppointmentId() {
         AppointmentId appointmentId = new AppointmentId();
         Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"),
-                new AppointmentDate(LocalDate.now()), appointmentId);
+                new AppointmentDateTime(LocalDateTime.now()), appointmentId);
         assertEquals(appointmentId, appointment.getAppointmentId());
     }
 
     @Test
     void getAppointmentDate() throws ParseException {
-        AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
-        Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), appointmentDate);
-        assertEquals(appointmentDate, appointment.getAppointmentDate());
+        AppointmentDateTime appointmentDateTime = new AppointmentDateTime(LocalDateTime.now());
+        Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), appointmentDateTime);
+        assertEquals(appointmentDateTime, appointment.getAppointmentDateTime());
     }
 
     @Test
     void isValidAppointment_validDate_returnsTrue() throws ParseException {
-        AppointmentDate futureDate = new AppointmentDate(LocalDate.now().plusDays(1));
-        Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), futureDate);
+        AppointmentDateTime futureDateTime = new AppointmentDateTime(LocalDateTime.now().plusDays(1));
+        Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), futureDateTime);
 
-        assertTrue(appointment.isValidAppointment(futureDate));
+        assertTrue(appointment.isValidAppointment(futureDateTime));
     }
 
     @Test
     void isValidAppointment_pastDate_returnsFalse() {
-        AppointmentDate pastDate = new AppointmentDate(LocalDate.now().minusDays(1));
+        AppointmentDateTime pastDateTime = new AppointmentDateTime(LocalDateTime.now().minusDays(1));
         // Use assertThrows to check if IllegalArgumentException is thrown
         assertThrows(ParseException.class, () -> {
-            new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), pastDate);
+            new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), pastDateTime);
         });
     }
 
@@ -69,9 +69,9 @@ class AppointmentTest {
     void isSameAppointment() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
-        AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
-        Appointment appointment1 = new Appointment(doctorNric, patientNric, appointmentDate);
-        Appointment appointment2 = new Appointment(doctorNric, patientNric, appointmentDate);
+        AppointmentDateTime appointmentDateTime = new AppointmentDateTime(LocalDateTime.now());
+        Appointment appointment1 = new Appointment(doctorNric, patientNric, appointmentDateTime);
+        Appointment appointment2 = new Appointment(doctorNric, patientNric, appointmentDateTime);
         assertTrue(appointment1.isSameAppointment(appointment2));
     }
 
@@ -79,8 +79,8 @@ class AppointmentTest {
     void appointmentContainsPerson() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
-        AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
-        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDate);
+        AppointmentDateTime appointmentDateTime = new AppointmentDateTime(LocalDateTime.now());
+        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDateTime);
 
         // False Doctor and Patient
         Person doctor = new DoctorBuilder().withNric("S7654321A").build();
@@ -99,9 +99,9 @@ class AppointmentTest {
     void testEquals() throws ParseException {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
-        AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
-        Appointment appointment1 = new Appointment(doctorNric, patientNric, appointmentDate);
-        Appointment appointment2 = new Appointment(doctorNric, patientNric, appointmentDate);
+        AppointmentDateTime appointmentDateTime = new AppointmentDateTime(LocalDateTime.now());
+        Appointment appointment1 = new Appointment(doctorNric, patientNric, appointmentDateTime);
+        Appointment appointment2 = new Appointment(doctorNric, patientNric, appointmentDateTime);
         assertEquals(appointment1, appointment2);
     }
 
@@ -109,10 +109,10 @@ class AppointmentTest {
     void testToString() {
         Nric doctorNric = new Nric("S1234567A");
         Nric patientNric = new Nric("T1234567A");
-        AppointmentDate appointmentDate = new AppointmentDate(LocalDate.now());
+        AppointmentDateTime appointmentDateTime = new AppointmentDateTime(LocalDateTime.now());
         AppointmentId appointmentId = new AppointmentId();
-        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDate, appointmentId);
-        String expectedString = "seedu.address.model.appointment.Appointment{Date=" + appointmentDate + ", Doctor="
+        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDateTime, appointmentId);
+        String expectedString = "seedu.address.model.appointment.Appointment{Date=" + appointmentDateTime + ", Doctor="
                 + doctorNric + ", Patient=" + patientNric + ", Id=" + appointmentId + "}";
         assertEquals(expectedString, appointment.toString());
     }

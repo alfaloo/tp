@@ -44,7 +44,7 @@ class MessagesTest {
     public void format_validAppointment_stringFormattedAppointment() {
         Appointment a = new AppointmentBuilder().build();
         assertEquals(Messages.format(a), "Date: "
-                + a.getAppointmentDate()
+                + a.getAppointmentDateTime()
                 + "; Doctor: "
                 + a.getDoctorNric()
                 + "; Patient: "

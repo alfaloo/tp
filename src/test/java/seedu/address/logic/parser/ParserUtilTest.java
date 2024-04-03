@@ -14,7 +14,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -197,29 +197,29 @@ public class ParserUtilTest {
 
     @Test
     public void parseAppointmentDate_validDate_returnsAppointmentDate() throws ParseException {
-        String date = "2024-09-02";
-        AppointmentDate ad = new AppointmentDate(date);
-        assertEquals(ad, ParserUtil.parseAppointmentDate(date));
+        String date = "2024-09-02 11:02";
+        AppointmentDateTime ad = new AppointmentDateTime(date);
+        assertEquals(ad, ParserUtil.parseAppointmentDateTime(date));
     }
 
     @Test
-    public void parseAppointmentDate_invalidDate_throwsParseException() {
-        String date = "2024-00-010";
-        assertThrows(ParseException.class, () -> ParserUtil.parseAppointmentDate(date));
+    public void parseAppointmentDate_invalidDateTime_throwsParseException() {
+        String date = "2024-00-010 11:0";
+        assertThrows(ParseException.class, () -> ParserUtil.parseAppointmentDateTime(date));
     }
 
     @Test
-    public void parseAppointmentDate_invalidApptDate_throwsParseException() {
-        String date = " 2024-00-00";
-        assertThrows(ParseException.class, () -> ParserUtil.parseAppointmentDate(date));
+    public void parseAppointmentDate_invalidApptDateTime_throwsParseException() {
+        String date = " 2024-00-00 11:11";
+        assertThrows(ParseException.class, () -> ParserUtil.parseAppointmentDateTime(date));
     }
 
     @Test
-    public void parseAppointmentDate_whitespacedDate_returnsAppointmentDate() throws ParseException {
-        String date = " 2024-09-02  ";
-        AppointmentDate ad = new AppointmentDate(date.strip());
-        assertEquals(ad, ParserUtil.parseAppointmentDate(date));
+    public void parseAppointmentDateTime_whitespacedDateTime_returnsAppointmentDateTime() throws ParseException {
+        String date = " 2024-09-02 11:02 ";
+        AppointmentDateTime ad = new AppointmentDateTime(date.strip());
+        assertEquals(ad, ParserUtil.parseAppointmentDateTime(date));
     }
 
-    //TODO: test parseAppointmentDate with null input once caught
+    //TODO: test parseAppointmentDateTime with null input once caught
 }
