@@ -9,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showAppointmentAtIndex;
 import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_1;
+import static seedu.address.testutil.TypicalAppointments.APPOINTMENT_2;
 import static seedu.address.testutil.TypicalAppointments.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_APPOINTMENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_APPOINTMENT;
@@ -181,6 +182,14 @@ public class EditAppointmentCommandTest {
         String expected = EditAppointmentCommand.class.getCanonicalName() + "{index=" + index
                 + ", editAppointmentDescriptor=" + editAppointmentDescriptor + "}";
         assertEquals(expected, editAppointmentCommand.toString());
+    }
+
+    @Test
+    public void getPatientNric_returnsNricAsOptional() {
+        model.addAppointment(APPOINTMENT_2);
+        Index idx = Index.fromOneBased(1);
+        EditAppointmentDescriptor descriptor = new EditAppointmentDescriptorBuilder().withDate("2124-03-19").build();
+        EditAppointmentCommand editAppointmentCommand = new EditAppointmentCommand(idx, descriptor);
     }
 
 }
