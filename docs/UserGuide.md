@@ -146,14 +146,24 @@ Examples:
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`
+Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the patient or doctor at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
+Field Constraints:
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
+* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **PHONE** : Only contain numerical characters and of exactly 8 digits long.
+
+Command Constraints:
+* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.
+* The ordering of the fields does not influence the command.
+
 Examples:
-*  `edit 1 p/91234567 n/Betsy Crower` Edits the phone number and name of the 1st person to be `91234567` and `Betsy Crower` respectively.
+*  `edit 1 i/s1234567a n/Betsy Crower` Edits the NRIC and name of the 1st person to be `s1234567a` and `Betsy Crower` respectively.
                                   
 ![add_appointment_result](images/editPerson.png)
 
@@ -164,9 +174,15 @@ Format: `editappt INDEX ad/DATE`
                                                                                                                                                                                 
 * Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
 * Existing values will be updated to the input values.                                                                                                                          
-                                                                                                                                                                                
-Examples:                                                                                                                                                                       
-*  `editappt 1 ad/2024-04-09` Edits the appointment date of the first appointment in the appointment list to `2024-04-09`                                   
+
+Field Constraints:
+* **DATE** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
+
+Examples:    
+
+*  `editappt 1 ad/2024-04-09 11:00` Edits the appointment date of the first appointment in the appointment list to `2024-04-09 11:00`                                   
+
+![add_appointment_result](images/editAppointment.png)
 
 ### Querying persons by name: `patient`
 
