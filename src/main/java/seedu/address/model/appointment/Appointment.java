@@ -81,7 +81,8 @@ public class Appointment {
      */
     public Appointment(
             Nric doctorNric, Nric patientNric,
-            AppointmentDateTime appointmentDateTime, AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
+            AppointmentDateTime appointmentDateTime,
+            AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
