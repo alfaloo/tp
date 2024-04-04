@@ -86,6 +86,26 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+### Adding an appointment: `addappt`
+
+Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
+
+Format: `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC`
+
+Field Constraints:
+- `DATE`: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
+- `DOCTOR_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+- `PATIENT_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+
+Command Constraints:
+- All of the above fields (`DATE`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
+- A doctor with the specified `DOCTOR_NRIC` must already exist in the MediCLI System.
+- A patient with the specified `PATIENT_NRIC` must already exist in the MediCLI System.
+
+Examples:
+- `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
+- `addappt ad/2025-04-09 11:10 dn/T1234567A pn/T1234567B`
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
