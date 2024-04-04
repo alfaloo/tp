@@ -141,16 +141,25 @@ Examples:
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
-                                    
+*  `edit 1 p/91234567 n/Betsy Crower` Edits the phone number and name of the 1st person to be `91234567` and `Betsy Crower` respectively.
+
+### Editing an appointment: 'editappt'
+Edits an existing person in the address book.                                                                                                                                                               
+                                                                                                                                                                                
+Format: `editappt INDEX [ad/DATE]`                                                                                                                        
+                                                                                                                                                                                
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
+* Existing values will be updated to the input values.                                                                                                                          
+                                                                                                                                                                                
+Examples:                                                                                                                                                                       
+*  `editappt 1 ad/2024-04-09` Edits the appointment date of the first appointment in the appointment list to `2024-04-09`                                   
 
 ### Querying persons by name: `patient`
 
@@ -332,7 +341,8 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete Person** | `delete INDEX`<br> e.g., `delete 3`
 **Delete Appointment** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit Appointment** | `editappt INDEX [ad/DATE]`<br> e.g.,`editappt 1 ad/2024-04-09`
+**Edit Person** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
 **Exit** | `exit`
 **Query Patient** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
 **Query Doctor** | `doctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `doctor John Doe`
