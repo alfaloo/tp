@@ -79,7 +79,7 @@
                     <Image url="@/images/calendar.png" />
                   </ImageView>
                 </HBox>
-   
+
                 <HBox alignment="CENTER_RIGHT">
                   <padding>
                     <Insets left="5" top="5" />
