@@ -92,7 +92,8 @@ public class EditCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        AppointmentContainsDoctorPredicate predicateDoctor = new AppointmentContainsDoctorPredicate(Arrays.asList(personToEdit.getNric().nric));
+        AppointmentContainsDoctorPredicate predicateDoctor =
+                new AppointmentContainsDoctorPredicate(Arrays.asList(personToEdit.getNric().nric));
         model.updateFilteredAppointmentList(predicateDoctor);
 
         for (Appointment appt : model.getFilteredAppointmentList()) {
@@ -101,7 +102,8 @@ public class EditCommand extends Command {
             }
         }
 
-        AppointmentContainsPatientPredicate predicatePatient = new AppointmentContainsPatientPredicate(Arrays.asList(personToEdit.getNric().nric));
+        AppointmentContainsPatientPredicate predicatePatient =
+                new AppointmentContainsPatientPredicate(Arrays.asList(personToEdit.getNric().nric));
         model.updateFilteredAppointmentList(predicatePatient);
 
         for (Appointment appt : model.getFilteredAppointmentList()) {
