@@ -32,7 +32,7 @@ public class AddDoctorCommand extends Command {
             + PREFIX_PHONE + "98765432";
 
     public static final String MESSAGE_SUCCESS = "New doctor added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This doctor already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Doctor toAdd;
 
