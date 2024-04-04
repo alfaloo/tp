@@ -25,7 +25,7 @@ public class JsonAdaptedAppointmentTest {
     private static final String VALID_NRIC_1 = APPOINTMENT_1.getPatientNric().toString();
     private static final String VALID_NRIC_2 = APPOINTMENT_1.getDoctorNric().toString();
     private static final String VALID_DATE_A = APPOINTMENT_1.getAppointmentDateTime().toString();
-    private static final String VALID_DATE_B = APPOINTMENT_1.getAppointmentDateTime().appointmentDateTime.toString();
+    private static final String VALID_DATE_B = APPOINTMENT_1.getAppointmentDateTime().toString();
     private static final String VALID_APPOINTMENT_ID = APPOINTMENT_1.getAppointmentId().toString();
 
     /**
