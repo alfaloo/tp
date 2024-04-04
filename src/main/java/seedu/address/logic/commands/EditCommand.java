@@ -6,8 +6,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -18,6 +20,9 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentContainsDoctorPredicate;
+import seedu.address.model.appointment.AppointmentContainsPatientPredicate;
 import seedu.address.model.person.DoB;
 import seedu.address.model.person.Doctor;
 import seedu.address.model.person.Name;
@@ -86,6 +91,27 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        AppointmentContainsDoctorPredicate predicateDoctor = new AppointmentContainsDoctorPredicate(Arrays.asList(personToEdit.getNric().nric));
+        model.updateFilteredAppointmentList(predicateDoctor);
+
+        for (Appointment appt : model.getFilteredAppointmentList()) {
+            if (appt.getDoctorNric().equals(personToEdit.getNric())) {
+                appt.setDoctorNric(editedPerson.getNric());
+            }
+        }
+
+        AppointmentContainsPatientPredicate predicatePatient = new AppointmentContainsPatientPredicate(Arrays.asList(personToEdit.getNric().nric));
+        model.updateFilteredAppointmentList(predicatePatient);
+
+        for (Appointment appt : model.getFilteredAppointmentList()) {
+            if (appt.getPatientNric().equals(personToEdit.getNric())) {
+                appt.setPatientNric(editedPerson.getNric());
+            }
+        }
+
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
