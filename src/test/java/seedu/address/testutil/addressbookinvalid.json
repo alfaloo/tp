@@ -1,0 +1,60 @@
+{
+  "persons" : [ {
+    "type" : "PATIENT",
+    "nric" : "S1234567A",
+    "name" : "John Doe",
+    "dob" : "2002-01-30",
+    "phone" : "92624417",
+    "tags" : [ ]
+  }, {
+    "type" : "PATIENT",
+    "nric" : "S0123456A",
+    "name" : "David Li",
+    "dob" : "2003-04-28",
+    "phone" : "87438807",
+    "tags" : [ ]
+  }, {
+    "type" : "DOCTOR",
+    "nric" : "S1234567s",
+    "name" : "John Doe",
+    "dob" : "2003-01-30",
+    "phone" : "98765432",
+    "tags" : [ ]
+  } ],
+  "appointments" : [ {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2024-06-06 15:00",
+    "appointmentId" : "a48433956"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2024-06-07 13:00",
+    "appointmentId" : "a14526721"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2025-05-05 19:00",
+    "appointmentId" : "a56366553"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2020-07-07 10:00",
+    "appointmentId" : "a11259511"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2024-05-04 02:00",
+    "appointmentId" : "a20170899"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2024-05-03 02:03",
+    "appointmentId" : "a50992029"
+  }, {
+    "doctorNric" : "s1234567s",
+    "patientNric" : "s1234567a",
+    "appointmentDateTime" : "2024-04-05 02:08",
+    "appointmentId" : "a13027485"
+  } ]
+}
