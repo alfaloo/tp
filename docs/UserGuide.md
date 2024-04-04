@@ -109,23 +109,49 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Querying persons by name: `patient/doctor`
 
-Finds persons whose names contain any of the given keywords.
+Finds person(s) whose details contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format for querying Patients: `patient KEYWORD [MORE_KEYWORDS]`
+
+Format for querying Doctors: `doctor KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* All person fields are searched and matched (Name, NRIC, Phone Number, DoB).
+* Both full words and substrings will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+* `patient John` returns `john` and `John Doe`
+* `doctor alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+
+### Querying appointments by Nric `apptforpatient/apptfordoctor`
+
+Finds appointment(s) which involve either the specified `patient`'s or `doctor`'s Nric.
+
+Format for querying Appointments by Patient's Nric: `apptforpatient KEYWORD [MORE_KEYWORDS]`
+
+Format for querying Appointments by Doctor's Nric: `apptfordoctor KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`
+* The order of the keywords does not matter. e.g. `S1234562A S1234561A` will 
+  match appointments that involve `S1234562A` and `S1234561A`.
+* Only the Nric field of `Patient` and `Doctor` are searched and matched.
+* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`
+* Appointments with `Patient`s or `Doctor`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).
+
+Example:
+* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with Nric `S1234561A` is involved in.
+
+* Initial State (All `Appointment`s listed)
+![result for 'apptforpatient S1234561A'](images/findAppointmentInitial.png)
+
+* After Querying (Only `Appointment`s with `Patient` of Nric `S1234561A`)
+![result for 'apptforpatient S1234561A'](images/findAppointmentResult.png)
 
 ### Deleting a person : `delete`
 
@@ -193,6 +219,9 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Query Patient** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
+**Query Doctor** | `doctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `doctor John Doe`
+**Query Appointment by Patient** | `apptforpatient KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptforpatient S1234567A`
+**Query Appointment by Doctor** | `apptfordoctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptfordoctor S7654321A`
 **List** | `list`
 **Help** | `help`
