@@ -65,8 +65,8 @@
                 </HBox>
               </HBox>
             </VBox>
-   
-                     <HBox alignment="BOTTOM_LEFT">
+
+            <HBox alignment="BOTTOM_LEFT">
               <padding>
                 <Insets left="55" right="5" />
               </padding>
@@ -80,7 +80,7 @@
                   </ImageView>
                 </HBox>
    
-                         <HBox alignment="CENTER_RIGHT">
+                <HBox alignment="CENTER_RIGHT">
                   <padding>
                     <Insets left="5" top="5" />
                   </padding>
