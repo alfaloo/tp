@@ -95,6 +95,31 @@ Examples:
 * `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
 * `addpatient n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
 
+![add_patient_result](images/addPatient.png)
+
+### Adding a Doctor: `adddoctor`                                                                                                                                                                    
+                                                                                                                                                                                                    
+Adds a doctor into the MediCLI system.                                                                                                                                                              
+                                                                                                                                                                                                    
+Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`                                                                                                                                                     
+                                                                                                                                                                                                    
+Field Constraints:                                                                                                                                                                                  
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive. 
+* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.                                                                                                     
+* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.                                                            
+* **PHONE** : Only contain numerical characters and of exactly 8 digits long.                                                                                                                       
+                                                                                                                                                                                                    
+Command Constraints:                                                                                                                                                                                
+* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.                                                                                                        
+* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.                                                                 
+* The ordering of the fields does not influence the command.                                                                                                                                        
+                                                                                                                                                                                                    
+Examples:                                                                                                                                                                                           
+* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
+* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`                                                                                                                                       
+
+![add_doctor_result](images/addDoctor.png)
+
 ### Adding an appointment: `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
@@ -114,28 +139,8 @@ Command Constraints:
 Examples:
 - `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
 - `addappt ad/2025-04-09 11:10 dn/T1234567A pn/T1234567B`
-
-
-### Adding a Doctor: `adddoctor`
-
-Adds a doctor into the MediCLI system.
-
-Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`
-
-Field Constraints:
-* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
-* **PHONE** : Only contain numerical characters and of exactly 8 digits long.
-
-Command Constraints:
-* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
-* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.
-* The ordering of the fields does not influence the command.
-
-Examples:
-* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
+                  
+![add_appointment_result](images/addAppointment.png)
 
 ### Editing a person: `edit`
 
@@ -149,11 +154,13 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`
 
 Examples:
 *  `edit 1 p/91234567 n/Betsy Crower` Edits the phone number and name of the 1st person to be `91234567` and `Betsy Crower` respectively.
+                                  
+![add_appointment_result](images/editPerson.png)
 
 ### Editing an appointment: 'editappt'
 Edits an existing person in the address book.                                                                                                                                                               
                                                                                                                                                                                 
-Format: `editappt INDEX [ad/DATE]`                                                                                                                        
+Format: `editappt INDEX ad/DATE`                                                                                                                        
                                                                                                                                                                                 
 * Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
 * Existing values will be updated to the input values.                                                                                                                          
@@ -341,7 +348,7 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete Person** | `delete INDEX`<br> e.g., `delete 3`
 **Delete Appointment** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
-**Edit Appointment** | `editappt INDEX [ad/DATE]`<br> e.g.,`editappt 1 ad/2024-04-09`
+**Edit Appointment** | `editappt INDEX ad/DATE`<br> e.g.,`editappt 1 ad/2024-04-09`
 **Edit Person** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
 **Exit** | `exit`
 **Query Patient** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
