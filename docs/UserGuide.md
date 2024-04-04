@@ -71,26 +71,53 @@ Shows a message explaning how to access the help page.
 
 Format: `help`
 
-
-### Adding a person: `add`
-
-Adds a person to the address book.
-
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
-</div>
-
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons (patients & doctors) and appointments in the MediCLI system.
 
 Format: `list`
+
+### Adding a patient: `addpatient`
+
+Adds a patient into the MediCLI system.
+
+Format: `addpatient i/[NRIC] n/[NAME] d/[DOB] p/[PHONE]`
+
+Field Constraints:
+* **[NRIC]** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **[NAME]** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
+* **[DOB]** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **[PHONE]** : Only contain numerical characters and of exactly 8 digits long.
+
+Command Constraints:
+* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
+* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.
+* The ordering of the fields does not influence the command.
+
+Examples:
+* `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+* `addpatient n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
+
+### Adding a Doctor: `adddoctor`
+
+Adds a doctor into the MediCLI system.
+
+Format: `adddoctor i/[NRIC] n/[NAME] d/[DOB] p/[PHONE]`
+
+Field Constraints:
+* **[NRIC]** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **[NAME]** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
+* **[DOB]** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **[PHONE]** : Only contain numerical characters and of exactly 8 digits long.
+
+Command Constraints:
+* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
+* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.
+* The ordering of the fields does not influence the command.
+
+Examples:
+* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
 
 ### Editing a person : `edit`
 
