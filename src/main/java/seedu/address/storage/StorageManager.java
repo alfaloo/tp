@@ -61,7 +61,11 @@ public class StorageManager implements Storage {
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataLoadingException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return addressBookStorage.readAddressBook(filePath);
+        try {
+            return addressBookStorage.readAddressBook(filePath);
+        } catch (DataLoadingException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

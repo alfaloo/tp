@@ -30,9 +30,9 @@ public class EditAppointmentCommand extends Command {
             + "by the index number used in the displayed appointment list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_DATE + "DATE]\n"
+            + PREFIX_DATE + "DATE\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_DATE + "2024-04-09";
+            + PREFIX_DATE + "2024-04-09 10:00";
 
     public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
