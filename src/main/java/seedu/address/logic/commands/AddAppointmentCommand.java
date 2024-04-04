@@ -27,7 +27,7 @@ public class AddAppointmentCommand extends Command {
             + PREFIX_DOCTORNRIC + "DOCTOR NRIC "
             + PREFIX_PATIENTNRIC + "PATIENT NRIC\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_DATE + "2024-04-09 "
+            + PREFIX_DATE + "2024-04-09 10:15 "
             + PREFIX_DOCTORNRIC + "S7777888T "
             + PREFIX_PATIENTNRIC + "T0000111U";
 

@@ -28,8 +28,8 @@ public class AppointmentUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_DOCTORNRIC + appointment.getDoctorNric().nric + " ");
         sb.append(PREFIX_PATIENTNRIC + appointment.getPatientNric().nric + " ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        sb.append(PREFIX_DATE + appointment.getAppointmentDate().appointmentDate.format(formatter) + " ");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        sb.append(PREFIX_DATE + appointment.getAppointmentDateTime().appointmentDateTime.format(formatter) + " ");
         return sb.toString();
     }
 }

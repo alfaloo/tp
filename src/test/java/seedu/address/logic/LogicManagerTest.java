@@ -31,7 +31,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Person;
 import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -100,7 +100,8 @@ public class LogicManagerTest {
     public void getAppointmentList_getList_listIsNotNull() throws ParseException {
         model.addPerson(ALICE);
         model.addPerson(BROWN);
-        model.addAppointment(new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDate("2024-11-11")));
+        model.addAppointment(
+                new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDateTime("2024-11-11 11:02")));
         assertTrue(model.getFilteredAppointmentList() != null);
         assertTrue(model.getFilteredAppointmentList().size() == 1);
     }

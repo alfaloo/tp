@@ -2,7 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Doctor;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Patient;
@@ -12,11 +12,11 @@ import seedu.address.model.person.Patient;
  */
 public class AppointmentBuilder {
 
-    public static final String DEFAULT_APPTDATE = "2024-08-30";
+    public static final String DEFAULT_APPTDATE = "2024-08-30 11:02";
 
     private Nric doctorNric;
     private Nric patientNric;
-    private AppointmentDate appointmentDate;
+    private AppointmentDateTime appointmentDateTime;
 
 
     /**
@@ -28,14 +28,14 @@ public class AppointmentBuilder {
 
         this.doctorNric = d.getNric();
         this.patientNric = p.getNric();
-        this.appointmentDate = new AppointmentDate(DEFAULT_APPTDATE);
+        this.appointmentDateTime = new AppointmentDateTime(DEFAULT_APPTDATE);
     }
 
     /**
      * Initializes the AppointmentBuilder with the data of {@code personToCopy}.
      */
     public AppointmentBuilder(Appointment apptToCopy) {
-        this.appointmentDate = apptToCopy.getAppointmentDate();
+        this.appointmentDateTime = apptToCopy.getAppointmentDateTime();
         this.doctorNric = apptToCopy.getDoctorNric();
         this.patientNric = apptToCopy.getPatientNric();
     }
@@ -43,8 +43,8 @@ public class AppointmentBuilder {
     /**
      * Sets the {@code date} of the {@code Appointment} that we are building.
      */
-    public AppointmentBuilder withDate(String dateString) {
-        this.appointmentDate = new AppointmentDate(dateString);
+    public AppointmentBuilder withDateTime(String dateTimeString) {
+        this.appointmentDateTime = new AppointmentDateTime(dateTimeString);
         return this;
     }
 
@@ -71,7 +71,7 @@ public class AppointmentBuilder {
      */
     public Appointment build() {
         try {
-            return new Appointment(doctorNric, patientNric, appointmentDate);
+            return new Appointment(doctorNric, patientNric, appointmentDateTime);
         } catch (ParseException e) {
             return null;
         }

@@ -61,7 +61,7 @@ public class Messages {
     public static String format(Appointment appointment) {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
-                .append(appointment.getAppointmentDate())
+                .append(appointment.getAppointmentDateTime())
                 .append("; Doctor: ")
                 .append(appointment.getDoctorNric())
                 .append("; Patient: ")
