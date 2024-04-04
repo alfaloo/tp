@@ -27,7 +27,7 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimize
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to MediCLI.
+   * `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` : Adds a patient named `John Doe` to the MediCLI system.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
