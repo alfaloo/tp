@@ -70,6 +70,7 @@
               <padding>
                 <Insets left="55" right="5" />
               </padding>
+                     <Region HBox.hgrow="ALWAYS" />
               <VBox>
                 <HBox>
                   <padding>
@@ -87,7 +88,7 @@
                   <Label fx:id="appointmentDateTime" styleClass="cell_big_label" text="\$appointmentDateTime" />
                 </HBox>
               </VBox>
-    <!--          <Label fx:id="appointmentId" text="\$appointmentId" styleClass="cell_small_label" />-->
+              <!--          <Label fx:id="appointmentId" text="\$appointmentId" styleClass="cell_small_label" />-->
             </HBox>
           </HBox>
 
