@@ -16,7 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Nric;
 
 /**
@@ -85,11 +85,11 @@ public class EditAppointmentCommand extends Command {
 
         Nric doctorNric = appointmentToEdit.getDoctorNric();
         Nric patientNric = appointmentToEdit.getPatientNric();
-        AppointmentDate updatedDate = editAppointmentDescriptor
-                .getDate().orElse(appointmentToEdit.getAppointmentDate());
+        AppointmentDateTime updatedDateTime = editAppointmentDescriptor
+                .getDate().orElse(appointmentToEdit.getAppointmentDateTime());
 
         try {
-            return new Appointment(doctorNric, patientNric, updatedDate);
+            return new Appointment(doctorNric, patientNric, updatedDateTime);
         } catch (ParseException e) {
             throw new CommandException("Unable to edit appointment due to invalid inputs");
         }
@@ -126,7 +126,7 @@ public class EditAppointmentCommand extends Command {
     public static class EditAppointmentDescriptor {
         private Nric doctorNric;
         private Nric patientNric;
-        private AppointmentDate apptdate;
+        private AppointmentDateTime apptdatetime;
 
         public EditAppointmentDescriptor() {}
 
@@ -135,7 +135,7 @@ public class EditAppointmentCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
-            setDate(toCopy.apptdate);
+            setDateTime(toCopy.apptdatetime);
             setDoctorNric(toCopy.doctorNric);
             setPatientNric(toCopy.patientNric);
         }
@@ -144,15 +144,15 @@ public class EditAppointmentCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(apptdate);
+            return CollectionUtil.isAnyNonNull(apptdatetime);
         }
 
-        public void setDate(AppointmentDate date) {
-            this.apptdate = date;
+        public void setDateTime(AppointmentDateTime dateTime) {
+            this.apptdatetime = dateTime;
         }
 
-        public Optional<AppointmentDate> getDate() {
-            return Optional.ofNullable(apptdate);
+        public Optional<AppointmentDateTime> getDate() {
+            return Optional.ofNullable(apptdatetime);
         }
 
         public void setDoctorNric(Nric nric) {
@@ -183,7 +183,7 @@ public class EditAppointmentCommand extends Command {
             }
 
             EditAppointmentDescriptor otherEditAppointmentDescriptor = (EditAppointmentDescriptor) other;
-            return Objects.equals(apptdate, otherEditAppointmentDescriptor.apptdate)
+            return Objects.equals(apptdatetime, otherEditAppointmentDescriptor.apptdatetime)
                     && Objects.equals(doctorNric, otherEditAppointmentDescriptor.doctorNric)
                     && Objects.equals(patientNric, otherEditAppointmentDescriptor.patientNric);
         }
@@ -191,7 +191,7 @@ public class EditAppointmentCommand extends Command {
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("apptdate", apptdate)
+                    .add("apptdatetime", apptdatetime)
                     .toString();
         }
     }

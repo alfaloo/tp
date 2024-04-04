@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.appointment.AppointmentId;
 import seedu.address.model.person.Nric;
 
@@ -18,7 +18,7 @@ class JsonAdaptedAppointment {
 
     private final String doctorNric;
     private final String patientNric;
-    private final String appointmentDate;
+    private final String appointmentDateTime;
     private final String appointmentId;
 
     /**
@@ -27,11 +27,11 @@ class JsonAdaptedAppointment {
     @JsonCreator
     public JsonAdaptedAppointment(@JsonProperty("doctorNric") String doctorNric,
                                   @JsonProperty("patientNric") String patientNric,
-                                  @JsonProperty("appointmentDate") String appointmentDate,
+                                  @JsonProperty("appointmentDateTime") String appointmentDateTime,
                                   @JsonProperty("appointmentId") String appointmentId) {
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
-        this.appointmentDate = appointmentDate;
+        this.appointmentDateTime = appointmentDateTime;
         this.appointmentId = appointmentId;
     }
 
@@ -41,7 +41,7 @@ class JsonAdaptedAppointment {
     public JsonAdaptedAppointment(Appointment source) {
         doctorNric = source.getDoctorNric().toString();
         patientNric = source.getPatientNric().toString();
-        appointmentDate = source.getAppointmentDate().appointmentDate.toString();
+        appointmentDateTime = source.getAppointmentDateTime().appointmentDateTime.toString();
         appointmentId = source.getAppointmentId().toString();
     }
 
@@ -68,13 +68,16 @@ class JsonAdaptedAppointment {
         }
         final Nric modelPatientNric = new Nric(patientNric);
 
-        if (appointmentDate == null) {
+        if (appointmentDateTime == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    AppointmentDate.class.getSimpleName()));
+                    AppointmentDateTime.class.getSimpleName()));
         }
 
-        final AppointmentDate modelAppointmentDate = new AppointmentDate(appointmentDate, true);
+        if (!AppointmentDateTime.isValidDate(appointmentDateTime)) {
+            throw new IllegalValueException(AppointmentDateTime.MESSAGE_CONSTRAINTS);
+        }
 
+        final AppointmentDateTime modelAppointmentDateTime = new AppointmentDateTime(appointmentDateTime);
 
         if (appointmentId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -85,8 +88,8 @@ class JsonAdaptedAppointment {
         }
 
         final AppointmentId modelAppointmentId = new AppointmentId(appointmentId);
-        return new Appointment(modelDoctorNric, modelPatientNric,
-                modelAppointmentDate, modelAppointmentId, true);
+
+        return new Appointment(modelDoctorNric, modelPatientNric, modelAppointmentDateTime, modelAppointmentId);
     }
 
 
@@ -112,7 +115,7 @@ class JsonAdaptedAppointment {
         return jsonAdaptedAppt != null
                 && jsonAdaptedAppt.doctorNric.equals(this.doctorNric)
                 && jsonAdaptedAppt.patientNric.equals(this.patientNric)
-                && jsonAdaptedAppt.appointmentDate.equals(this.appointmentDate)
+                && jsonAdaptedAppt.appointmentDateTime.equals(this.appointmentDateTime)
                 && jsonAdaptedAppt.appointmentId.equals(this.appointmentId);
 
     }

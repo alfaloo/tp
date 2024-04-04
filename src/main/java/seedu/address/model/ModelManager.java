@@ -15,6 +15,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Type;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -189,10 +190,9 @@ public class ModelManager implements Model {
      * @param appointment appointment to check validity of
      * @return boolean indicating if appointment is valid
      */
-    public boolean isValidAppointment(Appointment appointment) {
+    public boolean isValidAppointment(Appointment appointment) throws PersonNotFoundException {
         Nric doctorNric = appointment.getDoctorNric();
         Nric patientNric = appointment.getPatientNric();
-
         Person doctor = addressBook.getPersonByNric(doctorNric);
         Person patient = addressBook.getPersonByNric(patientNric);
 
@@ -202,5 +202,4 @@ public class ModelManager implements Model {
 
         return false;
     }
-
 }

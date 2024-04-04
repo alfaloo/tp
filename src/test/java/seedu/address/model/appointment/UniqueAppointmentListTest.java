@@ -44,7 +44,7 @@ public class UniqueAppointmentListTest {
         Appointment editedAppt = new Appointment(
                 VALID_APPT.getDoctorNric(),
                 VALID_APPT.getPatientNric(),
-                VALID_APPT.getAppointmentDate()
+                VALID_APPT.getAppointmentDateTime()
         );
         assertTrue(uniqueAppointmentList.contains(editedAppt));
     }
@@ -92,7 +92,7 @@ public class UniqueAppointmentListTest {
         Appointment editedAppt = new Appointment(
                 VALID_APPT.getDoctorNric(),
                 VALID_APPT.getPatientNric(),
-                VALID_APPT.getAppointmentDate()
+                VALID_APPT.getAppointmentDateTime()
         );
         uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt);
         UniqueAppointmentList expectedUniqueAppointmentList = new UniqueAppointmentList();
@@ -106,7 +106,7 @@ public class UniqueAppointmentListTest {
         Appointment editedAppt = new Appointment(
                 BROWN.getNric(),
                 VALID_APPT.getPatientNric(),
-                VALID_APPT.getAppointmentDate()
+                VALID_APPT.getAppointmentDateTime()
         );
         uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt);
         UniqueAppointmentList expectedUniqueAppointmentList = new UniqueAppointmentList();
@@ -159,7 +159,7 @@ public class UniqueAppointmentListTest {
         Appointment editedAppt = new Appointment(
                 BROWN.getNric(),
                 VALID_APPT.getPatientNric(),
-                VALID_APPT.getAppointmentDate()
+                VALID_APPT.getAppointmentDateTime()
         );
         expectedUniqueAppointmentList.add(editedAppt);
         uniqueAppointmentList.setAppointments(expectedUniqueAppointmentList.asUnmodifiableObservableList());
@@ -179,7 +179,7 @@ public class UniqueAppointmentListTest {
         Appointment editedAppt = new Appointment(
                 VALID_APPT.getDoctorNric(),
                 VALID_APPT.getPatientNric(),
-                VALID_APPT.getAppointmentDate()
+                VALID_APPT.getAppointmentDateTime()
         );
         List<Appointment> appointmentList = Collections.singletonList(editedAppt);
         uniqueAppointmentList.setAppointments(appointmentList);

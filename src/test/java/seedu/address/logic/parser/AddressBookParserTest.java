@@ -37,7 +37,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentContainsDoctorPredicate;
 import seedu.address.model.appointment.AppointmentContainsPatientPredicate;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Doctor;
 import seedu.address.model.person.DoctorContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -127,11 +127,11 @@ public class AddressBookParserTest {
     public void parseCommand_editAppointment() throws Exception {
         Patient patient = new PatientBuilder().build();
         Doctor doctor = new DoctorBuilder().build();
-        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String today = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         Appointment appointment = new Appointment(doctor.getNric(), patient.getNric(),
-                new AppointmentDate(today));
+                new AppointmentDateTime(today));
         EditAppointmentDescriptor descriptor = new EditAppointmentDescriptor();
-        descriptor.setDate(new AppointmentDate("3" + today.substring(1)));
+        descriptor.setDateTime(new AppointmentDateTime("3" + today.substring(1)));
         EditAppointmentCommand command = (EditAppointmentCommand) parser
                 .parseCommand(EditAppointmentCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_DATE + "3" + today.substring(1));
