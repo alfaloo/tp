@@ -108,70 +108,113 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+                                    
 
-### Querying persons by name: `patient/doctor`
+### Querying persons by name: `patient`
 
-Finds person(s) whose details contain any of the given keywords.
+Finds `Patient`(s) whose details contain any of the given keywords.
 
 Format for querying Patients: `patient KEYWORD [MORE_KEYWORDS]`
 
-Format for querying Doctors: `doctor KEYWORD [MORE_KEYWORDS]`
+Command Constraints:
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All person fields are searched and matched (Name, NRIC, Phone Number, DoB).
 * Both full words and substrings will be matched e.g. `Han` will match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `patient John` returns `john` and `John Doe`
-* `doctor alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `patient alex david` returns `Alex Yeoh`, `David Li`<br>
+  ![result for 'find alex david'](images/findAlexDavidResultPatient.png)
+                                   
 
-### Querying appointments by Nric `apptforpatient/apptfordoctor`
+### Querying persons by name: `doctor`                                     
+                                                                                   
+Finds `Doctors`(s) whose details contain any of the given keywords.               
+                                                                                  
+Format for querying Doctors: `doctor KEYWORD [MORE_KEYWORDS]`                     
+                  
+Command Constraints:
+                                                                 
+* The search is case-insensitive. e.g `hans` will match `Hans`                    
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`  
+* All person fields are searched and matched (Name, NRIC, Phone Number, DoB).     
+* Both full words and substrings will be matched e.g. `Han` will match `Hans`     
+* Doctors matching at least one keyword will be returned (i.e. `OR` search).      
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`                             
+                                                                                  
+Examples:                                                                         
+* `doctor John` returns `john` and `John Doe`                                     
+* `doctor alex david` returns `Alex Yeoh`, `David Li`<br>                         
+  ![result for 'find alex david'](images/findAlexDavidResultDoctor.png)           
+                                 
 
-Finds appointment(s) which involve either the specified `patient`'s or `doctor`'s Nric.
+### Querying appointments by Nric `apptforpatient`                                                             
+                                                                                                                                 
+Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
+                                                       
+Command Constraints:                                                                          
+* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                        
+* The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                                    
+match appointments that involve `S1234562A` and `S1234561A`.                                                                  
+* Only the Nric field of `Patient` is searched and matched.                                                       
+* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`                                                    
+* Appointments with `Patient`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).         
 
-Format for querying Appointments by Patient's Nric: `apptforpatient KEYWORD [MORE_KEYWORDS]`
-
-Format for querying Appointments by Doctor's Nric: `apptfordoctor KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`
-* The order of the keywords does not matter. e.g. `S1234562A S1234561A` will 
-  match appointments that involve `S1234562A` and `S1234561A`.
-* Only the Nric field of `Patient` and `Doctor` are searched and matched.
-* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`
-* Appointments with `Patient`s or `Doctor`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).
-
-Example:
-* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with Nric `S1234561A` is involved in.
+Example:                                                                                                                        
+* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with Nric `S1234561A` is involved in.     
 
 * Initial State (All `Appointment`s listed)
-![result for 'apptforpatient S1234561A'](images/findAppointmentInitial.png)
+![result for 'apptforpatient S1234561A'](images/findAppointmentInitialPatient.png)
 
 * After Querying (Only `Appointment`s with `Patient` of Nric `S1234561A`)
-![result for 'apptforpatient S1234561A'](images/findAppointmentResult.png)
+![result for 'apptforpatient S1234561A'](images/findAppointmentResultPatient.png)
 
-### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+### Querying appointments by Nric `apptfordoctor`                                                         
+                                                                                                                         
+Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`                                                                          
+                                 
+Command Constraints:
 
-Format: `delete INDEX`
+* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                 
+* The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                             
+match appointments that involve `S1234562A` and `S1234561A`.                                                             
+  * Only the Nric field of `Doctor` is searched and matched.                                                             
+* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`                                             
+* Appointments with `Doctor`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).  
+                                                                                                                         
+Example:                                                                                                                 
+* `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with Nric `S1234561A` is involved in.      
+                                                                                                                         
+* Initial State (All `Appointment`s listed)                                                                              
+![result for 'apptforpatient S1234561A'](images/findAppointmentInitialDoctor.png)                                        
+                                                                                                                         
+* After Querying (Only `Appointment`s with `Doctor` of Nric `S1234561A`)                                                
+![result for 'apptforpatient S1234561A'](images/findAppointmentResultDoctor.png)                                               
+                                 
+### Deleting a specific person
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
-### Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-Format: `clear`
+Deletes the specified person from the address book.                                                 
+                                                                                                 
+Format: `delete INDEX`                                                                              
+                                                                                                 
+* Deletes the person at the specified `INDEX`.                                                      
+* The index refers to the index number shown in the displayed person list.                          
+* The index **must be a positive integer** 1, 2, 3, …​                                              
+                                                                                                 
+Examples:                                                                                           
+* `list` followed by `delete 2` deletes the 2nd person in the address book.                         
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.  
+                                                                                                 
+### Clearing all entries : `clear`                                                                  
+                                                                                                 
+Clears all entries from the address book.                                                           
+                                                                                                 
+Format: `clear`                                                                                     
 
 ### Exiting the program : `exit`
 
