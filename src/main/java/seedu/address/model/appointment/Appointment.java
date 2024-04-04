@@ -72,6 +72,24 @@ public class Appointment {
     }
 
     /**
+     * constructs a new appointment instance
+     * @param doctorNric doctor in charge
+     * @param patientNric patient of the appointment
+     * @param appointmentDateTime dateTime of the appointment
+     * @param isInitialised a boolean value indication whether this was initialised by the json file
+     * @throws ParseException
+     */
+    public Appointment(
+            Nric doctorNric, Nric patientNric,
+            AppointmentDateTime appointmentDateTime,
+            AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
+        requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
+        this.doctorNric = doctorNric;
+        this.patientNric = patientNric;
+        this.appointmentDateTime = appointmentDateTime;
+        this.appointmentId = new AppointmentId();
+    }
+    /**
      * Checks if appointment is valid by comparing appointment date against current date.
      * A valid new appointment can only be in the future, not the past.
      *

@@ -72,12 +72,12 @@ class JsonAdaptedAppointment {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     AppointmentDateTime.class.getSimpleName()));
         }
+
         if (!AppointmentDateTime.isValidDate(appointmentDateTime)) {
             throw new IllegalValueException(AppointmentDateTime.MESSAGE_CONSTRAINTS);
         }
 
         final AppointmentDateTime modelAppointmentDateTime = new AppointmentDateTime(appointmentDateTime);
-
 
         if (appointmentId == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
@@ -89,7 +89,8 @@ class JsonAdaptedAppointment {
 
         final AppointmentId modelAppointmentId = new AppointmentId(appointmentId);
 
-        return new Appointment(modelDoctorNric, modelPatientNric, modelAppointmentDateTime, modelAppointmentId);
+        return new Appointment(modelDoctorNric, modelPatientNric,
+                modelAppointmentDateTime, modelAppointmentId, true);
     }
 
 
