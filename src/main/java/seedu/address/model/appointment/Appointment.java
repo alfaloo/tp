@@ -19,10 +19,10 @@ public class Appointment {
             "Appointment should be made with a date today onwards";
 
     // The doctor in charge of the appointment
-    private final Nric doctorNric;
+    private Nric doctorNric;
 
     // The patient benefiting from the appointment
-    private final Nric patientNric;
+    private Nric patientNric;
 
     // The date of the appointment
     private final AppointmentDate appointmentDate;
@@ -90,12 +90,20 @@ public class Appointment {
         return doctorNric;
     }
 
+    public void setDoctorNric(Nric nric) {
+        this.doctorNric = nric;
+    }
+
     /**
      * Gets patient of the appointment
      * @return patient of the appointment
      */
     public Nric getPatientNric() {
         return patientNric;
+    }
+
+    public void setPatientNric(Nric nric) {
+        this.patientNric = nric;
     }
 
     public AppointmentId getAppointmentId() {
