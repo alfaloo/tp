@@ -2,8 +2,8 @@
 layout: page
 title: User Guide
 ---
-
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+        
+MediCLI is a **desktop app for managing persons involved in a hospital, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). Targeted at fast typing hospital clerks, MediCLI allows them to manage doctors, patients and appointments faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -14,11 +14,11 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `addressbook.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `MediCLI.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your MediCLI.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediCLI.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -27,7 +27,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to MediCLI.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -49,10 +49,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g `edit INDEX [n/NAME] [p/PHONE]` can be used as `edit 1 n/John Doe` or as `edit 1 p/91234567`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -98,6 +95,31 @@ Examples:
 * `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
 * `addpatient n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
 
+![add_patient_result](images/addPatient.png)
+
+### Adding a Doctor: `adddoctor`                                                                                                                                                                    
+                                                                                                                                                                                                    
+Adds a doctor into the MediCLI system.                                                                                                                                                              
+                                                                                                                                                                                                    
+Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`                                                                                                                                                     
+                                                                                                                                                                                                    
+Field Constraints:                                                                                                                                                                                  
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive. 
+* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.                                                                                                     
+* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.                                                            
+* **PHONE** : Only contain numerical characters and of exactly 8 digits long.                                                                                                                       
+                                                                                                                                                                                                    
+Command Constraints:                                                                                                                                                                                
+* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.                                                                                                        
+* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.                                                                 
+* The ordering of the fields does not influence the command.                                                                                                                                        
+                                                                                                                                                                                                    
+Examples:                                                                                                                                                                                           
+* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
+* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`                                                                                                                                       
+
+![add_doctor_result](images/addDoctor.png)
+
 ### Adding an appointment: `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
@@ -117,46 +139,34 @@ Command Constraints:
 Examples:
 - `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
 - `addappt ad/2025-04-09 11:10 dn/T1234567A pn/T1234567B`
+                  
+![add_appointment_result](images/addAppointment.png)
 
-
-### Adding a Doctor: `adddoctor`
-
-Adds a doctor into the MediCLI system.
-
-Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`
-
-Field Constraints:
-* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
-* **PHONE** : Only contain numerical characters and of exactly 8 digits long.
-
-Command Constraints:
-* All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
-* Command fails if there already exists a person (patient or doctor) in the MediCLI system that has the same NRIC as the one given.
-* The ordering of the fields does not influence the command.
-
-Examples:
-* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
-
-### Editing a person : `edit`
+### Editing a person: `edit`
 
 Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-                                    
+*  `edit 1 p/91234567 n/Betsy Crower` Edits the phone number and name of the 1st person to be `91234567` and `Betsy Crower` respectively.
+                                  
+![add_appointment_result](images/editPerson.png)
+
+### Editing an appointment: 'editappt'
+Edits an existing person in the address book.                                                                                                                                                               
+                                                                                                                                                                                
+Format: `editappt INDEX ad/DATE`                                                                                                                        
+                                                                                                                                                                                
+* Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
+* Existing values will be updated to the input values.                                                                                                                          
+                                                                                                                                                                                
+Examples:                                                                                                                                                                       
+*  `editappt 1 ad/2024-04-09` Edits the appointment date of the first appointment in the appointment list to `2024-04-09`                                   
 
 ### Querying persons by name: `patient`
 
@@ -200,7 +210,7 @@ Examples:
   ![result for 'doctor alex david'](images/findAlexDavidResultDoctor.png)           
                                  
 
-### Querying appointments by Nric `apptforpatient`                                                             
+### Querying appointments by NRIC `apptforpatient`                                                             
                                                                                                                                  
 Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
                                                        
@@ -208,21 +218,21 @@ Command Constraints:
 * The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                        
 * The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                                    
 match appointments that involve `S1234562A` and `S1234561A`.                                                                  
-* Only the Nric field of `Patient` is searched and matched.                                                       
-* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`                                                    
-* Appointments with `Patient`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).         
+* Only the NRIC field of `Patient` is searched and matched.                                                       
+* Only exact NRICs will be matched e.g. `S123456` will not match `S1234562A`                                                    
+* Appointments with `Patient`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).         
 
 Example:                                                                                                                
-* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with Nric `S1234561A` is involved in.   
+* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with NRIC `S1234561A` is involved in.   
                                                                                                                         
 * Initial State (All `Appointment`s listed)                                                                             
 ![result for 'apptforpatient S1234561A'](images/findAppointmentInitialPatient.png)                                      
                                                                                                                         
-* After Querying (Only `Appointment`s with `Patient` of Nric `S1234561A`)                                               
+* After Querying (Only `Appointment`s with `Patient` of NRIC `S1234561A`)                                               
 ![result for 'apptforpatient S1234561A'](images/findAppointmentResultPatient.png)                                       
             
 
-### Querying appointments by Nric `apptfordoctor`                                                                       
+### Querying appointments by NRIC `apptfordoctor`                                                                       
                                                                                                                         
 Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`                                                                         
                                                                                                                         
@@ -231,17 +241,17 @@ Command Constraints:
 * The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                
 * The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                            
 match appointments that involve `S1234562A` and `S1234561A`.                                                            
-  * Only the Nric field of `Doctor` is searched and matched.                                                            
-* Only exact Nrics will be matched e.g. `S123456` will not match `S1234562A`                                            
-* Appointments with `Doctor`s whose Nrics match at least one keyword will be returned (i.e. `OR` search).               
+  * Only the NRIC field of `Doctor` is searched and matched.                                                            
+* Only exact NRICs will be matched e.g. `S123456` will not match `S1234562A`                                            
+* Appointments with `Doctor`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).               
                                                                                                                         
 Example:                                                                                                                
-* `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with Nric `S1234561A` is involved in.     
+* `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with NRIC `S1234561A` is involved in.     
                                                                                                                         
 * Initial State (All `Appointment`s listed)                                                                             
 ![result for 'apptfordoctor S1234561A'](images/findAppointmentInitialDoctor.png)                                       
                                                                                                                         
-* After Querying (Only `Appointment`s with `Doctor` of Nric `S1234561A`)                                                
+* After Querying (Only `Appointment`s with `Doctor` of NRIC `S1234561A`)                                                
 ![result for 'apptfordoctor S1234561A'](images/findAppointmentResultDoctor.png)                                        
                                                                                                                         
 
@@ -256,7 +266,7 @@ Deletes the specified doctor / patient from the mediCLI system.
 Examples:
 * `list` followed by `delete 2` deletes the 2nd doctor / patient in the mediCLI system.
 * `patient John` followed by `delete 1` deletes the 1st patient in the results of the `patient` search command.
-*  `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
+* `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
 
 ### Deleting appointment : `deleteappt`
 
@@ -290,7 +300,7 @@ Examples:
                                                                                                  
 ### Clearing all entries : `clear`                                                                  
                                                                                                  
-Clears all entries from the address book.                                                           
+Clears all entries from MediCLI.                                                           
                                                                                                  
 Format: `clear`                                                                                     
 
@@ -318,7 +328,7 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MediCLI home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -332,10 +342,15 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add Patient** | `addpatient i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+**Add Doctor** | `adddoctor i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+**Add Appointment** | `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC` <br> e.g., `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete Person** | `delete INDEX`<br> e.g., `delete 3`
+**Delete Appointment** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
+**Edit Appointment** | `editappt INDEX ad/DATE`<br> e.g.,`editappt 1 ad/2024-04-09`
+**Edit Person** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
+**Exit** | `exit`
 **Query Patient** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
 **Query Doctor** | `doctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `doctor John Doe`
 **Query Appointment by Patient** | `apptforpatient KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptforpatient S1234567A`
