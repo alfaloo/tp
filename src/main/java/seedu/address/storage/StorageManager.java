@@ -65,8 +65,7 @@ public class StorageManager implements Storage {
         try {
             return addressBookStorage.readAddressBook(filePath);
         } catch (DataLoadingException e) {
-            AddressBook emptyBook = new AddressBook();
-            return Optional.of(emptyBook);
+            return Optional.empty();
         }
     }
 
