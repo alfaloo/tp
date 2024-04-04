@@ -82,11 +82,6 @@ public class Appointment {
             Nric doctorNric, Nric patientNric,
             AppointmentDate appointmentDate, AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDate);
-        try {
-            checkArgument(isInitialised);
-        } catch (IllegalArgumentException e) {
-            throw new ParseException(e.getMessage());
-        }
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
         this.appointmentDate = appointmentDate;

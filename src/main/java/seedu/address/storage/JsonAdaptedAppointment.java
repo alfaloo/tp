@@ -85,8 +85,8 @@ class JsonAdaptedAppointment {
         }
 
         final AppointmentId modelAppointmentId = new AppointmentId(appointmentId);
-
-        return new Appointment(modelDoctorNric, modelPatientNric, modelAppointmentDate, modelAppointmentId, true);
+        return new Appointment(modelDoctorNric, modelPatientNric,
+                modelAppointmentDate, modelAppointmentId, true);
     }
 
 
