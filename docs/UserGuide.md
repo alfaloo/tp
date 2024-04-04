@@ -81,13 +81,13 @@ Format: `list`
 
 Adds a patient into the MediCLI system.
 
-Format: `addpatient i/[NRIC] n/[NAME] d/[DOB] p/[PHONE]`
+Format: `addpatient i/NRIC n/NAME d/DOB p/PHONE`
 
 Field Constraints:
-* **[NRIC]** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-* **[NAME]** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **[DOB]** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
-* **[PHONE]** : Only contain numerical characters and of exactly 8 digits long.
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
+* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **PHONE** : Only contain numerical characters and of exactly 8 digits long.
 
 Command Constraints:
 * All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
@@ -102,13 +102,13 @@ Examples:
 
 Adds a doctor into the MediCLI system.
 
-Format: `adddoctor i/[NRIC] n/[NAME] d/[DOB] p/[PHONE]`
+Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`
 
 Field Constraints:
-* **[NRIC]** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-* **[NAME]** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **[DOB]** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
-* **[PHONE]** : Only contain numerical characters and of exactly 8 digits long.
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
+* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **PHONE** : Only contain numerical characters and of exactly 8 digits long.
 
 Command Constraints:
 * All of the above fields (NRIC, NAME, DOB, and PHONE) are compulsory and must be non-empty.
