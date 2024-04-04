@@ -3,7 +3,8 @@ package seedu.address.model.appointment;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -19,13 +20,13 @@ public class Appointment {
             "Appointment should be made with a date today onwards";
 
     // The doctor in charge of the appointment
-    private final Nric doctorNric;
+    private Nric doctorNric;
 
     // The patient benefiting from the appointment
-    private final Nric patientNric;
+    private Nric patientNric;
 
     // The date of the appointment
-    private final AppointmentDate appointmentDate;
+    private final AppointmentDateTime appointmentDateTime;
 
     // Message to outputs in case constraints are not met
 
@@ -35,21 +36,21 @@ public class Appointment {
      * Constructs a new appointment instance
      * @param doctorNric doctor in charge
      * @param patientNric patient of the appointment
-     * @param appointmentDate date of the appointment
+     * @param appointmentDateTime date of the appointment
      */
     public Appointment(
-            Nric doctorNric, Nric patientNric, AppointmentDate appointmentDate) throws ParseException {
-        requireAllNonNull(doctorNric, patientNric, appointmentDate);
+            Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime) throws ParseException {
+        requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
 
         try {
-            checkArgument(isValidAppointment(appointmentDate), MESSAGE_CONSTRAINTS_INVALID_DATE);
+            checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
 
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
-        this.appointmentDate = appointmentDate;
+        this.appointmentDateTime = appointmentDateTime;
         this.appointmentId = new AppointmentId();
     }
 
@@ -57,16 +58,16 @@ public class Appointment {
      * Constructs a new appointment instance
      * @param doctorNric doctor in charge
      * @param patientNric patient of the appointment
-     * @param appointmentDate date of the appointment
+     * @param appointmentDateTime date and time of the appointment
      * @param appointmentId id of the appointment
      */
-    public Appointment(Nric doctorNric, Nric patientNric, AppointmentDate appointmentDate,
+    public Appointment(Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime,
                        AppointmentId appointmentId) {
-        requireAllNonNull(doctorNric, patientNric, appointmentDate);
-        checkArgument(isValidAppointment(appointmentDate), MESSAGE_CONSTRAINTS_INVALID_DATE);
+        requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
+        checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
-        this.appointmentDate = appointmentDate;
+        this.appointmentDateTime = appointmentDateTime;
         this.appointmentId = appointmentId;
     }
 
@@ -77,9 +78,10 @@ public class Appointment {
      * @param appointmentDate Date to check validity of
      * @return boolean if appointment is valid or not
      */
-    public boolean isValidAppointment(AppointmentDate appointmentDate) {
-        AppointmentDate currentDate = new AppointmentDate(LocalDate.now());
-        return appointmentDate.compareTo(currentDate) > -1;
+    public boolean isValidAppointment(AppointmentDateTime appointmentDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        AppointmentDateTime currentDateTime = new AppointmentDateTime(LocalDateTime.now().format(formatter));
+        return appointmentDate.compareTo(currentDateTime) > -1;
     }
 
     /**
@@ -90,12 +92,20 @@ public class Appointment {
         return doctorNric;
     }
 
+    public void setDoctorNric(Nric nric) {
+        this.doctorNric = nric;
+    }
+
     /**
      * Gets patient of the appointment
      * @return patient of the appointment
      */
     public Nric getPatientNric() {
         return patientNric;
+    }
+
+    public void setPatientNric(Nric nric) {
+        this.patientNric = nric;
     }
 
     public AppointmentId getAppointmentId() {
@@ -106,8 +116,8 @@ public class Appointment {
      * Gets date of the appointment
      * @return date of the appointment
      */
-    public AppointmentDate getAppointmentDate() {
-        return appointmentDate;
+    public AppointmentDateTime getAppointmentDateTime() {
+        return appointmentDateTime;
     }
 
     /**
@@ -123,7 +133,7 @@ public class Appointment {
         return appt != null
                 && appt.getDoctorNric().equals(this.getDoctorNric())
                 && appt.getPatientNric().equals(this.getPatientNric())
-                && appt.getAppointmentDate().equals(this.getAppointmentDate());
+                && appt.getAppointmentDateTime().equals(this.getAppointmentDateTime());
     }
 
     /**
@@ -153,13 +163,13 @@ public class Appointment {
         return appt != null
                 && appointment.getDoctorNric().equals(this.getDoctorNric())
                 && appointment.getPatientNric().equals(this.getPatientNric())
-                && appointment.getAppointmentDate().equals(this.getAppointmentDate());
+                && appointment.getAppointmentDateTime().equals(this.getAppointmentDateTime());
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("Date", getAppointmentDate())
+                .add("Date", getAppointmentDateTime())
                 .add("Doctor", getDoctorNric())
                 .add("Patient", getPatientNric())
                 .add("Id", getAppointmentId())

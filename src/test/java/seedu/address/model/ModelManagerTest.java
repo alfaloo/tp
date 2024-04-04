@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentDate;
+import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Doctor;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Patient;
@@ -185,7 +185,7 @@ public class ModelManagerTest {
         Patient p = (Patient) ALICE;
         modelManager.addPerson(d);
         modelManager.addPerson(p);
-        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(), new AppointmentDate("2024-08-30"));
+        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(), new AppointmentDateTime("2024-08-30 11:02"));
         assertFalse(modelManager.isValidAppointment(a));
     }
 }

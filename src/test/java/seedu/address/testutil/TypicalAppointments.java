@@ -21,13 +21,13 @@ import seedu.address.model.person.Patient;
  */
 public class TypicalAppointments {
 
-    public static final Appointment APPOINTMENT_1 = new AppointmentBuilder().withDate("2124-03-19")
+    public static final Appointment APPOINTMENT_1 = new AppointmentBuilder().withDateTime("2124-03-19 11:11")
             .withDoctor((Doctor) BROWN).withPatient((Patient) ALICE).build();
-    public static final Appointment APPOINTMENT_2 = new AppointmentBuilder().withDate("2124-03-20")
+    public static final Appointment APPOINTMENT_2 = new AppointmentBuilder().withDateTime("2124-03-20 11:09")
             .withDoctor((Doctor) BROWN).withPatient((Patient) CAM).build();
-    public static final Appointment APPOINTMENT_3 = new AppointmentBuilder().withDate("2124-03-25")
+    public static final Appointment APPOINTMENT_3 = new AppointmentBuilder().withDateTime("2124-03-25 12:09")
             .withDoctor((Doctor) BROWN).withPatient((Patient) DANNY).build();
-    public static final Appointment APPOINTMENT_4 = new AppointmentBuilder().withDate("2124-03-30")
+    public static final Appointment APPOINTMENT_4 = new AppointmentBuilder().withDateTime("2124-03-30 12:55")
             .withDoctor((Doctor) DAMES).withPatient((Patient) BENSON).build();
     private TypicalAppointments() {} // prevents instantiation
 
