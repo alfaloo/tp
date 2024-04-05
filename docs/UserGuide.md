@@ -167,7 +167,7 @@ Examples:
                                   
 ![add_appointment_result](images/editPerson.png)
 
-### Editing an appointment: 'editappt'
+### Editing an appointment: `editappt`
 Edits an existing person in the address book.                                                                                                                                                               
                                                                                                                                                                                 
 Format: `editappt INDEX ad/DATE`                                                                                                                        
@@ -284,6 +284,8 @@ Examples:
 * `patient John` followed by `delete 1` deletes the 1st patient in the results of the `patient` search command.
 * `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
 
+![result for 'delete 1'](images/deletePatient.png)
+
 ### Deleting appointment : `deleteappt`
 
 Deletes the specified appointment from the mediCLI system.
@@ -299,21 +301,12 @@ Examples:
 * `apptforpatient S1234567A` followed by `deleteappt 1` deletes the 1st appointment in the results of the `apptforpatient` search command.
 * `apptfordoctor S1234567B` followed by `deleteappt 2` deletes the 2nd appointment in the results of the `apptfordoctor` search command.
 
+Visual Guide
+* Initial State (All appointments listed after running `list`)                                                                          
+  ![result for 'list'](images/deleteApptInitialState.png)
+* Final State (After running `deleteappt` with `Index` of `1`)                                                               
+  ![result for 'deleteappt 1'](images/deleteApptFinalState.png)
 
-### Deleting a specific person
-
-Deletes the specified person from the address book.                                                 
-                                                                                                 
-Format: `delete INDEX`                                                                              
-                                                                                                 
-* Deletes the person at the specified `INDEX`.                                                      
-* The index refers to the index number shown in the displayed person list.                          
-* The index **must be a positive integer** 1, 2, 3, …​                                              
-                                                                                                 
-Examples:                                                                                           
-* `list` followed by `delete 2` deletes the 2nd person in the address book.                         
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.  
-                                                                                                 
 ### Clearing all entries : `clear`                                                                  
                                                                                                  
 Clears all entries from MediCLI.                                                           
