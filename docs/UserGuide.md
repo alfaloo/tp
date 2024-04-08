@@ -239,13 +239,13 @@ match appointments that involve `S1234562A` and `S1234561A`.
 * Appointments with `Patient`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).         
 
 Example:                                                                                                                
-* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with NRIC `S1234561A` is involved in.   
+* `apptforpatient s0123456a` returns all `Appointment` object(s) that `Patient` with NRIC `S0123456A` is involved in.   
                                                                                                                         
 * Initial State (All `Appointment`s listed)                                                                             
-![result for 'apptforpatient S1234561A'](images/findAppointmentInitialPatient.png)                                      
+![result for 'list'](images/findAppointmentInitialPatient.png)                                      
                                                                                                                         
-* After Querying (Only `Appointment`s with `Patient` of NRIC `S1234561A`)                                               
-![result for 'apptforpatient S1234561A'](images/findAppointmentResultPatient.png)                                       
+* After Querying (Only `Appointment`s with `Patient` of NRIC `S0123456A`)                                               
+![result for 'apptforpatient S0123456A'](images/findAppointmentResultPatient.png)                                       
             
 
 ### Querying appointments by NRIC `apptfordoctor`                                                                       
@@ -273,7 +273,7 @@ Example:
 
 ### Deleting a doctor or patient : `delete`
 
-Deletes the specified doctor / patient from the mediCLI system.
+Deletes the specified doctor / patient from the mediCLI system. <u>**Note that all associated appointments with this doctor / patient will also be recursively deleted.**</u> Please exercise caution when using the delete command and removing a patient or a doctor from MediCLI, as this action cannot be undone.
 
 * Deletes the doctor / patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed doctor and patient list.
