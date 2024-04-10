@@ -151,6 +151,7 @@ Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 * Edits the patient or doctor at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Note that editing a patient or doctor and not changing any of the values of the parameters is allowed and is considered a valid edit by the system.
 
 Field Constraints:
 * **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
