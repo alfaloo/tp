@@ -92,8 +92,8 @@ Command Constraints:
 * The ordering of the fields does not influence the command.
 
 Examples:
-* `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-* `addpatient n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
+* `addpatient i/T0334567A n/John Doe d/2003-01-30 p/98765432`
+* `addpatient n/Amy Smith i/S8054321B p/87654321 d/1980-12-05`
 
 ![add_patient_result](images/addPatient.png)
 
@@ -115,8 +115,8 @@ Command Constraints:
 * The ordering of the fields does not influence the command.                                                                                                                                        
                                                                                                                                                                                                     
 Examples:                                                                                                                                                                                           
-* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
-* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`                                                                                                                                       
+* `adddoctor i/T0334567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
+* `adddoctor n/Amy Smith i/S8054321B p/87654321 d/1980-12-05`                                                                                                                                       
 
 ![add_doctor_result](images/addDoctor.png)
 
@@ -138,7 +138,7 @@ Command Constraints:
 
 Examples:
 - `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
-- `addappt ad/2025-04-09 11:10 dn/T1234567A pn/T1234567B`
+- `addappt ad/2025-04-09 11:10 dn/S8054321B pn/T0334567A`
                   
 ![add_appointment_result](images/addAppointment.png)
 
