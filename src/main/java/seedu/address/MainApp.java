@@ -15,12 +15,18 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Type;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonAddressBookStorage;
@@ -84,6 +90,20 @@ public class MainApp extends Application {
                         + " populated with a sample AddressBook.");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            AddressBook ab = (AddressBook) initialData;
+            for (Appointment appt : initialData.getAppointmentList()) {
+                try {
+                    Person doctor = ab.getPersonByNric(appt.getDoctorNric());
+                    Person patient = ab.getPersonByNric(appt.getPatientNric());
+
+                    if (!(doctor.getType() == Type.DOCTOR) || !(patient.getType() == Type.PATIENT)) {
+                        throw new PersonNotFoundException();
+                    }
+                } catch (PersonNotFoundException e) {
+                    initialData = new AddressBook();
+                    break;
+                }
+            }
         } catch (DataLoadingException e) {
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
