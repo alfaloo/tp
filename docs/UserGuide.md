@@ -123,7 +123,7 @@ Examples:
 ### Adding an appointment: `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
-
+Note that while you cannot create a new appointment with the date/time in the past, appointments that were valid when created but are now past their date will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
 Format: `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC`
 
 Field Constraints:
