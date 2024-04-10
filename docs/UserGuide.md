@@ -14,7 +14,7 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimize
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `MediCLI.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `MediCLI.jar` from [here](https://github.com/AY2324S2-CS2103T-T15-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your MediCLI.
 
@@ -62,7 +62,7 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimize
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -144,7 +144,7 @@ Examples:
 
 ### Editing a person: `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in the MediCLI system.
 
 Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 
@@ -168,7 +168,7 @@ Examples:
 ![add_appointment_result](images/editPerson.png)
 
 ### Editing an appointment: `editappt`
-Edits an existing person in the address book.                                                                                                                                                               
+Edits an existing person in the MediCLI system.                                                                                                                                                               
                                                                                                                                                                                 
 Format: `editappt INDEX ad/DATE`                                                                                                                        
                                                                                                                                                                                 
