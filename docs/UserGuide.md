@@ -163,7 +163,7 @@ Command Constraints:
 * The ordering of the fields does not influence the command.
 
 Examples:
-*  `edit 1 i/s1234567a n/Betsy Crower` Edits the NRIC and name of the 1st person to be `s1234567a` and `Betsy Crower` respectively.
+*  `edit 1 i/S1234567A n/Betsy Crower` Edits the NRIC and name of the 1st person to be `s1234567a` and `Betsy Crower` respectively.
                                   
 ![add_appointment_result](images/editPerson.png)
 
