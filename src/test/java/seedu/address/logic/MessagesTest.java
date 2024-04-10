@@ -15,7 +15,7 @@ class MessagesTest {
     @Test
     public void format_validPatient_stringFormattedPerson() {
         Person patient = new PatientBuilder().build();
-        assertEquals(Messages.format(patient), "; NRIC: "
+        assertEquals(Messages.format(patient), "NRIC: "
                 + patient.getNric()
                 + "; Name: "
                 + patient.getName()
@@ -29,7 +29,7 @@ class MessagesTest {
     @Test
     public void format_validDoctor_stringFormattedPerson() {
         Person doctor = new DoctorBuilder().build();
-        assertEquals(Messages.format(doctor), "; NRIC: "
+        assertEquals(Messages.format(doctor), "NRIC: "
                 + doctor.getNric()
                 + "; Name: "
                 + doctor.getName()

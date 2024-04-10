@@ -92,8 +92,8 @@ Command Constraints:
 * The ordering of the fields does not influence the command.
 
 Examples:
-* `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-* `addpatient n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`
+* `addpatient i/T0334567A n/John Doe d/2003-01-30 p/98765432`
+* `addpatient n/Amy Smith i/S8054321B p/87654321 d/1980-12-05`
 
 ![add_patient_result](images/addPatient.png)
 
@@ -115,15 +115,15 @@ Command Constraints:
 * The ordering of the fields does not influence the command.                                                                                                                                        
                                                                                                                                                                                                     
 Examples:                                                                                                                                                                                           
-* `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
-* `adddoctor n/Amy Smith i/T7654321B p/87654321 d/1980-12-05`                                                                                                                                       
+* `adddoctor i/T0334567A n/John Doe d/2003-01-30 p/98765432`                                                                                                                                        
+* `adddoctor n/Amy Smith i/S8054321B p/87654321 d/1980-12-05`                                                                                                                                       
 
 ![add_doctor_result](images/addDoctor.png)
 
 ### Adding an appointment: `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
-
+Note that while you cannot create a new appointment with the date/time in the past, appointments that were valid when created but are now past their date will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
 Format: `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC`
 
 Field Constraints:
@@ -138,7 +138,7 @@ Command Constraints:
 
 Examples:
 - `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
-- `addappt ad/2025-04-09 11:10 dn/T1234567A pn/T1234567B`
+- `addappt ad/2025-04-09 11:10 dn/S8054321B pn/T0334567A`
                   
 ![add_appointment_result](images/addAppointment.png)
 
@@ -151,6 +151,7 @@ Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 * Edits the patient or doctor at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* Note that editing a patient or doctor and not changing any of the values of the parameters is allowed and is considered a valid edit by the system.
 
 Field Constraints:
 * **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
@@ -163,7 +164,7 @@ Command Constraints:
 * The ordering of the fields does not influence the command.
 
 Examples:
-*  `edit 1 i/s1234567a n/Betsy Crower` Edits the NRIC and name of the 1st person to be `s1234567a` and `Betsy Crower` respectively.
+*  `edit 1 i/S1234567A n/Betsy Crower` Edits the NRIC and name of the 1st person to be `s1234567a` and `Betsy Crower` respectively.
                                   
 ![add_appointment_result](images/editPerson.png)
 
@@ -239,13 +240,13 @@ match appointments that involve `S1234562A` and `S1234561A`.
 * Appointments with `Patient`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).         
 
 Example:                                                                                                                
-* `apptforpatient s1234561a` returns all `Appointment` object(s) that `Patient` with NRIC `S1234561A` is involved in.   
+* `apptforpatient s0123456a` returns all `Appointment` object(s) that `Patient` with NRIC `S0123456A` is involved in.   
                                                                                                                         
 * Initial State (All `Appointment`s listed)                                                                             
-![result for 'apptforpatient S1234561A'](images/findAppointmentInitialPatient.png)                                      
+![result for 'list'](images/findAppointmentInitialPatient.png)                                      
                                                                                                                         
-* After Querying (Only `Appointment`s with `Patient` of NRIC `S1234561A`)                                               
-![result for 'apptforpatient S1234561A'](images/findAppointmentResultPatient.png)                                       
+* After Querying (Only `Appointment`s with `Patient` of NRIC `S0123456A`)                                               
+![result for 'apptforpatient S0123456A'](images/findAppointmentResultPatient.png)                                       
             
 
 ### Querying appointments by NRIC `apptfordoctor`                                                                       
@@ -273,7 +274,7 @@ Example:
 
 ### Deleting a doctor or patient : `delete`
 
-Deletes the specified doctor / patient from the mediCLI system.
+Deletes the specified doctor / patient from the mediCLI system. <u>**Note that all associated appointments with this doctor / patient will also be recursively deleted.**</u> Please exercise caution when using the delete command and removing a patient or a doctor from MediCLI, as this action cannot be undone.
 
 * Deletes the doctor / patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed doctor and patient list.
@@ -309,7 +310,9 @@ Visual Guide
 
 ### Clearing all entries : `clear`                                                                  
                                                                                                  
-Clears all entries from MediCLI.                                                           
+Clears all entries from MediCLI.
+
+Warning!!! This will wipe the entire data from the system upon being executed. Please be very purposeful and cautious when you use this.
                                                                                                  
 Format: `clear`                                                                                     
 

@@ -41,7 +41,7 @@ public class Messages {
      */
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
-        builder.append("; NRIC: ")
+        builder.append("NRIC: ")
                 .append(person.getNric())
                 .append("; Name: ")
                 .append(person.getName())
