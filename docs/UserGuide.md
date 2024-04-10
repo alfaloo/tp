@@ -309,7 +309,9 @@ Visual Guide
 
 ### Clearing all entries : `clear`                                                                  
                                                                                                  
-Clears all entries from MediCLI.                                                           
+Clears all entries from MediCLI.
+
+Warning!!! This will wipe the entire data from the system upon being executed. Please be very purposeful and cautious when you use this.
                                                                                                  
 Format: `clear`                                                                                     
 
