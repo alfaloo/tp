@@ -330,6 +330,9 @@ MediCLI data are saved in the hard disk automatically after any command that cha
 
 MediCLI data are saved automatically as a JSON file `[JAR file location]/data/medicli.json`. Advanced users are welcome to update data directly by editing that data file.
 
+To view the format, advanced users can take a look at the json structure by opening up the `MediCLI.json` file in a code editor or text editor.
+You can add/edit/remove patients, doctors and appointments directly, but note that any invalid changes such as appointment in the past or patient/doctor not in the system etc. will cause MediCLI to completely wipe the data and start afresh.
+
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, mediCLI will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
