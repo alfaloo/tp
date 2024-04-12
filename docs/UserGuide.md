@@ -231,7 +231,7 @@ Command Constraints:
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name field is searched.
 * Both full words and substrings will be matched e.g. `Han` will match `Hans`
-* Patients and Doctors matching at least one keyword will be returned (i.e. `OR` search).
+* Patients and Doctors matching at least one keyword will be returned (i.e. logical 'OR' search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
