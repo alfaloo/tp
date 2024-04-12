@@ -1,0 +1,20 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+:User enters command to query a person,\nthe person can be either a doctor or patient.;
+
+
+if () then ([missing required fields])
+    :Show error message\nfor missing required fields;
+else ([else])
+    :Search the person from person list;
+    :Update the 'person' panel\nin the GUI to display the list;
+    :Show success message\nwith found person(s) information;
+endif
+
+
+stop
+@enduml
