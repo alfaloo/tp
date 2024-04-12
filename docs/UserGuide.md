@@ -350,6 +350,8 @@ Warning!!! This will wipe the entire data from the system upon being executed. P
                                                                                                  
 Format: `clear`                                                                                     
 
+![result for 'clear'](images/clear.png)
+
 ### Exiting the program : `exit`
 
 Exits the program.
