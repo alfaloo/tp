@@ -124,15 +124,15 @@ Examples:
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
 Note that while you cannot create a new appointment with the date/time in the past, appointments that were valid when created but are now past their date will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
-Format: `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC`
+Format: `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC`
 
 Field Constraints:
-- `DATE`: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
+- `DATETIME`: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
 - `DOCTOR_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
 - `PATIENT_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
 
 Command Constraints:
-- All of the above fields (`DATE`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
+- All of the above fields (`DATETIME`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
 - A doctor with the specified `DOCTOR_NRIC` must already exist in the MediCLI System.
 - A patient with the specified `PATIENT_NRIC` must already exist in the MediCLI System.
 
