@@ -337,7 +337,7 @@ The activity diagram below demonstrates this error handling process in more deta
 
 * Step 4. The `parse` command in `FindCommandParser` returns an instance of `FindCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `FindCommand`.
-* Step 6. The `execute` method in `FindCommand` executes and calls `updateFilteredPersonList` in model to get a filtered list of person entries, both `patient` and `doctor` entries can be displayed.
+* Step 6. The `execute` method in `FindCommand` executes and calls `updateFilteredPersonList` in model with the `NameContainsKeywordsPredicate` to get a filtered list of person entries of the entered keyword(s), both `patient` and `doctor` entries can be displayed.
 * Step 7. A Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
 The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
@@ -366,7 +366,7 @@ The activity diagram below demonstrates this error handling process in more deta
 
 * Step 4. The `parse` command in `QueryDoctorCommandParser` returns an instance of `QueryDoctorCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `QueryDoctorCommand`.
-* Step 6. The `execute` method in `QueryDoctorCommand` executes and calls `updateFilteredPersonList` in model to get a filtered list of only `Doctor` entries.
+* Step 6. The `execute` method in `QueryDoctorCommand` executes and calls `updateFilteredPersonList` in model with the `DoctorContainsKeywordsPredicate` to get a filtered list of only `Doctor` entries of the entered keywords(s).
 * Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
 
@@ -392,7 +392,7 @@ The activity diagram below demonstrates this error handling process in more deta
 
 * Step 4. The `parse` command in `QueryPatientCommandParser` returns an instance of `QueryPatientCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `QueryPatientCommand`.
-* Step 6. The `execute` method in `QueryPatientCommand` executes and calls `updateFilteredPersonList` in model to get a filtered list of only `Patient` entries.
+* Step 6. The `execute` method in `QueryPatientCommand` executes and calls `updateFilteredPersonList` in model with the `PatientContainsKeywordsPredicate` to get a filtered list of only `Patient` entries of the entered keywords(s).
 * Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
 
@@ -418,7 +418,7 @@ The activity diagram below demonstrates this error handling process in more deta
 
 * Step 4. The `parse` command in `QueryDoctorAppointmentCommandParser` returns an instance of `QueryDoctorAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `QueryDoctorAppointmentCommand`.
-* Step 6. The `execute` method in `QueryDoctorAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model to get a filtered list of appointment entries, only those `appointment`(s) that have the associated `doctor`'s `Nric` entries are be displayed.
+* Step 6. The `execute` method in `QueryDoctorAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model with the `AppointmentContainsDoctorPredicate` to get a filtered list of appointment entries with the entered keyword(s), only those `appointment`(s) that have the associated `doctor`'s `Nric` entries are be displayed.
 * Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
 
@@ -445,7 +445,7 @@ The activity diagram below demonstrates this error handling process in more deta
 
 * Step 4. The `parse` command in `QueryPatientAppointmentCommandParser` returns an instance of `QueryPatientAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `QueryPatientAppointmentCommand`.
-* Step 6. The `execute` method in `QueryPatientAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model to get a filtered list of appointment entries, only those `appointment`(s) that have the associated `patient`'s `Nric` entries are be displayed.
+* Step 6. The `execute` method in `QueryPatientAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model with the `AppointmentContainsPatientPredicate` to get a filtered list of appointment entries with the entered keyword(s), only those `appointment`(s) that have the associated `patient`'s `Nric` entries are be displayed.
 * Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
 
