@@ -3,14 +3,17 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.Main;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
-
 /**
  * Deletes an appointment identified using it's displayed index from mediCLI.
  */
@@ -24,6 +27,7 @@ public class DeleteAppointmentCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Deleted Appointment: %1$s";
+    private static Logger logger = LogsCenter.getLogger(Main.class);
 
     private final Index targetIndex;
 
@@ -38,6 +42,7 @@ public class DeleteAppointmentCommand extends Command {
 
         // Check for valid index
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            logger.log(Level.INFO, "Specified index is not valid! (when executing command: deleteappt)");
             throw new CommandException(Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
 
@@ -46,7 +51,7 @@ public class DeleteAppointmentCommand extends Command {
         model.deleteAppointment(appointmentToDelete);
 
         return new CommandResult(String.format(MESSAGE_DELETE_APPOINTMENT_SUCCESS,
-                    Messages.format(appointmentToDelete)));
+                Messages.format(appointmentToDelete)));
     }
 
     @Override
