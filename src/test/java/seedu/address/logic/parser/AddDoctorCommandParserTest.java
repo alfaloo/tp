@@ -14,9 +14,6 @@ import static seedu.address.logic.commands.CommandTestUtil.NRIC_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
-//import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_BOB;
@@ -153,8 +150,8 @@ public class AddDoctorCommandParserTest {
                 DoB.MESSAGE_CONSTRAINTS);
 
         // invalid phone
-        assertParseFailure(parser, NRIC_DESC_BOB + NAME_DESC_BOB + DOB_DESC_BOB + INVALID_PHONE_DESC
-                + TAG_DESC_HUSBAND + TAG_DESC_FRIEND, Phone.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, NRIC_DESC_BOB + NAME_DESC_BOB + DOB_DESC_BOB + INVALID_PHONE_DESC,
+                Phone.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NRIC_DESC + NAME_DESC_BOB + DOB_DESC_BOB + INVALID_PHONE_DESC,

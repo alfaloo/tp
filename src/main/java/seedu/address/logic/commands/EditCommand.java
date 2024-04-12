@@ -31,8 +31,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 
 
-
-
 /**
  * Editcommand class enables user to edit a doctor or patient in the person list
  */
