@@ -188,6 +188,9 @@ public class ParserUtil {
     public static AppointmentDateTime parseAppointmentDateTime(String apptDateTime) throws ParseException {
         requireNonNull(apptDateTime);
         String trimmedDate = apptDateTime.trim();
+        if (trimmedDate.length() < 16) {
+            throw new ParseException(AppointmentDateTime.MESSAGE_CONSTRAINTS);
+        }
         String datetime = trimmedDate.substring(0, 11) + trimmedDate.substring(11).strip();
         if (!AppointmentDateTime.isValidDate(datetime)) {
             throw new ParseException(AppointmentDateTime.MESSAGE_CONSTRAINTS);

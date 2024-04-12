@@ -155,30 +155,34 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add a `Patient`
+### Add a `Patient` or `Doctor`
+<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation. 
+This reduces repetition of information and increases clarity.</i>
 
-Adds a new `Patient` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
-This command is implemented through the `AddPatientCommand` class which extend the `Command` class.
+Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
+This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
 
-* Step 1. User enters an `addpatient` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addPatientCommandParser`.
-* Step 3. The `parse` command in `addPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the patient to added already exists in the system, a `DuplicatePersonException` is thrown`.
+* Step 1. User enters an `addpatient` or `adddoctor` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addPatientCommandParser` or `addDoctorCommandParser`.
+* Step 3. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+  * If there are any missing fields, a `CommandException` is thrown.
+  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+  * If the patient to added already exists in the system, a `DuplicatePersonException` is thrown`.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
-<img src="images/AddPatientActivityDiagram.png" width="800" />
+<img src="images/AddPersonActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `addPatientCommandParser` return an instance of `addPatientCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addPatientCommand`.
-* Step 6. The `execute` method in `addPatientCommand` executes and calls `addPerson` in model to add the new patient into the system.
+* Step 4. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` return an instance of either `addPatientCommand` or `addDoctorCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `addPatientCommand` or `addDoctorCommand`.
+* Step 6. The `execute` method in `addPatientCommand` or `addDoctorCommand` executes and calls `addPerson` in model to add the new patient into the system.
 * Step 7. Success message gets printed onto the results display to notify user.
 
 The sequence diagram below closely describes the interaction between the various components during the execution of the `AddPatientCommand`.
 
 <img src="images/AddPatientSequenceDiagram.png" width="800" />
+
+<i>Note: Sequence diagram above is the same for `AddDoctorCommand`, but instead of `AddPatientCommandParser` it is `AddDoctorCommandParser` etc.</i>
 
 #### Design considerations:
 
@@ -191,27 +195,6 @@ The sequence diagram below closely describes the interaction between the various
 * **Alternative 2:** Directly update the fields in the `originalPerson`
     * Pros: Better performance, since this only requires searching through the person list once.
     * Cons: The order of person list will be lost, since `Name` of a `Person` may be edited.
-
-### Add a `doctor`
-
-Adds a new `doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
-This command is implemented through the `AddDoctorCommand` class which extend the `Command` class.
-
-* Step 1. User enters an `adddoctor` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addDoctorCommandParser`.
-* Step 3. The `parse` command in `addDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the doctor to added already exists in the system, a `DuplicatePersonException` is thrown`.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/AddDoctorActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `addDoctorCommandParser` return an instance of `addDoctorCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addDoctorCommand`.
-* Step 6. The `execute` method in `addDoctorCommand` executes and calls `addDoctor` in model to add the new doctor into the system.
-* Step 7. Success message gets printed onto the results display to notify user.
 
 ### Delete `doctor` or `patient`
 
@@ -234,6 +217,11 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 6. The `execute` method in `deleteCommand` executes and calls `deletePerson` in model to remove doctor or patient from the system.
 * Step 7. The `execute` method in `deleteCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be deleted, and calls the `deleteAppointmentCommand` as well.
 * Step 8. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteCommand`.
+
+<img src="images/DeletePersonSequenceDiagram.png" width="800" />
+
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute delete operations.
@@ -260,8 +248,6 @@ This command is implemented through the `AddAppointmentCommand` class which exte
 
 The activity diagram below demonstrates this error handling process in more detail.
 <img src="images/AddAppointmentActivityDiagram.png" width="800" />
-
-<img src="images/AddPatientActivityDiagram.png" width="800" />
 
 * Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
@@ -318,6 +304,10 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
 * Step 7. Success message gets printed onto the results display to notify user.
 
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+
+<img src="images/DeleteAppointmentSequenceDiagram.png" width="800" />
+
 Why is this implemented this way?
 1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
 2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
@@ -356,93 +346,215 @@ Why is this implemented this way?
 2. `Doctor` and `Patient` all exhibit similar qualities, and thus can inherit from the `Person` superclass.
 
 
-### \[Proposed\] Undo/redo feature
+[//]: # (### \[Proposed\] Undo/redo feature)
 
-#### Proposed Implementation
+[//]: # ()
+[//]: # (#### Proposed Implementation)
 
-The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+[//]: # ()
+[//]: # (The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:)
 
-* `VersionedMediCLI#commit()` — Saves the current MediCLI state in its history.
-* `VersionedMediCLI#undo()` — Restores the previous MediCLI state from its history.
-* `VersionedMediCLI#redo()` — Restores a previously undone MediCLI state from its history.
+[//]: # ()
+[//]: # (* `VersionedMediCLI#commit&#40;&#41;` — Saves the current MediCLI state in its history.)
 
-These operations are exposed in the `Model` interface as `Model#commitMediCLI()`, `Model#undoMediCLI()` and `Model#redoMediCLI()` respectively.
+[//]: # (* `VersionedMediCLI#undo&#40;&#41;` — Restores the previous MediCLI state from its history.)
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+[//]: # (* `VersionedMediCLI#redo&#40;&#41;` — Restores a previously undone MediCLI state from its history.)
 
-Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.
+[//]: # ()
+[//]: # (These operations are exposed in the `Model` interface as `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` and `Model#redoMediCLI&#40;&#41;` respectively.)
 
-![UndoRedoState0](images/UndoRedoState0.png)
+[//]: # ()
+[//]: # (Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.)
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI()`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+[//]: # ()
+[//]: # (Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.)
 
-![UndoRedoState1](images/UndoRedoState1.png)
+[//]: # ()
+[//]: # (![UndoRedoState0]&#40;images/UndoRedoState0.png&#41;)
 
-Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI()`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.
+[//]: # ()
+[//]: # (Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI&#40;&#41;`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.)
 
-![UndoRedoState2](images/UndoRedoState2.png)
+[//]: # ()
+[//]: # (![UndoRedoState1]&#40;images/UndoRedoState1.png&#41;)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI()`, so the MediCLI state will not be saved into the `mediCLIStateList`.
+[//]: # ()
+[//]: # (Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI&#40;&#41;`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.)
 
-</div>
+[//]: # ()
+[//]: # (![UndoRedoState2]&#40;images/UndoRedoState2.png&#41;)
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.
+[//]: # ()
+[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI&#40;&#41;`, so the MediCLI state will not be saved into the `mediCLIStateList`.)
 
-![UndoRedoState3](images/UndoRedoState3.png)
+[//]: # ()
+[//]: # (</div>)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
+[//]: # ()
+[//]: # (Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI&#40;&#41;`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.)
 
-</div>
+[//]: # ()
+[//]: # (![UndoRedoState3]&#40;images/UndoRedoState3.png&#41;)
 
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
+[//]: # ()
+[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather)
 
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
+[//]: # (than attempting to perform the undo.)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+[//]: # ()
+[//]: # (</div>)
 
-</div>
+[//]: # ()
+[//]: # (The following sequence diagram shows how an undo operation goes through the `Logic` component:)
 
-Similarly, how an undo operation goes through the `Model` component is shown below:
+[//]: # ()
+[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Logic.png&#41;)
 
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
+[//]: # ()
+[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker &#40;X&#41; but due to a limitation of PlantUML, the lifeline reaches the end of diagram.)
 
-The `redo` command does the opposite — it calls `Model#redoMediCLI()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.
+[//]: # ()
+[//]: # (</div>)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size() - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+[//]: # ()
+[//]: # (Similarly, how an undo operation goes through the `Model` component is shown below:)
 
-</div>
+[//]: # ()
+[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Model.png&#41;)
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI()`, `Model#undoMediCLI()` or `Model#redoMediCLI()`. Thus, the `mediCLIStateList` remains unchanged.
+[//]: # ()
+[//]: # (The `redo` command does the opposite — it calls `Model#redoMediCLI&#40;&#41;`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.)
 
-![UndoRedoState4](images/UndoRedoState4.png)
+[//]: # ()
+[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size&#40;&#41; - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.)
 
-Step 6. The user executes `clear`, which calls `Model#commitMediCLI()`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.
+[//]: # ()
+[//]: # (</div>)
 
-![UndoRedoState5](images/UndoRedoState5.png)
+[//]: # ()
+[//]: # (Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` or `Model#redoMediCLI&#40;&#41;`. Thus, the `mediCLIStateList` remains unchanged.)
 
-The following activity diagram summarizes what happens when a user executes a new command:
+[//]: # ()
+[//]: # (![UndoRedoState4]&#40;images/UndoRedoState4.png&#41;)
 
-<img src="images/CommitActivityDiagram.png" width="250" />
+[//]: # ()
+[//]: # (Step 6. The user executes `clear`, which calls `Model#commitMediCLI&#40;&#41;`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.)
 
-#### Design considerations:
+[//]: # ()
+[//]: # (![UndoRedoState5]&#40;images/UndoRedoState5.png&#41;)
 
-**Aspect: How undo & redo executes:**
+[//]: # ()
+[//]: # (The following activity diagram summarizes what happens when a user executes a new command:)
 
-* **Alternative 1 (current choice):** Saves the entire MediCLI.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+[//]: # ()
+[//]: # (<img src="images/CommitActivityDiagram.png" width="250" />)
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+[//]: # ()
+[//]: # (#### Design considerations:)
 
-_{more aspects and alternatives to be added}_
+[//]: # ()
+[//]: # (**Aspect: How undo & redo executes:**)
 
-### \[Proposed\] Data archiving
+[//]: # ()
+[//]: # (* **Alternative 1 &#40;current choice&#41;:** Saves the entire MediCLI.)
 
-_{Explain here how the data archiving feature will be implemented}_
+[//]: # (  * Pros: Easy to implement.)
+
+[//]: # (  * Cons: May have performance issues in terms of memory usage.)
+
+[//]: # ()
+[//]: # (* **Alternative 2:** Individual command knows how to undo/redo by)
+
+[//]: # (  itself.)
+
+[//]: # (  * Pros: Will use less memory &#40;e.g. for `delete`, just save the person being deleted&#41;.)
+
+[//]: # (  * Cons: We must ensure that the implementation of each individual command are correct.)
+
+[//]: # ()
+[//]: # (_{more aspects and alternatives to be added}_)
+
+[//]: # ()
+[//]: # (### \[Proposed\] Data archiving)
+
+[//]: # ()
+[//]: # (_{Explain here how the data archiving feature will be implemented}_)
+
+## Planned Enhancements
+
+The MediCLI development team acknowledges the presense of known feature flaws in our system.
+Thus, we have planned the following 10 enhancements to be added in the near future.
+Please find them organised into their respective categories.
+
+### Appointment Functionality Enhancements
+
+1. Adding an end time to appointments
+
+Currently, the MediCLI system only stores the date and start time of an appointment.
+However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
+This is so that the doctor can be safely booked by another patient without worrying about potential clashes in appointment timings.
+
+2. More robust appointment timing validation.
+
+Currently, the MediCLI system allows two appointments with the same doctor/patient and date-time to be simultaneously stored in the system.
+However, it is clearly impossible for a patient or doctor to attend two different appointments at the same time.
+Thus, we plan to implement a more robust appointment validation system to ensure that appointments with clashing or unrealistic timings can not be entered.
+
+3. Marking old appointments as completed.
+
+Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
+However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
+Thus, we plan to add a label (just like the patient/doctor labels) in the top right corner of each appointment card to help better distinguish them.
+
+### Parameter Checking Enhancements
+
+4. Accommodate names with symbols and/or special characters.
+
+The name parameter is currently restricted to just alphabetical characters and white-space.
+However, we recognise the existence of names that contain symbols and other special characters.
+In the future, we plan to implement a more accommodating constraint that allows UTF-8 characters instead.
+This means that names of other languages will be accepted as well.
+
+5. Allow foreign patients/doctors to be added to the system.
+
+The current constraints for the NRIC and phone number parameters reflect the Singaporean format.
+However, we recognise that for foreign users, this can be rather limiting.
+Thus, in the future, we plan on introducing more refined parameter checking that allows international NRIC and phone number formats.
+
+6. Ensure each person being added to the system is unique.
+
+While the current MediCLI system already checks to ensure every person added is unique, it is only done by comparing the NRIC of the person.
+However, this should not be the only checking condition. Two entries with the same name, date of birth, and/or phone number should also be flagged as non-unique.
+Thus, we will devise a more holistic assessment criterion to ensure no duplicates are allowed.
+
+### User Interface Enhancements
+
+7. Refine the user interface when the window size is minimised.
+
+The current MediCLI system is not particularly flexible when it comes to window sizing.
+Users on smaller screens may encounter the issue of scrolling being disabled or labels being truncated if a long name is entered.
+In the future, we plan to make the UI more adaptive and friendly to smaller screens.
+
+8. Standardise displayed information.
+
+For certain fields, the MediCLI system simply displays the text exactly as entered by the user.
+However, this can introduce inconsistencies in capitalisation (especially with the NRIC field) when displayed in the user interface.
+We plan on standardising these fields by automatically capitalising the users' input.
+
+### Feature Enhancements
+
+9. More advanced search options
+
+Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
+However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
+(e.g. when searching for a person by full name). In the future, we plan to add more advanced search options to allow for easy querying of information.
+
+10. More detailed error messages.
+
+Some of the current error messages are not the most informative
+(e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
+To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions.
 
 
 --------------------------------------------------------------------------------------------------------------------
