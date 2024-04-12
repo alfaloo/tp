@@ -340,6 +340,10 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 6. The `execute` method in `FindCommand` executes and calls `updateFilteredPersonList` in model to get a filtered list of person entries, both `patient` and `doctor` entries can be displayed.
 * Step 7. A Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+
+<img src="images/FindPersonSequenceDiagram.png" width="800" />
+
 Alternative implementations considered
 1. The following sections describes the behaviour of querying `doctor` and `patient` entries by separate commands by all of the entry's fields, both following a very similar logic to how the `find` command is implemented. We might consider using flags to be more precise with our searches, (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that this approach overloaded the `find` method too much, and overcomplicated the `find` command's usage.
 2. Even if the `find` command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed by the `find` command was unavoidable. As such, it was prudent to start with the implementation of the distinct commands first (as described in the following sections, each tied to a specific command), and leave the overloading of the `find` command as a later increment.
