@@ -1,8 +1,5 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,7 +24,6 @@ class JsonAdaptedPerson {
     private final String name;
     private final String dob;
     private final String phone;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.

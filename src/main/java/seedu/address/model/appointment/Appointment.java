@@ -17,7 +17,7 @@ import seedu.address.model.person.Person;
 public class Appointment {
 
     private static final String MESSAGE_CONSTRAINTS_INVALID_DATE =
-            "Appointment should be made with a date today onwards";
+            "Appointment should be made with a date-time today onwards";
 
     // The doctor in charge of the appointment
     private Nric doctorNric;
