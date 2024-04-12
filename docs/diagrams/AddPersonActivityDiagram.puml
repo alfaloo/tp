@@ -4,7 +4,7 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 
 start
-:User enters command to add a doctor;
+:User enters command to add a patient/doctor;
 
 if () then ([command is invalid])
     :Show error message\nfor invalid command;
@@ -15,12 +15,12 @@ else ([else])
         if () then ([invalid field arguments])
             :Show error message\nindicating invalid field\narguments provided;
         else ([else])
-            if () then ([Duplicate doctor detected])
-                :Show error message\nindicating duplicate doctor;
+            if () then ([Duplicate patient/doctor detected])
+                :Show error message\nindicating duplicate patient/doctor;
                 else ([else])
-                    :Add the doctor\ninto the persons list;
+                    :Add the patient/doctor\ninto the persons list;
                     :Update the 'person' panel\nin the GUI;
-                    :Show success message\nwith doctor's information;
+                    :Show success message\nwith patient/doctor's information;
             endif;
         endif
     endif

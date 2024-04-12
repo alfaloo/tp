@@ -155,30 +155,34 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Add a `Patient`
+### Add a `Patient` or `Doctor`
+<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation. 
+This reduces repetition of information and increases clarity.</i>
 
-Adds a new `Patient` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
-This command is implemented through the `AddPatientCommand` class which extend the `Command` class.
+Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
+This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
 
-* Step 1. User enters an `addpatient` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addPatientCommandParser`.
-* Step 3. The `parse` command in `addPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the patient to added already exists in the system, a `DuplicatePersonException` is thrown`.
+* Step 1. User enters an `addpatient` or `adddoctor` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addPatientCommandParser` or `addDoctorCommandParser`.
+* Step 3. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+  * If there are any missing fields, a `CommandException` is thrown.
+  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+  * If the patient to added already exists in the system, a `DuplicatePersonException` is thrown`.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
-<img src="images/AddPatientActivityDiagram.png" width="800" />
+<img src="images/AddPersonActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `addPatientCommandParser` return an instance of `addPatientCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addPatientCommand`.
-* Step 6. The `execute` method in `addPatientCommand` executes and calls `addPerson` in model to add the new patient into the system.
+* Step 4. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` return an instance of either `addPatientCommand` or `addDoctorCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `addPatientCommand` or `addDoctorCommand`.
+* Step 6. The `execute` method in `addPatientCommand` or `addDoctorCommand` executes and calls `addPerson` in model to add the new patient into the system.
 * Step 7. Success message gets printed onto the results display to notify user.
 
 The sequence diagram below closely describes the interaction between the various components during the execution of the `AddPatientCommand`.
 
 <img src="images/AddPatientSequenceDiagram.png" width="800" />
+
+<i>Note: Sequence diagram above is the same for `AddDoctorCommand`, but instead of `AddPatientCommandParser` it is `AddDoctorCommandParser` etc.</i>
 
 #### Design considerations:
 
@@ -191,27 +195,6 @@ The sequence diagram below closely describes the interaction between the various
 * **Alternative 2:** Directly update the fields in the `originalPerson`
     * Pros: Better performance, since this only requires searching through the person list once.
     * Cons: The order of person list will be lost, since `Name` of a `Person` may be edited.
-
-### Add a `doctor`
-
-Adds a new `doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
-This command is implemented through the `AddDoctorCommand` class which extend the `Command` class.
-
-* Step 1. User enters an `adddoctor` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addDoctorCommandParser`.
-* Step 3. The `parse` command in `addDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the doctor to added already exists in the system, a `DuplicatePersonException` is thrown`.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/AddDoctorActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `addDoctorCommandParser` return an instance of `addDoctorCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addDoctorCommand`.
-* Step 6. The `execute` method in `addDoctorCommand` executes and calls `addDoctor` in model to add the new doctor into the system.
-* Step 7. Success message gets printed onto the results display to notify user.
 
 ### Delete `doctor` or `patient`
 
@@ -234,6 +217,11 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 6. The `execute` method in `deleteCommand` executes and calls `deletePerson` in model to remove doctor or patient from the system.
 * Step 7. The `execute` method in `deleteCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be deleted, and calls the `deleteAppointmentCommand` as well.
 * Step 8. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteCommand`.
+
+<img src="images/DeletePersonSequenceDiagram.png" width="800" />
+
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute delete operations.
@@ -260,8 +248,6 @@ This command is implemented through the `AddAppointmentCommand` class which exte
 
 The activity diagram below demonstrates this error handling process in more detail.
 <img src="images/AddAppointmentActivityDiagram.png" width="800" />
-
-<img src="images/AddPatientActivityDiagram.png" width="800" />
 
 * Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
@@ -317,6 +303,10 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 5. The `LogicManager` calls the `execute` method in `deleteAppointmentCommand`.
 * Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
 * Step 7. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+
+<img src="images/DeleteAppointmentSequenceDiagram.png" width="800" />
 
 Why is this implemented this way?
 1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
