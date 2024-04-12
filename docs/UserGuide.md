@@ -1,6 +1,6 @@
 ---
 layout: page
-title: User Guide
+title: MediCLI User Guide
 ---
         
 MediCLI is a **desktop app for managing persons involved in a hospital, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). Targeted at fast typing hospital clerks, MediCLI allows them to manage doctors, patients and appointments faster than traditional GUI apps.
@@ -37,7 +37,9 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimize
 
 1. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Info call-outs give you information about MediCLI that you can take note of!</div>
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: Danger call-outs like this contain dangerous actions you should remember when using MediCLI to avoid errors!</div>
 
 ## Features
 
@@ -184,6 +186,25 @@ Examples:
 *  `editappt 1 ad/2024-04-09 11:00` Edits the appointment date of the first appointment in the appointment list to `2024-04-09 11:00`                                   
 
 ![add_appointment_result](images/editAppointment.png)
+
+### Finding both doctor and patient by name: `find`
+
+Finds `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
+
+Format for querying patients or doctors: `find KEYWORD [MORE_KEYWORDS]`
+
+Command Constraints:
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name field is searched.
+* Both full words and substrings will be matched e.g. `Han` will match `Hans`
+* Patients and Doctors matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
 ### Querying persons by name: `patient`
 
