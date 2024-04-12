@@ -326,10 +326,10 @@ This command is implemented through the `FindCommand` class which extends the `C
 The `find` command is able to take in multiple parameters (at least one), each of these parameters are read as strings, and act as separate queries. This is a feature of the `find` command, to have the capability of parsing both parameters as a short-hand feature.
 Example, the command `find hans doe` is equivalent of returning the logical 'or' result of `find hans` and `find doe`.
 
-* Step 1. User enters an `find` command.
+* Step 1. User enters a `find` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `findCommandParser`.
-* Step 3. The `parse` command in `FindCommandParser` calls `ParserUtil` to create instances of objects for each of the parameters.
-    * If there are any missing fields, a `CommandException` is thrown, and the UI displays an error message.
+* Step 3. The `parse` command in `FindCommandParser` checks if at least one parameter is present.
+    * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
@@ -340,7 +340,7 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 6. The `execute` method in `FindCommand` executes and calls `updateFilteredPersonList` in model with the `NameContainsKeywordsPredicate` to get a filtered list of person entries of the entered keyword(s), both `patient` and `doctor` entries can be displayed.
 * Step 7. A Success message gets printed onto the results display to notify user and the list of matching results is produced.
 
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+The sequence diagram below closely describes the interaction between the various components during the execution of the `FindCommand`.
 
 <img src="images/FindPersonSequenceDiagram.png" width="800" />
 
@@ -357,8 +357,8 @@ Similar to the `find` command, the `doctor` query command is able to take in mul
 
 * Step 1. User enters a `doctor` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryDoctorCommandParser`.
-* Step 3. The `parse` command in `QueryDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown, and an error message is displayed on the UI.
+* Step 3. The `parse` command in `QueryDoctorCommandParser` checks if at least one parameter is present.
+  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
@@ -383,8 +383,8 @@ Similar to the `find` command, the `patient` query command is able to take in mu
 
 * Step 1. User enters a `patient` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryPatientCommandParser`.
-* Step 3. The `parse` command in `QueryPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-  * If there are any missing fields, a `CommandException` is thrown, and an error message is displayed on the UI.
+* Step 3. The `parse` command in `QueryPatientCommandParser` checks if at least one parameter is present.
+  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
@@ -409,8 +409,8 @@ The `apptfordoctor` command takes in multiple parameters (at least one), and eac
 
 * Step 1. User enters an `QueryDoctorAppointment` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryDoctorAppointmentCommandParser`.
-* Step 3. The `parse` command in `QueryDoctorAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-  * If there are any missing fields, a `CommandException` is thrown, and an error message will be displayed on the UI.
+* Step 3. The `parse` command in `QueryDoctorAppointmentCommandParser` checks if at least one parameter is present.
+  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
@@ -436,8 +436,8 @@ The `apptforpatient` command takes in multiple parameters (at least one), and ea
 
 * Step 1. User enters an `QueryPatientAppointment` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryPatientAppointmentCommandParser`.
-* Step 3. The `parse` command in `QueryPatientAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-  * If there are any missing fields, a `CommandException` is thrown, and an error message will be displayed on the UI.
+* Step 3. The `parse` command in `QueryPatientAppointmentCommandParser` checks if at least one parameter is present.
+  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
 
 The activity diagram below demonstrates this error handling process in more detail.
 
