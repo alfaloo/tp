@@ -213,7 +213,7 @@ Field Constraints:
 
 Examples:    
 
-*  `editappt 1 ad/2025-04-09 11:00` Edits the appointment date and time of the first appointment in the appointment list to `2024-04-09 11:00`                                   
+*  `editappt 1 ad/2025-04-09 11:00` Edits the appointment date and time of the first appointment in the appointment list to `2025-04-09 11:00`                                   
 
 ![add_appointment_result](images/editAppointment.png)
 
@@ -233,9 +233,10 @@ Command Constraints:
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `patient John` returns `john` and `John Doe`
-* `patient alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'patient alex david'](images/findAlexDavidResultPatient.png)
+* `patient John David` returns `patient` with name `John Doe` and `patient` with name `David Li`
+* `patient S1234` returns `patient` with `Nric` `S1234567A`, `patient` with `Nric` `S1234765Q`
+* `patient 30 Jan` returns `patient` with `DoB` `30 January 1990`, `patient` with `DoB` `30 January 2001`<br>
+  ![result for 'patient alex david'](images/findPatient.png)
                                    
 
 ### Querying persons by name : `doctor`                                     
@@ -254,12 +255,13 @@ Command Constraints:
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`                             
                                                                                   
 Examples:                                                                         
-* `doctor John` returns `john` and `John Doe`                                     
-* `doctor alex david` returns `Alex Yeoh`, `David Li`<br>                         
-  ![result for 'doctor alex david'](images/findAlexDavidResultDoctor.png)           
+* `doctor John David` returns `doctor` with name `John Doe` and `doctor` with name `David Li`
+* `doctor S1234` returns `doctor` with `Nric` `S1234567A`, `doctor` with `Nric` `S1234765Q`
+* `doctor 30 Jan` returns `doctor` with `DoB` `30 January 1990`, `doctor` with `DoB` `30 January 2001`<br>              
+  ![result for 'doctor alex david'](images/findDoctor.png)           
                                  
 
-### Querying appointments by NRIC : `apptforpatient`                                                             
+### Querying appointments by Patient's NRIC : `apptforpatient`                                                             
                                                                                                                                  
 Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
                                                        
@@ -272,16 +274,16 @@ match appointments that involve `S1234562A` and `S1234561A`.
 * Appointments with `Patient`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).         
 
 Example:                                                                                                                
-* `apptforpatient s0123456a` returns all `Appointment` object(s) that `Patient` with NRIC `S0123456A` is involved in.   
+* `apptforpatient s0123456a` returns all `Appointment` entries that `Patient` with `Nric` `S0123456A` is involved in.   
                                                                                                                         
-* Initial State (All `Appointment`s listed)                                                                             
+* All `Appointment`s listed                                                                        
 ![result for 'list'](images/findAppointmentInitialPatient.png)                                      
                                                                                                                         
-* After Querying (Only `Appointment`s with `Patient` of NRIC `S0123456A`)                                               
+* Only `Appointment`s with `Patient` of `Nric` `S0123456A`                                           
 ![result for 'apptforpatient S0123456A'](images/findAppointmentResultPatient.png)                                       
             
 
-### Querying appointments by NRIC : `apptfordoctor`                                                                       
+### Querying appointments by Doctor's NRIC : `apptfordoctor`                                                                       
                                                                                                                         
 Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`                                                                         
                                                                                                                         
@@ -297,10 +299,10 @@ match appointments that involve `S1234562A` and `S1234561A`.
 Example:                                                                                                                
 * `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with NRIC `S1234561A` is involved in.     
                                                                                                                         
-* Initial State (All `Appointment`s listed)                                                                             
-![result for 'apptfordoctor S1234561A'](images/findAppointmentInitialDoctor.png)                                       
+* All `Appointment`s listed                                                  
+![result for 'list'](images/findAppointmentInitialDoctor.png)                                       
                                                                                                                         
-* After Querying (Only `Appointment`s with `Doctor` of NRIC `S1234561A`)                                                
+* Only `Appointment`s with `Doctor` of `Nric` `S1234561A`                                               
 ![result for 'apptfordoctor S1234561A'](images/findAppointmentResultDoctor.png)                                        
                                                                                                                         
 
@@ -317,7 +319,7 @@ Examples:
 * `patient John` followed by `delete 1` deletes the 1st patient in the results of the `patient` search command.
 * `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
 
-![result for 'delete 1'](images/deletePatient.png)
+![result for 'delete 1'](images/deletePerson.png)
 
 ### Deleting appointment : `deleteappt`
 
@@ -335,9 +337,9 @@ Examples:
 * `apptfordoctor S1234567B` followed by `deleteappt 2` deletes the 2nd appointment in the results of the `apptfordoctor` search command.
 
 Visual Guide
-* Initial State (All appointments listed after running `list`)                                                                          
+* All appointments listed after running `list`                                                                   
   ![result for 'list'](images/deleteApptInitialState.png)
-* Final State (After running `deleteappt` with `Index` of `1`)                                                               
+* After running `deleteappt` with `Index` of `1`                                                            
   ![result for 'deleteappt 1'](images/deleteApptFinalState.png)
 
 ### Clearing all entries : `clear`                                                                  
