@@ -1,6 +1,6 @@
 ---
 layout: page
-title: User Guide
+title: MediCLI User Guide
 ---
 
 ## Welcome to MediCLI!
@@ -68,7 +68,9 @@ the command-line interface (CLI).]
 
 1. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Info call-outs give you information about MediCLI that you can take note of!</div>
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: Danger call-outs like this contain dangerous actions you should remember when using MediCLI to avoid errors!</div>
 
 ## Features
 
@@ -217,7 +219,26 @@ Examples:
 
 ![add_appointment_result](images/editAppointment.png)
 
-### Querying persons by name : `patient`
+### Finding both doctor and patient by name: `find`
+
+Finds `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
+
+Format for querying patients or doctors: `find KEYWORD [MORE_KEYWORDS]`
+
+Command Constraints:
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name field is searched.
+* Both full words and substrings will be matched e.g. `Han` will match `Hans`
+* Patients and Doctors matching at least one keyword will be returned (i.e. logical 'OR' search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+
+### Querying persons by name: `patient`
 
 Finds `Patient`(s) whose details contain any of the given keywords.
 
