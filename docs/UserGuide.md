@@ -182,7 +182,7 @@ Field Constraints:
 
 Examples:    
 
-*  `editappt 1 ad/2024-04-09 11:00` Edits the appointment date and time of the first appointment in the appointment list to `2024-04-09 11:00`                                   
+*  `editappt 1 ad/2025-04-09 11:00` Edits the appointment date and time of the first appointment in the appointment list to `2024-04-09 11:00`                                   
 
 ![add_appointment_result](images/editAppointment.png)
 
