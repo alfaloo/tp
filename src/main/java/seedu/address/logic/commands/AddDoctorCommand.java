@@ -6,6 +6,11 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import seedu.address.Main;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -33,6 +38,7 @@ public class AddDoctorCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New doctor added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    private static Logger logger = LogsCenter.getLogger(Main.class);
 
     private final Doctor toAdd;
 
@@ -49,6 +55,7 @@ public class AddDoctorCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
+            logger.log(Level.INFO, "Duplicate person detected! (when executing command: adddoctor)");
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
