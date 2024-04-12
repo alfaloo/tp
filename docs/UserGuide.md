@@ -171,13 +171,13 @@ Examples:
 ### Editing an appointment: `editappt`
 Edits an existing person in the MediCLI system.                                                                                                                                                               
                                                                                                                                                                                 
-Format: `editappt INDEX ad/DATE`                                                                                                                        
+Format: `editappt INDEX ad/DATETIME`                                                                                                                        
                                                                                                                                                                                 
 * Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
 * Existing values will be updated to the input values.                                                                                                                          
 
 Field Constraints:
-* **DATE** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
+* **DATETIME** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
 
 Examples:    
 
