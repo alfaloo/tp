@@ -196,10 +196,47 @@ The sequence diagram below closely describes the interaction between the various
     * Pros: Better performance, since this only requires searching through the person list once.
     * Cons: The order of person list will be lost, since `Name` of a `Person` may be edited.
 
+
+### Edit `doctor` or `patient`
+
+Edits a `doctor` or `patient` entry by indicating their `Index`.
+This command is implemented through the `EditCommand` class which extends the `Command` class.
+
+* Step 1. User enters an `edit` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editCommandParser`.
+* Step 3. The `parse` command in `editCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+    * If there are any missing fields, a `CommandException` is thrown.
+    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+    * If the provided `index` is invalid, a `CommandException` is thrown.
+
+The activity diagram below demonstrates this error handling process in more detail.
+
+<img src="images/EditPersonActivityDiagram.png" width="800" />
+
+* Step 4. The `parse` command in `editCommandParser` return an instance of `editCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `editCommand`.
+* Step 6. The `execute` method in `editCommand` executes and creates a new edited person.
+* Step 6. The `execute` method in `editCommand` calls the `setPerson` in model to update the details of the respective person.
+* Step 7. The `execute` method in `editCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be edited, and calls the `setDoctorNric` or `setPatientNric` methods to update all relevant appointments related to the patient or doctor.
+* Step 8. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `EditCommand`.
+
+<img src="images/EditPersonSequenceDiagram.png" width="800" />
+
+
+Why is this implemented this way?
+1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
+2. `Doctor` and `Patient` all exhibit similar qualities, and thus can inherit from the `Person` superclass.
+3. Eliminates the need for separate edit commands for doctor and patient.
+4. Since appointments are constructed with unique `Person` `Nric` fields, it does not make sense to have an appointment that does not have valid or outdated doctor or patient entries.
+5. As such, the solution that is inbuilt to editing a `Person`, comes with the added functionality on the backend to augment all related `Appointment` entries as well.
+6. This results in an updated `Appointments` panel, and saves the user from the hassle of needing to manually edit outdated `Appointment` entries one by one.
+
 ### Delete `doctor` or `patient`
 
 Deletes a `doctor` or `patient` entry by indicating their `Index`.
-This command is implemented through the `DeleteCommand` class which extend the `Command` class.
+This command is implemented through the `DeleteCommand` class which extends the `Command` class.
 
 * Step 1. User enters an `delete` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteCommandParser`.
@@ -283,6 +320,44 @@ The sequence diagram below closely describes the interaction between the various
 * We decided against this because we thought that it was not the most OOP friendly solution and just didn't feel right or justifiable. 
 * Furthermore, it might get confusing for the user if everything was dumped into the same list of them to sieve through. Perhaps the user was only concerned with looking up patients in which case the appointments would simple be added clutter.
 * The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
+
+
+### Edit `Appointment`
+Edits an `Appointment` entry by indicating their `Index`.
+This command is implemented through the `EditAppointmentCommand` class which extends the `Command` class.
+
+* Step 1. User enters an `editappt` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editAppointmentCommandParser`.
+* Step 3. The `parse` command in `editAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+  * If there are any missing fields, a `CommandException` is thrown.
+  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+  * If the provided `index` is invalid, a `CommandException` is thrown.
+
+The activity diagram below demonstrates this error handling process in more detail.
+
+<img src="images/EditAppointmentActivityDiagram.png" width="800" />
+
+* Step 4. The `parse` command in `editAppointmentCommandParser` returns an instance of `editAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `editAppointmentCommand`.
+* Step 6. The `execute` method in `editAppointmentCommand` executes and calls `setAppointment` in model to set an updated appointment into the system.
+* Step 7. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `EditAppointmentCommand`.
+
+<img src="images/EditAppointmentSequenceDiagram.png" width="800" />
+
+Why is this implemented this way?
+1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with edit operations.
+2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
+3. This parallelism is also reflected in the backend code, and hence is very similar to how editing a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `EditPerson`, such as `EditAppointment`
+4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
+
+Alternative implementation for consideration
+1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle edits.
+2. This will centralise the behaviours, and reduce the amount of code needed to perform the edit function.
+3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
+
+
 
 ### Delete `Appointment`
 Deletes an `Appointment` entry by indicating their `Index`.
