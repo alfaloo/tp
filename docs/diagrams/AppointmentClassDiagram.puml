@@ -1,0 +1,26 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+package Appointment\n <<Rectangle>>{
+Class "Appointment" as Appointment
+Class Nric
+Class AppointmentDate
+Class AppointmentId
+}
+
+
+
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Appointment
+
+Appointment -down-> "1" Nric : Doctor's
+Appointment -down-> "1" Nric : Patient's
+Appointment -down-> "1" AppointmentDate
+Appointment -down-> "1" AppointmentId
+
+
+@enduml
+

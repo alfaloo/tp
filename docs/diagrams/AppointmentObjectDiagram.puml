@@ -1,0 +1,20 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+object "appointment:Appointment" as appointment
+object "doctorNric:Nric" as doctorNric
+object "patientNric:Nric" as patientNric
+object "appointmentDate:AppointmentDate" as appointmentDate
+object "appointmentId:AppointmentId" as appointmentId
+
+
+appointment -down-> doctorNric : Doctor's\t
+appointment -down-> patientNric : Patient's\t
+appointment -down-> appointmentDate
+appointment -down-> appointmentId
+
+
+@enduml
