@@ -220,7 +220,7 @@ The activity diagram below demonstrates this error handling process in more deta
 * Step 7. The `execute` method in `editCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be edited, and calls the `setDoctorNric` or `setPatientNric` methods to update all relevant appointments related to the patient or doctor.
 * Step 8. Success message gets printed onto the results display to notify user.
 
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteCommand`.
+The sequence diagram below closely describes the interaction between the various components during the execution of the `EditCommand`.
 
 <img src="images/EditPersonSequenceDiagram.png" width="800" />
 
@@ -324,7 +324,7 @@ The sequence diagram below closely describes the interaction between the various
 
 ### Edit `Appointment`
 Edits an `Appointment` entry by indicating their `Index`.
-This command is implemented through the `EditAppointmentCommand` class which extend the `Command` class.
+This command is implemented through the `EditAppointmentCommand` class which extends the `Command` class.
 
 * Step 1. User enters an `editappt` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editAppointmentCommandParser`.
@@ -337,12 +337,12 @@ The activity diagram below demonstrates this error handling process in more deta
 
 <img src="images/EditAppointmentActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `editAppointmentCommandParser` return an instance of `editAppointmentCommand`.
+* Step 4. The `parse` command in `editAppointmentCommandParser` returns an instance of `editAppointmentCommand`.
 * Step 5. The `LogicManager` calls the `execute` method in `editAppointmentCommand`.
 * Step 6. The `execute` method in `editAppointmentCommand` executes and calls `setAppointment` in model to set an updated appointment into the system.
 * Step 7. Success message gets printed onto the results display to notify user.
 
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+The sequence diagram below closely describes the interaction between the various components during the execution of the `EditAppointmentCommand`.
 
 <img src="images/EditAppointmentSequenceDiagram.png" width="800" />
 
@@ -355,7 +355,7 @@ Why is this implemented this way?
 Alternative implementation for consideration
 1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle edits.
 2. This will centralise the behaviours, and reduce the amount of code needed to perform the edit function.
-   3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
+3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
 
 
 
