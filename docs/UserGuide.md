@@ -25,8 +25,13 @@ That being said, even if you do not meet the above criteria, do not fret! Follow
 
 ---------------------------------------------------------
 ## Purpose of UG
-This User Guide (UG) serves as a comprehensive manual to help you familiarize yourself with MediCLI. Whether you are a new user looking to get started or an experienced user seeking to explore advanced features, this guide provides step-by-step instructions, explanations, and tips to help you make the most out of MediCLI.
+This User Guide (UG) guide provides step-by-step instructions, explanations, and tips to help users to make the most out of MediCLI regardless of experience.
 
+#### For new users
+This UG offers a comprehensive overview of the features on offer, and provide you with a step-by-step guide on how to get started.
+
+#### For experienced MediCLI users:
+You may skip to the features section which elaborates on the individual commands that you can run to get the most out of the system.
 
 ## How to use this UG
 -includes information on how users can
