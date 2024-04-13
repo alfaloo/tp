@@ -18,6 +18,19 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimise
 ## Purpose of UG
 
 ## How to use this UG
+As you read through this MediCLI User Guide, you will come across a variety of different types of text formats. The table below will explain to you what they mean.
+
+| Text Format        | What it means                                                                                          |
+|--------------------|--------------------------------------------------------------------------------------------------------|
+| [hyperlink]()      | Text in blue are hyperlinks and will take you to a different page.                                     |
+| `command`          | Text in lowercase with grey background box are MediCLI commands.                                       |
+| `FIELD`            | Text in uppercase with grey background box are inputs to MediCLI commands                              |
+| `[OPTIONAL_FIELD]` | Text in uppercase with grey background box and square brackets are optional inputs to MediCLI commands |
+
+Take note of these text-boxes, as they give you important information for using MediCLI.
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Info call-outs give you information about MediCLI that you can take note of!</div>
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: Danger call-outs like this contain dangerous actions you should remember when using MediCLI to avoid errors!</div>
 
 --------------------------------------------------------------------------------------------------------------------
 ## Key Product Information
@@ -51,6 +64,19 @@ the command-line interface (CLI).]
 
 ### How to use the command line interface (CLI)
 
+MediCLI is operated using typed commands to the command line interface (CLI). Do not worry if you do not understand CLI yet; Here we will explain to you the formats of text commands and how to use them.
+
+![Ui](images/cli_format.png)
+
+| CLI Format        | What it means                                                                                                                                                                                                                                                        |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Command           | The command tells MediCLI what action you want to perform.                                                                                                                                                                                                           |
+| Index             | Certain MediCLI commands have an `INDEX` field, which is a number that is assigned to a particular patient, doctor or appointment. Index must be larger than 1 and can be up to the maximum number of patients/doctors or appointments as listed in the MediCLI GUI. |
+| Parameter Prefix  | Fields typically have a prefix like `i/` or `n/` followed by the field content. This tells MediCLI what field you are entering.                                                                                                                                      |
+| Command Parameter | The command parameter is the parameter prefix followed by field content. For example, the command parameter to enter NRIC would be `i/S1234567A`                                                                                                                     |
+
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Not all MediCLI commands have fields! For example, the command to clear all data is simply `clear`.</div>
+
 ### Initial start-up and sample use-case
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -67,10 +93,6 @@ the command-line interface (CLI).]
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
-
-<div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
-<div markdown="span" class="alert alert-info">:information_source: **INFO**: Info call-outs give you information about MediCLI that you can take note of!</div>
-<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: Danger call-outs like this contain dangerous actions you should remember when using MediCLI to avoid errors!</div>
 
 ## Features
 
