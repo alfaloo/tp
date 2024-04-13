@@ -10,7 +10,7 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimise
 ## Who can benefit from MediCLI?
 [Target audience]
 
-
+## Table of Contents
 * Table of Contents
 {:toc}
 
@@ -124,6 +124,7 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 | Parameter Prefix  | Fields typically have a prefix like `i/` or `n/` followed by the field content. This tells MediCLI what field you are entering.                                                                                                                                      |
 | Command Parameter | The command parameter is the parameter prefix followed by field content. For example, the command parameter to enter NRIC would be `i/S1234567A`                                                                                                                     |
 
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: If you forget the command foramt, you can simply type the command word and press enter. MediCLI will prompt you with the format and an example.</div>
 <div markdown="span" class="alert alert-info">:information_source: **INFO**: Not all MediCLI commands have fields! For example, the command to clear all data is simply `clear`.</div>
 
 ### Quick Tutorial on a Sample Use Case
