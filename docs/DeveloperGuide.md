@@ -666,7 +666,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ## Planned Enhancements
 
-The MediCLI development team acknowledges the presense of known feature flaws in our system.
+The MediCLI development team (consisting of 5 members) acknowledges the presense of known feature flaws in our system.
 Thus, we have planned the following 10 enhancements to be added in the near future.
 Please find them organised into their respective categories.
 
@@ -677,6 +677,8 @@ Please find them organised into their respective categories.
 Currently, the MediCLI system only stores the date and start time of an appointment.
 However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
 This is so that the doctor can be safely booked by another patient without worrying about potential clashes in appointment timings.
+* <b>Updated Command Format</b> - `addappt sdt/STARTDATETIME [edt/ENDDATETIME] dn/DOCTORNRIC pn/PATIENTNRIC`
+* <b>Example Input</b> - `addappt sdt/2024-05-20 10:00 edt/2024-05-20 11:00 dn/S1234567A pn/S1234567B`
 
 2. More robust appointment timing validation.
 
@@ -689,6 +691,9 @@ Thus, we plan to implement a more robust appointment validation system to ensure
 Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
 However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
 Thus, we plan to add a label (just like the patient/doctor labels) in the top right corner of each appointment card to help better distinguish them.
+* <b>New Command Format</b> - `markappt index s/STATUS` (`STATUS` can be any one of {`completed`, `missed`})
+* <b>Example Input</b> - `markappt 1 s/completed`
+* <b>Example Input</b> - `markappt 2 s/missed`
 
 ### Parameter Checking Enhancements
 
@@ -732,12 +737,15 @@ We plan on standardising these fields by automatically capitalising the users' i
 Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
 However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
 (e.g. when searching for a person by full name). In the future, we plan to add more advanced search options to allow for easy querying of information.
+* <b>Updated Command Format</b> - `find t/TYPE KEYWORD`, `patient t/TYPE KEYWORD`, `doctor t/TYPE KEYWORD` (`TYPE` can be any one of {`full`, `partial`}).
+* <b>Example Input</b> - `find t/full John Doe`
+* <b>Example Input</b> - `doctor t/partial Smith Li`
 
 10. More detailed error messages.
 
 Some of the current error messages are not the most informative
 (e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
-To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions.
+To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions, e.g. `Please make sure the NRIC provided belongs to a person of the correct type as indicated by the prefix.`.
 
 
 --------------------------------------------------------------------------------------------------------------------
