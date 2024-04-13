@@ -1,6 +1,6 @@
 ---
 layout: page
-title: User Guide
+title: MediCLI User Guide
 ---
 
 ## Welcome to MediCLI!
@@ -34,11 +34,19 @@ This UG offers a comprehensive overview of the features on offer, and provide yo
 You may skip to the features section which elaborates on the individual commands that you can run to get the most out of the system.
 
 ## How to use this UG
--includes information on how users can
-effectively navigate the document, clarifies
-the meaning of icons and formatting used,
-and provides guidance on understanding
-features, functions, or command
+As you read through this MediCLI User Guide, you will come across a variety of different types of text formats. The table below will explain to you what they mean.
+
+| Text Format        | What it means                                                                                          |
+|--------------------|--------------------------------------------------------------------------------------------------------|
+| [hyperlink]()      | Text in blue are hyperlinks and will take you to a different page.                                     |
+| `command`          | Text in lowercase with grey background box are MediCLI commands.                                       |
+| `FIELD`            | Text in uppercase with grey background box are inputs to MediCLI commands                              |
+| `[OPTIONAL_FIELD]` | Text in uppercase with grey background box and square brackets are optional inputs to MediCLI commands |
+
+Take note of these text-boxes, as they give you important information for using MediCLI.
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Info call-outs give you information about MediCLI that you can take note of!</div>
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: Danger call-outs like this contain dangerous actions you should remember when using MediCLI to avoid errors!</div>
 
 --------------------------------------------------------------------------------------------------------------------
 ## Key Product Information
@@ -69,48 +77,109 @@ On top of the primary entities and operations highlighted above, MediCLI also pr
 
 
 ## Quick start Guide
-[-offers detailed information on how users
-can get started, encompassing installation
-instructions, compatibility with different
-operating systems, elements of the graphical
-user interface (GUI), and a tutorial on using
-the command-line interface (CLI).]
 
-### Compatibility
-[OS]
+Ready to step into the world of MediCLI? This section will provide detailed information on how users can get started,
+which includes basic system requirements, installation instructions, overview of the main window,
+and a tutorial on using the command-line interface (CLI).
 
-### Installation
+### System Compatibility
 
-1. Ensure you have Java `11` or above installed in your Computer.
+MediCLI is written with the Java programming language on the backend and JavaFX on the front end.
+Therefore, a device with <b>Java version 11 or above and JavaFX version 17 or above</b> installed is required to run MediCLI.
+
+Compatible Operating Systems:
+* Any device running Windows, macOS, or Ubuntu with sufficient Java and JavaFX compatibility.
+
+Recommended Minimum System Requirements:
+* 2-core CPU running at 2.40 GHz
+* 4GB RAM
+* 2GB free disc space
+
+### Installation Instructions
+
+1. Please make sure the computer you are using meets the system compatibility specified above.
 
 1. Download the latest `MediCLI.jar` from [here](https://github.com/AY2324S2-CS2103T-T15-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your MediCLI.
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: The MediCLI jar file can be found at the bottom of the release notes</div>
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediCLI.jar` command to run the application.<br>
+1. We recommend you to copy the file into the folder you want to use as the _home folder_ for MediCLI. This is because running the application will create additional storage and logging files.
+
+1. Congratulations! You now have MediCLI successfully downloaded on your computer.
+
+### Starting up MediCLI
+
+Once you have installed MediCLI onto your computer (refer to the sub-section above), navigate to the instruction specific to your operating system below.
+
+#### Windows
+
+1. Open file explorer and navigate to the home folder containing the MediCLI jar file.
+
+2. Double-click on the MediCLI application and it should start up!<br>
+
+    ![Ui](images/WindowsStartup.png)
+
+#### macOS
+
+1. Open finder and navigate to the home folder containing the MediCLI jar file.
+
+2. Double-click on the MediCLI application and it should start up!<br>
+
+    ![Ui](images/macOSStartup.png)
+
+#### CLI Alternative Solution
+
+1. Open a command terminal, `cd` into the home folder containing the MediCLI jar file, and use the `java -jar MediCLI.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+
+   ![Ui](images/InitialState.png)
+
+### Overview of MediCLI Main Window
+
+MediCLI has 4 primary components in its main window. Detailed descriptions of each can be found below.
+
+![Ui](images/GUI.png)
+
+<b>Command Input</b> - This is where you will type your commands.
+
+<b>Results Display</b> - MediCLI will respond to you here with either a success message or a detailed description of what went wrong.
+
+<b>Persons Panel</b> - This is where you will see a list of the filtered patients and patients.
+
+<b>Appointments Panel</b> - This is where you will see a list of the filtered patients and patients.
 
 ### How to use the command line interface (CLI)
 
-### Initial start-up and sample use-case
+MediCLI is operated using typed commands to the command line interface (CLI). Do not worry if you do not understand CLI yet; Here we will explain to you the formats of text commands and how to use them.
+
+![Ui](images/cli_format.png)
+
+| CLI Format        | What it means                                                                                                                                                                                                                                                        |
+|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Command           | The command tells MediCLI what action you want to perform.                                                                                                                                                                                                           |
+| Index             | Certain MediCLI commands have an `INDEX` field, which is a number that is assigned to a particular patient, doctor or appointment. Index must be larger than 1 and can be up to the maximum number of patients/doctors or appointments as listed in the MediCLI GUI. |
+| Parameter Prefix  | Fields typically have a prefix like `i/` or `n/` followed by the field content. This tells MediCLI what field you are entering.                                                                                                                                      |
+| Command Parameter | The command parameter is the parameter prefix followed by field content. For example, the command parameter to enter NRIC would be `i/S1234567A`                                                                                                                     |
+
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: Not all MediCLI commands have fields! For example, the command to clear all data is simply `clear`.</div>
+
+### Quick Tutorial on a Sample Use Case
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+
+    Some example commands you can try (Assuming MediCLI is opened for the first time and is in its initial state with the default sample data):
 
    * `list` : Lists all contacts.
 
-   * `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` : Adds a patient named `John Doe` to the MediCLI system.
+   * `adddoctor i/S1234567B n/Amy Smith d/2003-01-30 p/98765432` : Adds a doctor named `Amy Smith` to the MediCLI system.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `addappt ad/2024-06-09 10:15 dn/S1234567B pn/S1234567A` : Schedules an appointment between the doctor `Amy Smith` and the patient `John Doe`.
 
-   * `clear` : Deletes all contacts.
+   * `delete 2` : Deletes the 2nd person currently listed in the MediCLI system (patient named David Li).
 
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
-
---------------------------------------------------------------------------------------------------------------------
 
 ## Features
 
@@ -118,14 +187,14 @@ the command-line interface (CLI).]
 
 **:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by you.<br>
+  e.g. in `addpatient i/NRIC n/NAME d/DOB p/PHONE`, `NAME` is a parameter which can be used as `n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `edit INDEX [n/NAME] [p/PHONE]` can be used as `edit 1 n/John Doe` or as `edit 1 p/91234567`.
+  e.g `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]` can be used as `edit 1 n/John Doe` or as `edit 1 i/t1234567s`.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -170,7 +239,7 @@ Examples:
 
 ![add_patient_result](images/addPatient.png)
 
-### Adding a Doctor: `adddoctor`                                                                                                                                                                    
+### Adding a Doctor : `adddoctor`                                                                                                                                                                    
                                                                                                                                                                                                     
 Adds a doctor into the MediCLI system.                                                                                                                                                              
                                                                                                                                                                                                     
@@ -193,19 +262,19 @@ Examples:
 
 ![add_doctor_result](images/addDoctor.png)
 
-### Adding an appointment: `addappt`
+### Adding an appointment : `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
-Note that while you cannot create a new appointment with the date/time in the past, appointments that were valid when created but are now past their date will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
-Format: `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC`
+Note that while you cannot create a new appointment with the date and time in the past, appointments that were valid when created but are now past their date and time will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
+Format: `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC`
 
 Field Constraints:
-- `DATE`: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
-- `DOCTOR_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-- `PATIENT_NRIC`: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+- **DATETIME**: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
+- **DOCTOR_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+- **PATIENT_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
 
 Command Constraints:
-- All of the above fields (`DATE`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
+- All of the above fields (`DATETIME`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
 - A doctor with the specified `DOCTOR_NRIC` must already exist in the MediCLI System.
 - A patient with the specified `PATIENT_NRIC` must already exist in the MediCLI System.
 
@@ -215,7 +284,7 @@ Examples:
                   
 ![add_appointment_result](images/addAppointment.png)
 
-### Editing a person: `edit`
+### Editing a person : `edit`
 
 Edits an existing person in the MediCLI system.
 
@@ -225,6 +294,7 @@ Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Note that editing a patient or doctor and not changing any of the values of the parameters is allowed and is considered a valid edit by the system.
+* Note that editing a patient or doctor will recursively update the relevant details of all appointments related to the patient or doctor.
 
 Field Constraints:
 * **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
@@ -241,22 +311,41 @@ Examples:
                                   
 ![add_appointment_result](images/editPerson.png)
 
-### Editing an appointment: `editappt`
-Edits an existing person in the MediCLI system.                                                                                                                                                               
+### Editing an appointment : `editappt`
+Edits an existing appointment in the MediCLI system.                                                                                                                                                               
                                                                                                                                                                                 
-Format: `editappt INDEX ad/DATE`                                                                                                                        
+Format: `editappt INDEX ad/DATETIME`                                                                                                                        
                                                                                                                                                                                 
 * Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointment list. The index **must be a positive integer** 1, 2, 3, …​      
 * Existing values will be updated to the input values.                                                                                                                          
 
 Field Constraints:
-* **DATE** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date must be >= current date and time. i.e. appointment cannot be scheduled in the past.
+* **DATETIME** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
 
 Examples:    
 
-*  `editappt 1 ad/2024-04-09 11:00` Edits the appointment date of the first appointment in the appointment list to `2024-04-09 11:00`                                   
+*  `editappt 1 ad/2025-04-09 11:00` Edits the appointment date and time of the first appointment in the appointment list to `2025-04-09 11:00`                                   
 
 ![add_appointment_result](images/editAppointment.png)
+
+### Finding both doctor and patient by name: `find`
+
+Finds `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
+
+Format for querying patients or doctors: `find KEYWORD [MORE_KEYWORDS]`
+
+Command Constraints:
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name field is searched.
+* Both full words and substrings will be matched e.g. `Han` will match `Hans`
+* Patients and Doctors matching at least one keyword will be returned (i.e. logical 'OR' search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `find John` returns `john` and `John Doe`
+* `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
 ### Querying persons by name: `patient`
 
@@ -274,12 +363,13 @@ Command Constraints:
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
-* `patient John` returns `john` and `John Doe`
-* `patient alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'patient alex david'](images/findAlexDavidResultPatient.png)
+* `patient John David` returns `patient` with name `John Doe` and `patient` with name `David Li`
+* `patient S1234` returns `patient` with `Nric` `S1234567A`, `patient` with `Nric` `S1234765Q`
+* `patient 30 Jan` returns `patient` with `DoB` `30 January 1990`, `patient` with `DoB` `30 January 2001`<br>
+  ![result for 'patient alex david'](images/findPatient.png)
                                    
 
-### Querying persons by name: `doctor`                                     
+### Querying persons by name : `doctor`                                     
                                                                                    
 Finds `Doctors`(s) whose details contain any of the given keywords.               
                                                                                   
@@ -295,12 +385,13 @@ Command Constraints:
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`                             
                                                                                   
 Examples:                                                                         
-* `doctor John` returns `john` and `John Doe`                                     
-* `doctor alex david` returns `Alex Yeoh`, `David Li`<br>                         
-  ![result for 'doctor alex david'](images/findAlexDavidResultDoctor.png)           
+* `doctor John David` returns `doctor` with name `John Doe` and `doctor` with name `David Li`
+* `doctor S1234` returns `doctor` with `Nric` `S1234567A`, `doctor` with `Nric` `S1234765Q`
+* `doctor 30 Jan` returns `doctor` with `DoB` `30 January 1990`, `doctor` with `DoB` `30 January 2001`<br>              
+  ![result for 'doctor alex david'](images/findDoctor.png)           
                                  
 
-### Querying appointments by NRIC `apptforpatient`                                                             
+### Querying appointments by Patient's NRIC : `apptforpatient`                                                             
                                                                                                                                  
 Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
                                                        
@@ -313,16 +404,16 @@ match appointments that involve `S1234562A` and `S1234561A`.
 * Appointments with `Patient`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).         
 
 Example:                                                                                                                
-* `apptforpatient s0123456a` returns all `Appointment` object(s) that `Patient` with NRIC `S0123456A` is involved in.   
+* `apptforpatient s0123456a` returns all `Appointment` entries that `Patient` with `Nric` `S0123456A` is involved in.   
                                                                                                                         
-* Initial State (All `Appointment`s listed)                                                                             
+* All `Appointment`s listed                                                                        
 ![result for 'list'](images/findAppointmentInitialPatient.png)                                      
                                                                                                                         
-* After Querying (Only `Appointment`s with `Patient` of NRIC `S0123456A`)                                               
+* Only `Appointment`s with `Patient` of `Nric` `S0123456A`                                           
 ![result for 'apptforpatient S0123456A'](images/findAppointmentResultPatient.png)                                       
             
 
-### Querying appointments by NRIC `apptfordoctor`                                                                       
+### Querying appointments by Doctor's NRIC : `apptfordoctor`                                                                       
                                                                                                                         
 Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`                                                                         
                                                                                                                         
@@ -338,16 +429,16 @@ match appointments that involve `S1234562A` and `S1234561A`.
 Example:                                                                                                                
 * `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with NRIC `S1234561A` is involved in.     
                                                                                                                         
-* Initial State (All `Appointment`s listed)                                                                             
-![result for 'apptfordoctor S1234561A'](images/findAppointmentInitialDoctor.png)                                       
+* All `Appointment`s listed                                                  
+![result for 'list'](images/findAppointmentInitialDoctor.png)                                       
                                                                                                                         
-* After Querying (Only `Appointment`s with `Doctor` of NRIC `S1234561A`)                                                
+* Only `Appointment`s with `Doctor` of `Nric` `S1234561A`                                               
 ![result for 'apptfordoctor S1234561A'](images/findAppointmentResultDoctor.png)                                        
                                                                                                                         
 
 ### Deleting a doctor or patient : `delete`
 
-Deletes the specified doctor / patient from the mediCLI system. <u>**Note that all associated appointments with this doctor / patient will also be recursively deleted.**</u> Please exercise caution when using the delete command and removing a patient or a doctor from MediCLI, as this action cannot be undone.
+Deletes the specified doctor / patient from the MediCLI system. <u>**Note that all associated appointments with this doctor / patient will also be recursively deleted.**</u> Please exercise caution when using the delete command and removing a patient or a doctor from MediCLI, as this action cannot be undone.
 
 * Deletes the doctor / patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed doctor and patient list.
@@ -358,11 +449,11 @@ Examples:
 * `patient John` followed by `delete 1` deletes the 1st patient in the results of the `patient` search command.
 * `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
 
-![result for 'delete 1'](images/deletePatient.png)
+![result for 'delete 1'](images/deletePerson.png)
 
 ### Deleting appointment : `deleteappt`
 
-Deletes the specified appointment from the mediCLI system.
+Deletes the specified appointment from the MediCLI system.
 
 Format: `deleteappt INDEX`
 
@@ -376,9 +467,9 @@ Examples:
 * `apptfordoctor S1234567B` followed by `deleteappt 2` deletes the 2nd appointment in the results of the `apptfordoctor` search command.
 
 Visual Guide
-* Initial State (All appointments listed after running `list`)                                                                          
+* All appointments listed after running `list`                                                                   
   ![result for 'list'](images/deleteApptInitialState.png)
-* Final State (After running `deleteappt` with `Index` of `1`)                                                               
+* After running `deleteappt` with `Index` of `1`                                                            
   ![result for 'deleteappt 1'](images/deleteApptFinalState.png)
 
 ### Clearing all entries : `clear`                                                                  
@@ -388,6 +479,8 @@ Clears all entries from MediCLI.
 Warning!!! This will wipe the entire data from the system upon being executed. Please be very purposeful and cautious when you use this.
                                                                                                  
 Format: `clear`                                                                                     
+
+![result for 'clear'](images/clear.png)
 
 ### Exiting the program : `exit`
 
@@ -415,11 +508,51 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MediCLI home folder.
 
+**Q**: Can I use MediCLI on different operating systems?<br>
+**A**: Yes, MediCLI is compatible with multiple operating systems as long as you have Java 11 or above installed. You can run it on Windows, macOS, or Linux.
+
+**Q**: Is there a limit to the number of patients, doctors, or appointments I can add to MediCLI?<br>
+**A**: There is no built-in limit to the number of entries you can add to MediCLI. However, the performance may be affected if you add an extremely large number of entries.
+
+**Q**: Can I customise the appearance or theme of the interface in MediCLI?<br>
+**A**: Currently, there is no option to customise the appearance or theme of the interface in MediCLI. It has a default interface optimised for efficiency and usability.
+
+**Q**: Does MediCLI support multi-user access or user authentication?<br>
+**A**: No, MediCLI is designed for single-user access only. It does not have built-in support for multi-user access or user authentication.
+
+**Q**: Can I export data from MediCLI to other formats like CSV or Excel?<br>
+**A**: Currently, there is no built-in feature to export data from MediCLI to other formats. However, you can manually extract data from the JSON file if needed.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+1. **Issue**: When using multiple screens, if the MediCLI application is moved to a secondary screen and later switched to using only the primary screen, the graphical user interface (GUI) may open off-screen upon application launch.
+
+   **Impact**: Users may find it challenging to interact with the application as the GUI is rendered off-screen, making it inaccessible and difficult to use.
+
+   **Workaround**: To resolve this issue, users can delete the preferences.json file generated by the application before launching MediCLI again. This action resets the application preferences, ensuring that the GUI opens within the visible area of the primary screen.
+2. **Issue**: MediCLI may experience performance degradation when handling a large number of entries, such as patients, doctors, or appointments.
+
+   **Impact**: Users may notice slower response times or delays when adding, editing, or deleting entries, especially in cases with a large dataset.
+   
+   **Workaround**: Users can optimise performance by limiting the number of entries stored in MediCLI or by periodically archiving old data to reduce the dataset size.
+3. **Issue**: Editing data directly in the data file may lead to unexpected behavior or data corruption.
+
+   **Impact**: Users who manually edit the JSON data file used by MediCLI may inadvertently introduce errors or inconsistencies, resulting in data loss or application crashes.
+
+   **Workaround**: It's recommended to avoid directly editing the data file unless absolutely necessary. Users should exercise caution and make backups before making any changes to the data file.
+4. **Issue**: MediCLI does not provide built-in data export functionality to formats like CSV or Excel.
+
+   **Impact**: Users may face challenges when trying to export data from MediCLI for analysis or reporting purposes, especially if they rely on external tools or software that require specific file formats.
+
+   **Workaround**: Users can manually extract data from the JSON data file used by MediCLI and convert it to the desired format using third-party tools or scripts. Alternatively, they can explore custom export solutions or request this feature from the developers.
+
+5. **Issue**: When the name entered into the system is too lengthy, MedicCLI truncates the name and adds ellipses.
+
+   **Impact**: Users may face challenges reading or finding long names when reading from MediCLI, especially on smaller displays.
+
+   **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name .
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -429,11 +562,11 @@ Action | Format, Examples
 --------|------------------
 **Add Patient** | `addpatient i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
 **Add Doctor** | `adddoctor i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-**Add Appointment** | `addappt ad/DATE dn/DOCTOR_NRIC pn/PATIENT_NRIC` <br> e.g., `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
+**Add Appointment** | `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC` <br> e.g., `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
 **Clear** | `clear`
 **Delete Person** | `delete INDEX`<br> e.g., `delete 3`
 **Delete Appointment** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
-**Edit Appointment** | `editappt INDEX ad/DATE`<br> e.g.,`editappt 1 ad/2024-04-09`
+**Edit Appointment** | `editappt INDEX ad/DATETIME`<br> e.g.,`editappt 1 ad/2024-04-09 10:10`
 **Edit Person** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
 **Exit** | `exit`
 **Query Patient** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`

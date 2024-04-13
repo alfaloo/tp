@@ -14,7 +14,7 @@ public class AppointmentDateTime {
 
     // Message to output in case constraints are not met
     public static final String MESSAGE_CONSTRAINTS =
-            "Appointment date should be in the format of yyyy-MM-dd HH:mm.";
+            "Appointment date-time should be in the format of yyyy-MM-dd HH:mm.";
 
     // Variable storing appointment date in a local datetime instance
     public final LocalDateTime appointmentDateTime;
@@ -48,8 +48,6 @@ public class AppointmentDateTime {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         try {
             LocalDateTime temp = LocalDateTime.parse(dateStr, formatter);
-            //LocalDate today = LocalDate.now();
-            //return temp.isAfter(today);
         } catch (DateTimeParseException e) {
             return false;
         }
