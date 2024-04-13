@@ -529,140 +529,140 @@ Why is this implemented this way?
 2. The rationale behind excluding substring searches for `appointment`(s) is that if a hospital clerk is searching for a specific `patient`'s scheduled `appointment`(s), the hospital clerk already has the `patient`'s unique `Nric` and hence including substring querying is irrelevant.
 
 
-[//]: # (### \[Proposed\] Undo/redo feature)
+### \[Proposed\] Undo/redo feature
 
-[//]: # ()
-[//]: # (#### Proposed Implementation)
 
-[//]: # ()
-[//]: # (The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:)
+#### Proposed Implementation
 
-[//]: # ()
-[//]: # (* `VersionedMediCLI#commit&#40;&#41;` — Saves the current MediCLI state in its history.)
 
-[//]: # (* `VersionedMediCLI#undo&#40;&#41;` — Restores the previous MediCLI state from its history.)
+The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-[//]: # (* `VersionedMediCLI#redo&#40;&#41;` — Restores a previously undone MediCLI state from its history.)
 
-[//]: # ()
-[//]: # (These operations are exposed in the `Model` interface as `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` and `Model#redoMediCLI&#40;&#41;` respectively.)
+* `VersionedMediCLI#commit()` — Saves the current MediCLI state in its history.
 
-[//]: # ()
-[//]: # (Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.)
+* `VersionedMediCLI#undo()` — Restores the previous MediCLI state from its history.
 
-[//]: # ()
-[//]: # (Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.)
+* `VersionedMediCLI#redo()` — Restores a previously undone MediCLI state from its history.
 
-[//]: # ()
-[//]: # (![UndoRedoState0]&#40;images/UndoRedoState0.png&#41;)
 
-[//]: # ()
-[//]: # (Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI&#40;&#41;`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.)
+These operations are exposed in the `Model` interface as `Model#commitMediCLI()`, `Model#undoMediCLI()` and `Model#redoMediCLI()` respectively.
 
-[//]: # ()
-[//]: # (![UndoRedoState1]&#40;images/UndoRedoState1.png&#41;)
 
-[//]: # ()
-[//]: # (Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI&#40;&#41;`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.)
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-[//]: # ()
-[//]: # (![UndoRedoState2]&#40;images/UndoRedoState2.png&#41;)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI&#40;&#41;`, so the MediCLI state will not be saved into the `mediCLIStateList`.)
+Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.
 
-[//]: # ()
-[//]: # (</div>)
 
-[//]: # ()
-[//]: # (Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI&#40;&#41;`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.)
+![UndoRedoState0](images/UndoRedoState0.png)
 
-[//]: # ()
-[//]: # (![UndoRedoState3]&#40;images/UndoRedoState3.png&#41;)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather)
+Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI()`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
-[//]: # (than attempting to perform the undo.)
 
-[//]: # ()
-[//]: # (</div>)
+![UndoRedoState1](images/UndoRedoState1.png)
 
-[//]: # ()
-[//]: # (The following sequence diagram shows how an undo operation goes through the `Logic` component:)
 
-[//]: # ()
-[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Logic.png&#41;)
+Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI()`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker &#40;X&#41; but due to a limitation of PlantUML, the lifeline reaches the end of diagram.)
 
-[//]: # ()
-[//]: # (</div>)
+![UndoRedoState2](images/UndoRedoState2.png)
 
-[//]: # ()
-[//]: # (Similarly, how an undo operation goes through the `Model` component is shown below:)
 
-[//]: # ()
-[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Model.png&#41;)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI()`, so the MediCLI state will not be saved into the `mediCLIStateList`.
 
-[//]: # ()
-[//]: # (The `redo` command does the opposite — it calls `Model#redoMediCLI&#40;&#41;`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size&#40;&#41; - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.)
+</div>
 
-[//]: # ()
-[//]: # (</div>)
 
-[//]: # ()
-[//]: # (Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` or `Model#redoMediCLI&#40;&#41;`. Thus, the `mediCLIStateList` remains unchanged.)
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.
 
-[//]: # ()
-[//]: # (![UndoRedoState4]&#40;images/UndoRedoState4.png&#41;)
 
-[//]: # ()
-[//]: # (Step 6. The user executes `clear`, which calls `Model#commitMediCLI&#40;&#41;`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.)
+![UndoRedoState3](images/UndoRedoState3.png)
 
-[//]: # ()
-[//]: # (![UndoRedoState5]&#40;images/UndoRedoState5.png&#41;)
 
-[//]: # ()
-[//]: # (The following activity diagram summarizes what happens when a user executes a new command:)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI()` to check if this is the case. If so, it will return an error to the user rather
 
-[//]: # ()
-[//]: # (<img src="images/CommitActivityDiagram.png" width="250" />)
+than attempting to perform the undo.
 
-[//]: # ()
-[//]: # (#### Design considerations:)
 
-[//]: # ()
-[//]: # (**Aspect: How undo & redo executes:**)
+</div>
 
-[//]: # ()
-[//]: # (* **Alternative 1 &#40;current choice&#41;:** Saves the entire MediCLI.)
 
-[//]: # (  * Pros: Easy to implement.)
+The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
-[//]: # (  * Cons: May have performance issues in terms of memory usage.)
 
-[//]: # ()
-[//]: # (* **Alternative 2:** Individual command knows how to undo/redo by)
+![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
 
-[//]: # (  itself.)
 
-[//]: # (  * Pros: Will use less memory &#40;e.g. for `delete`, just save the person being deleted&#41;.)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
-[//]: # (  * Cons: We must ensure that the implementation of each individual command are correct.)
 
-[//]: # ()
-[//]: # (_{more aspects and alternatives to be added}_)
+</div>
 
-[//]: # ()
-[//]: # (### \[Proposed\] Data archiving)
 
-[//]: # ()
-[//]: # (_{Explain here how the data archiving feature will be implemented}_)
+Similarly, how an undo operation goes through the `Model` component is shown below:
+
+
+![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
+
+
+The `redo` command does the opposite — it calls `Model#redoMediCLI()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size() - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+
+</div>
+
+
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI()`, `Model#undoMediCLI()` or `Model#redoMediCLI()`. Thus, the `mediCLIStateList` remains unchanged.
+
+
+![UndoRedoState4](images/UndoRedoState4.png)
+
+
+Step 6. The user executes `clear`, which calls `Model#commitMediCLI()`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.
+
+
+![UndoRedoState5](images/UndoRedoState5.png)
+
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+
+<img src="images/CommitActivityDiagram.png" width="250" />
+
+
+#### Design considerations:
+
+
+**Aspect: How undo & redo executes:**
+
+
+* **Alternative 1 (current choice):** Saves the entire MediCLI.
+
+  * Pros: Easy to implement.
+
+  * Cons: May have performance issues in terms of memory usage.
+
+
+* **Alternative 2:** Individual command knows how to undo/redo by
+
+  itself.
+
+  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+
+  * Cons: We must ensure that the implementation of each individual command are correct.
+
+
+_{more aspects and alternatives to be added}_
+
+
+### \[Proposed\] Data archiving
+
+
+_{Explain here how the data archiving feature will be implemented}_
 
 ## Planned Enhancements
 

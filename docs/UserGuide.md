@@ -145,6 +145,9 @@ MediCLI has 4 primary components in its main window. Detailed descriptions of ea
 
 <b>Results Display</b> - MediCLI will respond to you here with either a success message or a detailed description of what went wrong.
 
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: The results display may be too narrow to show the entire message. You can scroll in the results display to see the whole message.
+All error messages due to invalid formatting will end with an example usage.</div>
+
 <b>Persons Panel</b> - This is where you will see a list of the filtered patients and patients.
 
 <b>Appointments Panel</b> - This is where you will see a list of the filtered patients and patients.
@@ -167,15 +170,19 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 
 ### Quick Tutorial on a Sample Use Case
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>'
 
-    Some example commands you can try (Assuming MediCLI is opened for the first time and is in its initial state with the default sample data):
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.</div>
+
+Some example commands you can try (Assuming MediCLI is opened for the first time and is in its initial state with the default sample data):
 
    * `list` : Lists all contacts.
 
    * `adddoctor i/S1234567B n/Amy Smith d/2003-01-30 p/98765432` : Adds a doctor named `Amy Smith` to the MediCLI system.
 
    * `addappt ad/2024-06-09 10:15 dn/S1234567B pn/S1234567A` : Schedules an appointment between the doctor `Amy Smith` and the patient `John Doe`.
+
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: MediCLI cannot schedule an appointment in the past, so change the date-time field if necessary.</div>
 
    * `delete 2` : Deletes the 2nd person currently listed in the MediCLI system (patient named David Li).
 
@@ -201,7 +208,6 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
 ## Person Related Commands
@@ -301,6 +307,8 @@ Examples:
 
 ![result for 'find John David'](images/findPerson.png)
 
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: You can use the <code>find</code> command to filter people for commands that require a person's `INDEX`.</div>
+
 ### Querying patients by name : `patient`
 
 Finds `Patient`(s) whose details contain any of the given keywords.
@@ -371,6 +379,8 @@ Adds an appointment to MediCLI. Appointments are between a doctor with the speci
 Note that while you cannot create a new appointment with the date and time in the past, appointments that were valid when created but are now past their date and time will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
 
 Format: `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC`
+
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: You can use the <code>patient</code> and <code>doctor</code> commands to retrieve their NRIC number if you only remember their name.</div>
 
 Field Constraints:
 - **DATETIME**: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
