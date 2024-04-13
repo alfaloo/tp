@@ -4,7 +4,7 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 
 start
-:User enters command to appointment;
+:User enters command to delete appointment;
 
 if () then ([command is invalid])
     :Show error message\nfor invalid command;
