@@ -4,11 +4,21 @@ title: MediCLI User Guide
 ---
 
 ## Welcome to MediCLI!
-[Welcome note]
-MediCLI is a **desktop app for managing persons involved in a hospital, optimised for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). Targeted at fast typing hospital clerks, MediCLI allows them to manage doctors, patients and appointments faster than traditional GUI apps.
+Welcome to MediCLI - the solution to all your hospital management needs! 
+
+MediCLI is a desktop-based application that streamlines the management of patients, doctors, and appointments within a hospital. By combining the efficiency of a Command Line Interface (CLI) with an intuitive and comprehensive visual display, MediCLI presents itself as a robust solution for hospital clerks and administrators such as yourself. This guide will equip you with all the knowledge to become a MediCLI power-user and truly transform your hospital management experience.
+
 
 ## Who can benefit from MediCLI?
-[Target audience]
+MediCLI is tailored built for hospital clerks/administrators or anyone who manages the relevant stakeholders in a hospital setting and seeks to optimize their workflow.  
+
+### Prior knowledge:
+MediCLI will be particularly beneficial for you are either (or both of):
+- a fast-typer or,
+- and familar with a CLI,
+enabling you to get up to speed and perform tasks swiftly and efficiently.
+
+That being said, even if you do not meet the above criteria, do not fret! Follow this guide, practice a little, and in only a couple of days you too can take full advantage of MediCLI's features to manage doctors, patients, and appointments seamlessly.
 
 ## Table of Contents
 * Table of Contents
@@ -16,6 +26,13 @@ MediCLI is a **desktop app for managing persons involved in a hospital, optimise
 
 ---------------------------------------------------------
 ## Purpose of UG
+This User Guide (UG) guide provides step-by-step instructions, explanations, and tips to help users to make the most out of MediCLI regardless of experience.
+
+#### For new users
+This UG offers a comprehensive overview of the features on offer, and provide you with a step-by-step guide on how to get started.
+
+#### For experienced MediCLI users:
+You may skip to the features section which elaborates on the individual commands that you can run to get the most out of the system.
 
 ## How to use this UG
 As you read through this MediCLI User Guide, you will come across a variety of different types of text formats. The table below will explain to you what they mean.
@@ -34,10 +51,31 @@ Take note of these text-boxes, as they give you important information for using 
 
 --------------------------------------------------------------------------------------------------------------------
 ## Key Product Information
-[provides a user-centric statement detailing
-product information, including product
-description and an overview of main
-features.]
+
+### Product Description
+MediCLI is a Java-based desktop-application that allows you to manage your hospital with ease. Let's now explore the product in more detail.
+
+### Overview of main features
+
+#### Entities that you can manage with MediCLI
+MediCLI allows you to manage three types of entities that are common in a hospital setting:
+- **Doctors**: The doctors employed by your hospital
+- **Patients**:  The patients that are treated at your hospital
+- **Appointments**: A medical appointment between a doctor and a patient that takes place at a specified time
+
+#### Operations that you can perform with MediCLI
+MediCLI allows you to perform the following operations of each of the entities above:
+- Add: Add entities to the application
+- Delete: Delete entities from the application
+- Query: Lookup an entity in the application based on some criteria
+- Edit: Edit the attributes of entities
+
+#### Other notable features
+On top of the primary entities and operations highlighted above, MediCLI also provides the following capabilities:
+- Persistent storage of information across restarts of the application
+- A clean and minimalist display to view relevant information on entities
+- Thorough error messages and in-app prompts guiding you on how to overcome any issues you may run into.
+
 
 ## Quick Start Guide
 
