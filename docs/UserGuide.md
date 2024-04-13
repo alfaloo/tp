@@ -29,7 +29,7 @@ features.]
 ## Quick start Guide
 
 Ready to step into the world of MediCLI? This section will provide detailed information on how users can get started,
-which includes basic system requirements, installation instructions, overview of the graphical interface (GUI),
+which includes basic system requirements, installation instructions, overview of the main window,
 and a tutorial on using the command-line interface (CLI).
 
 ### System Compatibility
@@ -84,9 +84,9 @@ Once you have installed MediCLI onto your computer (refer to the sub-section abo
 
    ![Ui](images/InitialState.png)
 
-### Overview of the graphical user interface (GUI)
+### Overview of MediCLI Main Window
 
-MediCLI has 4 main components in its graphical user interface. Detailed descriptions of each can be found below.
+MediCLI has 4 primary components in its main window. Detailed descriptions of each can be found below.
 
 ![Ui](images/GUI.png)
 
