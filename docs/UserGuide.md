@@ -477,8 +477,8 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 **Q**: Is there a limit to the number of patients, doctors, or appointments I can add to MediCLI?<br>
 **A**: There is no built-in limit to the number of entries you can add to MediCLI. However, the performance may be affected if you add an extremely large number of entries.
 
-**Q**: Can I customize the appearance or theme of the interface in MediCLI?<br>
-**A**: Currently, there is no option to customize the appearance or theme of the interface in MediCLI. It has a default interface optimized for efficiency and usability.
+**Q**: Can I customise the appearance or theme of the interface in MediCLI?<br>
+**A**: Currently, there is no option to customise the appearance or theme of the interface in MediCLI. It has a default interface optimised for efficiency and usability.
 
 **Q**: Does MediCLI support multi-user access or user authentication?<br>
 **A**: No, MediCLI is designed for single-user access only. It does not have built-in support for multi-user access or user authentication.
@@ -499,7 +499,7 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 
    **Impact**: Users may notice slower response times or delays when adding, editing, or deleting entries, especially in cases with a large dataset.
    
-   **Workaround**: Users can optimize performance by limiting the number of entries stored in MediCLI or by periodically archiving old data to reduce the dataset size.
+   **Workaround**: Users can optimise performance by limiting the number of entries stored in MediCLI or by periodically archiving old data to reduce the dataset size.
 3. **Issue**: Editing data directly in the data file may lead to unexpected behavior or data corruption.
 
    **Impact**: Users who manually edit the JSON data file used by MediCLI may inadvertently introduce errors or inconsistencies, resulting in data loss or application crashes.
@@ -510,6 +510,12 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
    **Impact**: Users may face challenges when trying to export data from MediCLI for analysis or reporting purposes, especially if they rely on external tools or software that require specific file formats.
 
    **Workaround**: Users can manually extract data from the JSON data file used by MediCLI and convert it to the desired format using third-party tools or scripts. Alternatively, they can explore custom export solutions or request this feature from the developers.
+
+5. **Issue**: When the name entered into the system is too lengthy, MedicCLI truncates the name and adds ellipses.
+
+   **Impact**: Users may face challenges reading or finding long names when reading from MediCLI, especially on smaller displays.
+
+   **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name .
 
 --------------------------------------------------------------------------------------------------------------------
 
