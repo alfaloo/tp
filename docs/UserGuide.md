@@ -40,27 +40,76 @@ description and an overview of main
 features.]
 
 ## Quick start Guide
-[-offers detailed information on how users
-can get started, encompassing installation
-instructions, compatibility with different
-operating systems, elements of the graphical
-user interface (GUI), and a tutorial on using
-the command-line interface (CLI).]
 
-### Compatibility
-[OS]
+Ready to step into the world of MediCLI? This section will provide detailed information on how users can get started,
+which includes basic system requirements, installation instructions, overview of the main window,
+and a tutorial on using the command-line interface (CLI).
 
-### Installation
+### System Compatibility
 
-1. Ensure you have Java `11` or above installed in your Computer.
+MediCLI is written with the Java programming language on the backend and JavaFX on the front end.
+Therefore, a device with <b>Java version 11 or above and JavaFX version 17 or above</b> installed is required to run MediCLI.
+
+Compatible Operating Systems:
+* Any device running Windows, macOS, or Ubuntu with sufficient Java and JavaFX compatibility.
+
+Recommended Minimum System Requirements:
+* 2-core CPU running at 2.40 GHz
+* 4GB RAM
+* 2GB free disc space
+
+### Installation Instructions
+
+1. Please make sure the computer you are using meets the system compatibility specified above.
 
 1. Download the latest `MediCLI.jar` from [here](https://github.com/AY2324S2-CS2103T-T15-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your MediCLI.
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: The MediCLI jar file can be found at the bottom of the release notes</div>
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediCLI.jar` command to run the application.<br>
+1. We recommend you to copy the file into the folder you want to use as the _home folder_ for MediCLI. This is because running the application will create additional storage and logging files.
+
+1. Congratulations! You now have MediCLI successfully downloaded on your computer.
+
+### Starting up MediCLI
+
+Once you have installed MediCLI onto your computer (refer to the sub-section above), navigate to the instruction specific to your operating system below.
+
+#### Windows
+
+1. Open file explorer and navigate to the home folder containing the MediCLI jar file.
+
+2. Double-click on the MediCLI application and it should start up!<br>
+
+    ![Ui](images/WindowsStartup.png)
+
+#### macOS
+
+1. Open finder and navigate to the home folder containing the MediCLI jar file.
+
+2. Double-click on the MediCLI application and it should start up!<br>
+
+    ![Ui](images/macOSStartup.png)
+
+#### CLI Alternative Solution
+
+1. Open a command terminal, `cd` into the home folder containing the MediCLI jar file, and use the `java -jar MediCLI.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+
+   ![Ui](images/InitialState.png)
+
+### Overview of MediCLI Main Window
+
+MediCLI has 4 primary components in its main window. Detailed descriptions of each can be found below.
+
+![Ui](images/GUI.png)
+
+<b>Command Input</b> - This is where you will type your commands.
+
+<b>Results Display</b> - MediCLI will respond to you here with either a success message or a detailed description of what went wrong.
+
+<b>Persons Panel</b> - This is where you will see a list of the filtered patients and patients.
+
+<b>Appointments Panel</b> - This is where you will see a list of the filtered patients and patients.
 
 ### How to use the command line interface (CLI)
 
@@ -77,18 +126,19 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 
 <div markdown="span" class="alert alert-info">:information_source: **INFO**: Not all MediCLI commands have fields! For example, the command to clear all data is simply `clear`.</div>
 
-### Initial start-up and sample use-case
+### Quick Tutorial on a Sample Use Case
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+
+    Some example commands you can try (Assuming MediCLI is opened for the first time and is in its initial state with the default sample data):
 
    * `list` : Lists all contacts.
 
-   * `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` : Adds a patient named `John Doe` to the MediCLI system.
+   * `adddoctor i/S1234567B n/Amy Smith d/2003-01-30 p/98765432` : Adds a doctor named `Amy Smith` to the MediCLI system.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+   * `addappt ad/2024-06-09 10:15 dn/S1234567B pn/S1234567A` : Schedules an appointment between the doctor `Amy Smith` and the patient `John Doe`.
 
-   * `clear` : Deletes all contacts.
+   * `delete 2` : Deletes the 2nd person currently listed in the MediCLI system (patient named David Li).
 
    * `exit` : Exits the app.
 
