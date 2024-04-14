@@ -235,7 +235,7 @@ Examples:
 
 ![add_patient_result](images/addPatient.png)
 
-### Adding a poctor : `adddoctor`                                                                                                                                                                    
+### Adding a doctor : `adddoctor`                                                                                                                                                                    
                                                                                                                                                                                                     
 Adds a doctor into the MediCLI system.                                                                                                                                                              
                                                                                                                                                                                                     
@@ -588,25 +588,42 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 
    **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name .
 
+6. **Issue**: When the name entered into the system contains acute accents (e.g `Aimée`), Chinese characters or dash `-`, the system will reject it.
+
+   **Impact**: Users may face challenges entering information of patient / doctors with foreign names into MediCLI.
+
+   **Workaround**: Users can replace the accented characters with normal alphabets (e.g `é` with `e`), omit the dash and romanize Chinese names.
+
+7. **Issue**: MediCLI will only accept Singaporean NRIC
+
+   **Impact**: Users may face challenges entering information of patients who are not from Singapore (i.e those without NRIC).
+
+   **Workaround**: There is currently no workaround, but the MediCLI development team will add this feature enhancement in the near future.
+8. **Issue**: MediCLI currently allows scheduling of appointments between the same doctor but different patients at identical times (i.e overlapping appointments).
+
+    **Impact**: Users may schedule two or more patients with the same doctor at the same time when the doctor can only see one patient at any given time.
+
+    **Workaround**: Users can first look up the appointments of the doctor and visually confirming the doctor is free at given time before scheduling a patient with them.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
 Action | Format, Examples
 --------|------------------
-**[Add Patient](#Adding a Patient: `addpatient`)** | `addpatient i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-**[Add Doctor](#Adding a Doctor: `adddoctor`)** | `adddoctor i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
-**[Edit Person](#Editing a person: `edit`)** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
-**[Find Person](#Finding both doctor and patient by name: `find`)** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Doe Li`
-**[Query Patient](#Querying patients by name: `patient`)** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
-**[Query Doctor](#Querying doctors by name: `doctor`)** | `doctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `doctor John Doe`
-**[Delete Person](#Deleting a doctor or patient: `delete`)** | `delete INDEX`<br> e.g., `delete 3`
-**[Add Appointment](#Adding an appointment: `addappt`)** | `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC` <br> e.g., `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
-**[Edit Appointment](#Editing an appointment: `editappt`)** | `editappt INDEX ad/DATETIME`<br> e.g.,`editappt 1 ad/2024-04-09 10:10`
-**[Query Appointment by Patient](#Querying appointments by patient's NRIC: `apptforpatient` )** | `apptforpatient KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptforpatient S1234567A`
-**[Query Appointment by Doctor](#Querying appointments by doctor's NRIC: `apptfordoctor`   )** | `apptfordoctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptfordoctor S7654321A`
-**[Delete Appointment](#Deleting appointment: `deleteappt`)** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
-**[Help](#Viewing help: `help`)** | `help`
-**[List](#Listing all persons: `list`)** | `list`
-**[Clear](#Clearing all entries: `clear`)** | `clear`
-**[Exit](#Exiting the program: `exit`)** | `exit`
+**[Add Patient](#adding-a-patient--addpatient)** | `addpatient i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+**[Add Doctor](#adding-a-doctor--adddoctor)** | `adddoctor i/NRIC n/NAME d/DOB p/PHONE_NUMBER` <br> e.g., `adddoctor i/S1234567A n/John Doe d/2003-01-30 p/98765432`
+**[Edit Person](#editing-a-person--edit)** | `edit INDEX [n/NAME] [p/PHONE] [i/NRIC] [d/DOB]`<br> e.g.,`edit 1 p/91234567 n/Betsy Crower`
+**[Find Person](#finding-both-doctor-and-patient-by-name--find)** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Doe Li`
+**[Query Patient](#querying-patients-by-name--patient)** | `patient KEYWORD [MORE_KEYWORDS]`<br> e.g., `patient James Jake`
+**[Query Doctor](#querying-doctors-by-name--doctor)** | `doctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `doctor John Doe`
+**[Delete Person](#deleting-a-doctor-or-patient--delete)** | `delete INDEX`<br> e.g., `delete 3`
+**[Add Appointment](#adding-an-appointment--addappt)** | `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC` <br> e.g., `addappt ad/2024-08-11 23:50 dn/S1234567A pn/S1234567B`
+**[Edit Appointment](#editing-an-appointment--editappt)** | `editappt INDEX ad/DATETIME`<br> e.g.,`editappt 1 ad/2024-04-09 10:10`
+**[Query Appointment by Patient](#querying-appointments-by-patients-nric--apptforpatient)** | `apptforpatient KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptforpatient S1234567A`
+**[Query Appointment by Doctor](#querying-appointments-by-doctors-nric--apptfordoctor)** | `apptfordoctor KEYWORD [MORE_KEYWORDS]`<br> e.g., `apptfordoctor S7654321A`
+**[Delete Appointment](#deleting-appointment--deleteappt)** | `deleteappt INDEX`<br> e.g., `deleteappt 3`
+**[Help](#viewing-help--help)** | `help`
+**[List](#listing-all-persons--list)** | `list`
+**[Clear](#clearing-all-entries--clear)** | `clear`
+**[Exit](#exiting-the-program--exit)** | `exit`
