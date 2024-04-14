@@ -58,5 +58,5 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](https://www.linkedin.com/in/eugene-sim-866677188/)]
 
 * Role: Documentation, Testing, Intellij / Github Expert
-* Responsibilities: Ensures the testing of the project is done properly and on time. Responsible for the quality of various project documents. 
+* Responsibilities: Ensures the testing of the project is done properly and on time. Responsible for the quality of various project documents.
 * Helps other team member with matters related to Intellij, Github and Sourcetree tool.

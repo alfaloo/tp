@@ -156,7 +156,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Add a `Patient` or `Doctor`
-<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation. 
+<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
 This reduces repetition of information and increases clarity.</i>
 
 Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
@@ -297,8 +297,8 @@ The sequence diagram below closely describes the interaction between the various
 
 #### Context and thought process behind implementation:
 
-* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors. 
-* The idea is that at the end of the day, the appointment is simply another type of entry being tracked. 
+* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors.
+* The idea is that at the end of the day, the appointment is simply another type of entry being tracked.
 * Nevertheless, looking at it from a UI perspective, we would want to differentiate the appointment entries from the person entries.
 * Hence, while similar in terms of the code and functionality, a lot of the infrastructure to handle appointments was built parallel to the one for persons.
 * For instance, there is a separate `UniqueAppointmentList` class for storing and manipulating appointments that functions very similar to the equivalent list for persons.
@@ -317,7 +317,7 @@ The sequence diagram below closely describes the interaction between the various
 #### Alternatives considered
 * One key alternative we looked at was implementing the appointment as part of the same list i.e. `UniquePersonList`.
 * This would mean changing the `person` class to a different one such as `entry` and have all three of `patient` , `doctor` and `appointment` extend from the person class.
-* We decided against this because we thought that it was not the most OOP friendly solution and just didn't feel right or justifiable. 
+* We decided against this because we thought that it was not the most OOP friendly solution and just didn't feel right or justifiable.
 * Furthermore, it might get confusing for the user if everything was dumped into the same list of them to sieve through. Perhaps the user was only concerned with looking up patients in which case the appointments would simple be added clutter.
 * The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
 
@@ -937,7 +937,7 @@ Use case ends.
 
 ## **Appendix: Instructions for Manual Testing**
 
-This section provides guidance for testers to navigate through the user-testable features of MediCLI. It includes important test inputs along with the expected test results that can be copied and pasted into the app for testing purposes. 
+This section provides guidance for testers to navigate through the user-testable features of MediCLI. It includes important test inputs along with the expected test results that can be copied and pasted into the app for testing purposes.
 
 <div markdown="span" class="alert alert-info">:information_source: **INFO**: These instructions only provide a starting point for testers to work on. Testers are expected to do more *exploratory* testing.</div>
 
@@ -946,20 +946,20 @@ This section provides guidance for testers to navigate through the user-testable
 #### Initial launch
 Steps:
 1. Download the jar file and copy into an empty folder.
-2. Double-click the jar file. 
+2. Double-click the jar file.
 
-Expected Outcome: 
-* Shows the GUI with a set of sample contacts. 
+Expected Outcome:
+* Shows the GUI with a set of sample contacts.
 * The window size may not be optimum.
 
 #### Saving window preferences
 Steps:
-1. Resize the window to an optimum size. 
-2. Move the window to a different location. 
+1. Resize the window to an optimum size.
+2. Move the window to a different location.
 3. Close the window.
 4. Re-launch the app by double-clicking the jar file.<br>
 
-Expected Outcome: 
+Expected Outcome:
 * The most recent window size and location is retained.
                                                          
 #### Closing MediCLI
@@ -981,7 +981,7 @@ Steps:
 
 Valid Inputs:
 * Valid NRIC, name, DOB, and phone number.
-* Example: `addpatient i/S1234567A n/David Li d/2000-01-01 p/98765432` 
+* Example: `addpatient i/S1234567A n/David Li d/2000-01-01 p/98765432`
 
 Expected Outcome:
 * Patient is successfully added to the system.
@@ -1054,57 +1054,56 @@ Invalid Inputs:
 * Example: `find 123`
 
 Expected Error:
-* Results display indicates '0 persons listed', and the Persons panel is empty. 
+* Results display indicates '0 persons listed', and the Persons panel is empty.
                 
 #### Finding Persons by all Fields : `patient`, `doctor`
-Steps:                                                                              
-1. Use the `patient` command with keywords to search for patients only.    
+Steps:
+1. Use the `patient` command with keywords to search for patients only.
 2. Ensure the command returns expected results based on the provided keywords.
 3. Similarly, use the `doctor` command to search for doctors.
-4. Try different combinations of keywords and verify the search results.           
+4. Try different combinations of keywords and verify the search results.
                                                                                    
-Valid Inputs:                                                                      
-* Keywords exactly matching or substring matching existing persons' nric, name, date of birth, or phone number.                                       
+Valid Inputs:
+* Keywords exactly matching or substring matching existing persons' nric, name, date of birth, or phone number.
 * Example: `patient S1234`
 * Example: `patient Doe`
 * Example: `doctor 30 Jan`
 * Example: `doctor 98765432`
                                                                                    
-Expected Outcome:                                                                  
-* List of patients or doctors exactly matching or substring matching the keywords is displayed.                              
-                                                                                   
-Invalid Inputs:                                                                    
-* No matching keywords or invalid syntax.                                          
+Expected Outcome:
+* List of patients or doctors exactly matching or substring matching the keywords is displayed.
+
+Invalid Inputs:
+* No matching keywords or invalid syntax.
 * Example: `patient`
 * Example: `doctor @`
-                                                                                   
-Expected Error:                                                                    
+
+Expected Error:
 * Command fails with the appropriate error message indicating the required command format.
 * Or the results display indicates '0 persons listed', and the Persons panel is empty.
 
-#### Deleting a Person (delete)                                              
-Steps:                                                                       
-1. Use the `list` command to display a list of persons.                        
-2. Execute the `delete` command with the index of a person to delete them.     
-3. Confirm that the person is removed from MediCLI.                       
-4. Verify that associated appointments are also deleted recursively.         
-5. Test deleting a person with an invalid index and observe error handling.  
-                                                                            
-Valid Inputs:                                                                
- * Index of an existing person.                                               
- * Example: `delete 1`                                                          
-                                                                              
-Expected Outcome:                                                            
- * Person is successfully deleted from the system.      
+#### Deleting a Person (delete)
+Steps:
+1. Use the `list` command to display a list of persons.
+2. Execute the `delete` command with the index of a person to delete them.
+3. Confirm that the person is removed from MediCLI.
+4. Verify that associated appointments are also deleted recursively.
+5. Test deleting a person with an invalid index and observe error handling.
 
-Invalid Inputs:          
-* Invalid index.         
-* Example: `delete 0`      
-    
-Expected Error:                                                               
-* Command fails with appropriate error message indicating the required command format and parameter requirements.  
+Valid Inputs:
+ * Index of an existing person.
+ * Example: `delete 1`
 
-                                                                              
+Expected Outcome:
+ * Person is successfully deleted from the system.
+
+Invalid Inputs:
+* Invalid index.
+* Example: `delete 0`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format and parameter requirements.
+
 ### Appointment Related Commands
 #### Adding an Appointment : `addappt`
 Steps:
@@ -1167,8 +1166,8 @@ Invalid Inputs:
 * Example: `apptforpatient S123456`
 
 Expected Error:
-* Command fails with appropriate error message indicating the required command format. 
-* Or the results display indicates '0 appointments listed', and the appointments panel is empty
+* Command fails with appropriate error message indicating the required command format.
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty.
 
 #### Querying Appointments by Doctor's NRIC : `apptfordoctor`
 Steps:
@@ -1183,15 +1182,15 @@ Valid Inputs:
 Expected Outcome:
 * List of appointments involving the specified doctor is displayed.
 
-Invalid Inputs:                                                                                       
-* No matching patient NRIC, missing NRIC or invalid NRIC.                                             
-* Example: `apptfordoctor S1234567A`                                                                 
-* Example: `apptfordoctor`                                                                           
-* Example: `apptfordoctor S123456`                                                                   
-                                                                                                      
-Expected Error:                                                                                       
-* Command fails with appropriate error message indicating the required command format.                
-* Or the results display indicates '0 appointments listed', and the appointments panel is empty       
+Invalid Inputs:
+* No matching patient NRIC, missing NRIC or invalid NRIC.
+* Example: `apptfordoctor S1234567A`
+* Example: `apptfordoctor`
+* Example: `apptfordoctor S123456`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty.
 
 #### Deleting an Appointment : `deleteappt`
 Steps:
@@ -1261,7 +1260,7 @@ Valid Inputs:
 
 Expected Outcome:
 * All data is wiped from MediCLI.
-* Results display indicates that 'MediCLI's storage has been cleared!' 
+* Results display indicates that 'MediCLI's storage has been cleared!'
 
 Invalid Inputs:
 * None
