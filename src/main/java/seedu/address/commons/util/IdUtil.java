@@ -9,12 +9,12 @@ import java.util.Random;
 import jdk.jshell.spi.ExecutionControl;
 
 /**
- * Generates unique  String IDs for patients, doctors, and appointments
+ * Generates unique  String IDs for patients, doctors, and appointments.
  */
 public class IdUtil {
 
     /**
-     * Enum containing all possible entity types in our system
+     * Enum containing all possible entity types in our system.
      */
     public enum Entities {
         PATIENT("p"),
@@ -27,7 +27,7 @@ public class IdUtil {
         }
 
         /**
-         * Returns letter associated with entity
+         * Returns letter associated with entity.
          * @return String letter
          */
         public String getLetter() {
@@ -35,7 +35,7 @@ public class IdUtil {
         }
 
         /**
-         * Gets entity object associated with character
+         * Gets entity object associated with character.
          *
          * @param c character in question
          * @return Entities entity object associated with input character
@@ -78,7 +78,7 @@ public class IdUtil {
     }
 
     /**
-     * Deletes Id that is inputted
+     * Deletes Id that is inputted.
      * @param id String id to delete
      */
     public static void deleteId(String id) {
@@ -89,7 +89,7 @@ public class IdUtil {
     }
 
     /**
-     * Returns allIds as an unmodifiable map
+     * Returns allIds as an unmodifiable map.
      * @return unmodifiable map containing ids
      */
     public static boolean hasId(String id) {

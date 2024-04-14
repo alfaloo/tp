@@ -37,13 +37,19 @@ public class AddAppointmentCommand extends Command {
     private final Appointment toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an AddCommand to add the specified {@code Appointment}
      */
     public AddAppointmentCommand(Appointment appointment) {
         requireNonNull(appointment);
         toAdd = appointment;
     }
 
+    /**
+     * Method that executes command when called by performing checks then adding to the list.
+     *
+     * @param model the model in which the command is executed
+     * @return CommandResult resulting from command execution
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -62,6 +68,7 @@ public class AddAppointmentCommand extends Command {
         model.addAppointment(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
+
 
     @Override
     public boolean equals(Object other) {
