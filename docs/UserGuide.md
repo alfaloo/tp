@@ -588,6 +588,23 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 
    **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name .
 
+6. **Issue**: When the name entered into the system contains acute accents (e.g `Aimée`), Chinese characters or dash `-`, the system will reject it.
+
+   **Impact**: Users may face challenges entering information of patient / doctors with foreign names into MediCLI.
+
+   **Workaround**: Users can replace the accented characters with normal alphabets (e.g `é` with `e`), omit the dash and romanize Chinese names.
+
+7. **Issue**: MediCLI will only accept Singaporean NRIC
+
+   **Impact**: Users may face challenges entering information of patients who are not from Singapore (i.e those without NRIC).
+
+   **Workaround**: There is currently no workaround, but the MediCLI development team will add this feature enhancement in the near future.
+8. **Issue**: MediCLI currently allows scheduling of appointments between the same doctor but different patients at identical times (i.e overlapping appointments).
+
+    **Impact**: Users may schedule two or more patients with the same doctor at the same time when the doctor can only see one patient at any given time.
+
+    **Workaround**: Users can first look up the appointments of the doctor and visually confirming the doctor is free at given time before scheduling a patient with them.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
