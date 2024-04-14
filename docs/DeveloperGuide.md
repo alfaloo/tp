@@ -156,7 +156,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 ### Add a `Patient` or `Doctor`
-<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation. 
+<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
 This reduces repetition of information and increases clarity.</i>
 
 Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
@@ -549,144 +549,144 @@ Why is this implemented this way?
 2. The rationale behind excluding substring searches for `appointment`(s) is that if a hospital clerk is searching for a specific `patient`'s scheduled `appointment`(s), the hospital clerk already has the `patient`'s unique `Nric` and hence including substring querying is irrelevant.
 
 
-[//]: # (### \[Proposed\] Undo/redo feature)
+### \[Proposed\] Undo/redo feature
 
-[//]: # ()
-[//]: # (#### Proposed Implementation)
 
-[//]: # ()
-[//]: # (The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:)
+#### Proposed Implementation
 
-[//]: # ()
-[//]: # (* `VersionedMediCLI#commit&#40;&#41;` — Saves the current MediCLI state in its history.)
 
-[//]: # (* `VersionedMediCLI#undo&#40;&#41;` — Restores the previous MediCLI state from its history.)
+The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-[//]: # (* `VersionedMediCLI#redo&#40;&#41;` — Restores a previously undone MediCLI state from its history.)
 
-[//]: # ()
-[//]: # (These operations are exposed in the `Model` interface as `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` and `Model#redoMediCLI&#40;&#41;` respectively.)
+* `VersionedMediCLI#commit()` — Saves the current MediCLI state in its history.
 
-[//]: # ()
-[//]: # (Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.)
+* `VersionedMediCLI#undo()` — Restores the previous MediCLI state from its history.
 
-[//]: # ()
-[//]: # (Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.)
+* `VersionedMediCLI#redo()` — Restores a previously undone MediCLI state from its history.
 
-[//]: # ()
-[//]: # (![UndoRedoState0]&#40;images/UndoRedoState0.png&#41;)
 
-[//]: # ()
-[//]: # (Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI&#40;&#41;`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.)
+These operations are exposed in the `Model` interface as `Model#commitMediCLI()`, `Model#undoMediCLI()` and `Model#redoMediCLI()` respectively.
 
-[//]: # ()
-[//]: # (![UndoRedoState1]&#40;images/UndoRedoState1.png&#41;)
 
-[//]: # ()
-[//]: # (Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI&#40;&#41;`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.)
+Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-[//]: # ()
-[//]: # (![UndoRedoState2]&#40;images/UndoRedoState2.png&#41;)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI&#40;&#41;`, so the MediCLI state will not be saved into the `mediCLIStateList`.)
+Step 1. The user launches the  application for the first time. The `VersionedMediCLI` will be initialized with the initial MediCLI state, and the `currentStatePointer` pointing to that single MediCLI state.
 
-[//]: # ()
-[//]: # (</div>)
 
-[//]: # ()
-[//]: # (Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI&#40;&#41;`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.)
+![UndoRedoState0](images/UndoRedoState0.png)
 
-[//]: # ()
-[//]: # (![UndoRedoState3]&#40;images/UndoRedoState3.png&#41;)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather)
+Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI()`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
-[//]: # (than attempting to perform the undo.)
 
-[//]: # ()
-[//]: # (</div>)
+![UndoRedoState1](images/UndoRedoState1.png)
 
-[//]: # ()
-[//]: # (The following sequence diagram shows how an undo operation goes through the `Logic` component:)
 
-[//]: # ()
-[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Logic.png&#41;)
+Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI()`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker &#40;X&#41; but due to a limitation of PlantUML, the lifeline reaches the end of diagram.)
 
-[//]: # ()
-[//]: # (</div>)
+![UndoRedoState2](images/UndoRedoState2.png)
 
-[//]: # ()
-[//]: # (Similarly, how an undo operation goes through the `Model` component is shown below:)
 
-[//]: # ()
-[//]: # (![UndoSequenceDiagram]&#40;images/UndoSequenceDiagram-Model.png&#41;)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI()`, so the MediCLI state will not be saved into the `mediCLIStateList`.
 
-[//]: # ()
-[//]: # (The `redo` command does the opposite — it calls `Model#redoMediCLI&#40;&#41;`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.)
 
-[//]: # ()
-[//]: # (<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size&#40;&#41; - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI&#40;&#41;` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.)
+</div>
 
-[//]: # ()
-[//]: # (</div>)
 
-[//]: # ()
-[//]: # (Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI&#40;&#41;`, `Model#undoMediCLI&#40;&#41;` or `Model#redoMediCLI&#40;&#41;`. Thus, the `mediCLIStateList` remains unchanged.)
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoMediCLI()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous MediCLI state, and restores the MediCLI to that state.
 
-[//]: # ()
-[//]: # (![UndoRedoState4]&#40;images/UndoRedoState4.png&#41;)
 
-[//]: # ()
-[//]: # (Step 6. The user executes `clear`, which calls `Model#commitMediCLI&#40;&#41;`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.)
+![UndoRedoState3](images/UndoRedoState3.png)
 
-[//]: # ()
-[//]: # (![UndoRedoState5]&#40;images/UndoRedoState5.png&#41;)
 
-[//]: # ()
-[//]: # (The following activity diagram summarizes what happens when a user executes a new command:)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial MediCLI state, then there are no previous MediCLI states to restore. The `undo` command uses `Model#canUndoMediCLI()` to check if this is the case. If so, it will return an error to the user rather
 
-[//]: # ()
-[//]: # (<img src="images/CommitActivityDiagram.png" width="250" />)
+than attempting to perform the undo.
 
-[//]: # ()
-[//]: # (#### Design considerations:)
 
-[//]: # ()
-[//]: # (**Aspect: How undo & redo executes:**)
+</div>
 
-[//]: # ()
-[//]: # (* **Alternative 1 &#40;current choice&#41;:** Saves the entire MediCLI.)
 
-[//]: # (  * Pros: Easy to implement.)
+The following sequence diagram shows how an undo operation goes through the `Logic` component:
 
-[//]: # (  * Cons: May have performance issues in terms of memory usage.)
 
-[//]: # ()
-[//]: # (* **Alternative 2:** Individual command knows how to undo/redo by)
+![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
 
-[//]: # (  itself.)
 
-[//]: # (  * Pros: Will use less memory &#40;e.g. for `delete`, just save the person being deleted&#41;.)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 
-[//]: # (  * Cons: We must ensure that the implementation of each individual command are correct.)
 
-[//]: # ()
-[//]: # (_{more aspects and alternatives to be added}_)
+</div>
 
-[//]: # ()
-[//]: # (### \[Proposed\] Data archiving)
 
-[//]: # ()
-[//]: # (_{Explain here how the data archiving feature will be implemented}_)
+Similarly, how an undo operation goes through the `Model` component is shown below:
+
+
+![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
+
+
+The `redo` command does the opposite — it calls `Model#redoMediCLI()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.
+
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size() - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+
+
+</div>
+
+
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI()`, `Model#undoMediCLI()` or `Model#redoMediCLI()`. Thus, the `mediCLIStateList` remains unchanged.
+
+
+![UndoRedoState4](images/UndoRedoState4.png)
+
+
+Step 6. The user executes `clear`, which calls `Model#commitMediCLI()`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.
+
+
+![UndoRedoState5](images/UndoRedoState5.png)
+
+
+The following activity diagram summarizes what happens when a user executes a new command:
+
+
+<img src="images/CommitActivityDiagram.png" width="250" />
+
+
+#### Design considerations:
+
+
+**Aspect: How undo & redo executes:**
+
+
+* **Alternative 1 (current choice):** Saves the entire MediCLI.
+
+  * Pros: Easy to implement.
+
+  * Cons: May have performance issues in terms of memory usage.
+
+
+* **Alternative 2:** Individual command knows how to undo/redo by
+
+  itself.
+
+  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+
+  * Cons: We must ensure that the implementation of each individual command are correct.
+
+
+_{more aspects and alternatives to be added}_
+
+
+### \[Proposed\] Data archiving
+
+
+_{Explain here how the data archiving feature will be implemented}_
 
 ## Planned Enhancements
 
-The MediCLI development team acknowledges the presense of known feature flaws in our system.
+The MediCLI development team (consisting of 5 members) acknowledges the presense of known feature flaws in our system.
 Thus, we have planned the following 10 enhancements to be added in the near future.
 Please find them organised into their respective categories.
 
@@ -697,6 +697,8 @@ Please find them organised into their respective categories.
 Currently, the MediCLI system only stores the date and start time of an appointment.
 However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
 This is so that the doctor can be safely booked by another patient without worrying about potential clashes in appointment timings.
+* <b>Updated Command Format</b> - `addappt sdt/STARTDATETIME [edt/ENDDATETIME] dn/DOCTORNRIC pn/PATIENTNRIC`
+* <b>Example Input</b> - `addappt sdt/2024-05-20 10:00 edt/2024-05-20 11:00 dn/S1234567A pn/S1234567B`
 
 2. More robust appointment timing validation.
 
@@ -709,6 +711,9 @@ Thus, we plan to implement a more robust appointment validation system to ensure
 Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
 However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
 Thus, we plan to add a label (just like the patient/doctor labels) in the top right corner of each appointment card to help better distinguish them.
+* <b>New Command Format</b> - `markappt index s/STATUS` (`STATUS` can be any one of {`completed`, `missed`})
+* <b>Example Input</b> - `markappt 1 s/completed`
+* <b>Example Input</b> - `markappt 2 s/missed`
 
 ### Parameter Checking Enhancements
 
@@ -752,12 +757,15 @@ We plan on standardising these fields by automatically capitalising the users' i
 Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
 However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
 (e.g. when searching for a person by full name). In the future, we plan to add more advanced search options to allow for easy querying of information.
+* <b>Updated Command Format</b> - `find t/TYPE KEYWORD`, `patient t/TYPE KEYWORD`, `doctor t/TYPE KEYWORD` (`TYPE` can be any one of {`full`, `partial`}).
+* <b>Example Input</b> - `find t/full John Doe`
+* <b>Example Input</b> - `doctor t/partial Smith Li`
 
 10. More detailed error messages.
 
 Some of the current error messages are not the most informative
 (e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
-To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions.
+To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions, e.g. `Please make sure the NRIC provided belongs to a person of the correct type as indicated by the prefix.`.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -947,56 +955,354 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix: Instructions for Manual Testing**
 
-Given below are instructions to test the app manually.
+This section provides guidance for testers to navigate through the user-testable features of MediCLI. It includes important test inputs along with the expected test results that can be copied and pasted into the app for testing purposes.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: These instructions only provide a starting point for testers to work on. Testers are expected to do more *exploratory* testing.</div>
 
-</div>
 
 ### Launch and shutdown
+#### Initial launch
+Steps:
+1. Download the jar file and copy into an empty folder.
+2. Double-click the jar file.
 
-1. Initial launch
+Expected Outcome:
+* Shows the GUI with a set of sample contacts.
+* The window size may not be optimum.
 
-   1. Download the jar file and copy into an empty folder
+#### Saving window preferences
+Steps:
+1. Resize the window to an optimum size.
+2. Move the window to a different location.
+3. Close the window.
+4. Re-launch the app by double-clicking the jar file.<br>
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+Expected Outcome:
+* The most recent window size and location is retained.
+                                                         
+#### Closing MediCLI
+Steps:
+1. Execute the `exit` command, or simply close the window.
 
-1. Saving window preferences
+Expected Outcome:
+* MediCLI closes without any errors.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+### Person Related Commands
+#### Adding a Patient : `addpatient`
 
-1. _{ more test cases …​ }_
+Steps:
+1. Execute the `addpatient` command with valid NRIC, name, DOB, and phone number.
+2. Verify that the patient is successfully added to the system.
+3. Try adding a patient with an existing NRIC and verify that the command fails.
+4. Attempt to add a patient with invalid or missing fields and confirm appropriate error handling.
 
-### Deleting a person
+Valid Inputs:
+* Valid NRIC, name, DOB, and phone number.
+* Example: `addpatient i/S1234567A n/David Li d/2000-01-01 p/98765432`
 
-1. Deleting a person while all persons are being shown
+Expected Outcome:
+* Patient is successfully added to the system.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Invalid Inputs:
+* Missing or invalid fields (e.g. invalid NRIC format, missing name).
+* Example: `addpatient i/1234567A n/ d/2000-01-01 p/12345678`
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+Expected Error:
+* Command fails with the 'Invalid command format' error message indicating the required command format.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+#### Adding a Doctor : `adddoctor`
+Steps:
+1. Use the `adddoctor` command with valid NRIC, name, DOB, and phone number.
+2. Verify that the doctor is added to the system.
+3. Test adding a doctor with an existing NRIC and check if the command fails.
+4. Test adding a doctor with invalid or missing fields and observe error handling.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+Valid Inputs:
+* Valid NRIC, name, DOB, and phone number.
+* Example: `adddoctor i/S1234567A n/Dr. Jane Smith d/1975-05-15 p/98765432`
 
-1. _{ more test cases …​ }_
+Expected Outcome:
+* Doctor is successfully added to the system.
 
-### Saving data
+Invalid Inputs:
+* Missing or invalid fields (e.g. invalid phone number).
+* Example: `adddoctor i/S1234567A n/Dr. Jane Smith d/1975-05-15 p/1234567`
 
-1. Dealing with missing/corrupted data files
+Expected Error:
+* Command fails with the 'Invalid command format' error message indicating the required command format.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+#### Editing a Person : `edit`
+Steps:
+1. Execute the `edit` command with the index of an existing person.
+2. Update one or more fields (NRIC, name, DOB, or phone number) and confirm changes.
+3. Test editing without changing any values and ensure it's handled correctly.
+4. Try editing with an invalid index and verify error handling.
 
-1. _{ more test cases …​ }_
+Valid Inputs:
+* Index of an existing person and valid fields to update.
+* Example: `edit 1 n/John Smith`
+
+Expected Outcome:
+* Person's name has been successfully updated to John Smith.
+
+Invalid Inputs:
+* Invalid index or missing fields.
+* Example: `edit 0 n/John Smith`
+* Example: `edit 1`
+
+Expected Error:
+* Command fails with the appropriate error message indicating the invalid index or missing fields.
+
+#### Finding Persons by Name : `find`
+Steps:
+1. Use the `find` command with keywords to search for both patients and doctors.
+2. Ensure the command returns expected results based on the provided keywords.
+3. Try different combinations of keywords and verify the search results.
+
+Valid Inputs:
+* Keywords matching existing persons' names.
+* Example: `find John`
+
+Expected Outcome:
+* List of persons matching the keywords is displayed.
+
+Invalid Inputs:
+* No matching keywords or invalid syntax.
+* Example: `find 123`
+
+Expected Error:
+* Results display indicates '0 persons listed', and the Persons panel is empty.
+                
+#### Finding Persons by all Fields : `patient`, `doctor`
+Steps:
+1. Use the `patient` command with keywords to search for patients only.
+2. Ensure the command returns expected results based on the provided keywords.
+3. Similarly, use the `doctor` command to search for doctors.
+4. Try different combinations of keywords and verify the search results.
+                                                                                   
+Valid Inputs:
+* Keywords exactly matching or substring matching existing persons' nric, name, date of birth, or phone number.
+* Example: `patient S1234`
+* Example: `patient Doe`
+* Example: `doctor 30 Jan`
+* Example: `doctor 98765432`
+                                                                                   
+Expected Outcome:
+* List of patients or doctors exactly matching or substring matching the keywords is displayed.
+
+Invalid Inputs:
+* No matching keywords or invalid syntax.
+* Example: `patient`
+* Example: `doctor @`
+
+Expected Error:
+* Command fails with the appropriate error message indicating the required command format.
+* Or the results display indicates '0 persons listed', and the Persons panel is empty.
+
+#### Deleting a Person (delete)
+Steps:
+1. Use the `list` command to display a list of persons.
+2. Execute the `delete` command with the index of a person to delete them.
+3. Confirm that the person is removed from MediCLI.
+4. Verify that associated appointments are also deleted recursively.
+5. Test deleting a person with an invalid index and observe error handling.
+
+Valid Inputs:
+ * Index of an existing person.
+ * Example: `delete 1`
+
+Expected Outcome:
+ * Person is successfully deleted from the system.
+
+Invalid Inputs:
+* Invalid index.
+* Example: `delete 0`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format and parameter requirements.
+
+### Appointment Related Commands
+#### Adding an Appointment : `addappt`
+Steps:
+1. Execute the `addappt` command with valid datetime, doctor's NRIC, and patient's NRIC.
+2. Ensure the appointment is successfully added to the system.
+3. Test adding an appointment with invalid datetime or NRICs and verify error handling.
+
+Valid Inputs:
+* Valid datetime, doctor's NRIC, and patient's NRIC.
+* Example: `addappt ad/2024-08-11 12:00 dn/S1234567A pn/S7654321B`
+
+Expected Outcome:
+* Appointment is successfully added to the system.
+
+Invalid Inputs:
+* Missing or invalid datetime, doctor's NRIC, or patient's NRIC.
+* Example: `addappt ad/2024-08-11 dn/S1234567A pn/S7654321B`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+#### Editing an Appointment : `editappt`
+Steps:
+1. Use the editappt command with the index of an existing appointment.
+2. Update the datetime of the appointment and confirm changes.
+3. Test editing without changing any values and ensure it's handled correctly.
+4. Try editing with an invalid index and verify error handling.
+
+Valid Inputs:
+* Index of an existing appointment and valid datetime to update.
+* Example: `editappt 1 ad/2024-08-12 14:00`
+
+Expected Outcome:
+* Appointment datetime is successfully updated.
+
+Invalid Inputs:
+* Invalid index or missing datetime.
+* Example: `editappt 0 ad/2024-08-12 14:00`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+#### Querying Appointments by Patient's NRIC : `apptforpatient`
+Steps:
+1. Execute the `apptforpatient` command with a patient's exact NRIC.
+2. Verify that all appointments involving the specified patient are listed.
+3. Test with different patient NRICs and confirm the results.
+
+Valid Inputs:
+* Patient's NRIC.
+* Example: `apptforpatient S7654321B`
+
+Expected Outcome:
+* List of appointments involving the specified patient is displayed.
+
+Invalid Inputs:
+* No matching patient NRIC, missing NRIC or invalid NRIC.
+* Example: `apptforpatient S1234567A`
+* Example: `apptforpatient`
+* Example: `apptforpatient S123456`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty.
+
+#### Querying Appointments by Doctor's NRIC : `apptfordoctor`
+Steps:
+1. Use the `apptfordoctor` command with a doctor's NRIC.
+2. Ensure that all appointments involving the specified doctor are listed.
+3. Test with different doctor NRICs and verify the results.
+
+Valid Inputs:
+* Doctor's NRIC.
+* Example: `apptfordoctor S1234567A`
+
+Expected Outcome:
+* List of appointments involving the specified doctor is displayed.
+
+Invalid Inputs:
+* No matching patient NRIC, missing NRIC or invalid NRIC.
+* Example: `apptfordoctor S1234567A`
+* Example: `apptfordoctor`
+* Example: `apptfordoctor S123456`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty.
+
+#### Deleting an Appointment : `deleteappt`
+Steps:
+1. Use the `list` command to display a list of appointments.
+2. Execute the `deleteappt` command with the index of an appointment to delete it.
+3. Confirm that the appointment is removed from the system.
+4. Test deleting an appointment with an invalid index and observe error handling.
+
+Valid Inputs:
+* Index of an existing appointment.
+* Example: `deleteappt 1`
+
+Expected Outcome:
+* Appointment is successfully deleted from the system.
+
+Invalid Inputs:
+* Invalid index.
+* Example: `deleteappt 0`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+### Miscellaneous Commands
+#### Viewing Help : `help`
+Steps:
+1. Execute the `help` command and ensure the help message is displayed.
+2. Verify that the 'Help' pop up is displayed, and click the 'Copy URL' button.
+3. Verify that pasting the URL in your browser leads you to MediCLI's updated User-Guide page.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* 'Help' pop up is displayed successfully.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Listing All Persons and Appointments : `list`
+Steps:
+1. Use the `list` command to display all persons and appointments.
+2. Confirm that the Persons Panel and the Appointments Panel includes all existing patients, doctors, and appointments existing in MediCLI.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* All persons and appointments are displayed.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Clearing All Entries : `clear`
+Steps:
+1. Execute the `clear` command and confirm if all data is wiped from MediClI.
+2. Ensure there is no remaining data after executing this command.
+3. Verify that there is no confirmation prompt and data deletion is immediate.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* All data is wiped from MediCLI.
+* Results display indicates that 'MediCLI's storage has been cleared!'
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Exiting the Program : `exit`
+Steps:
+1. Execute the `exit` command and ensure the program exits gracefully.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* Program exits without errors.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
 
 -------------------------------------------------
 ## **Appendix: Effort**
