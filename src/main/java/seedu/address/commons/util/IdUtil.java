@@ -100,7 +100,8 @@ public class IdUtil {
     }
 
     /**
-     * Updates map with initial values from storage
+     * Updates map with initial values from storage.
+     * To be implemented in the future as it does not affect or impact current functionality.
      * @throws ExecutionControl.NotImplementedException
      */
     public static void initalMapUpdate() throws ExecutionControl.NotImplementedException {
