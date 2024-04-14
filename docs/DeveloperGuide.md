@@ -935,53 +935,352 @@ Use case ends.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Appendix: Instructions for manual testing**
+## **Appendix: Instructions for Manual Testing**
 
-Given below are instructions to test the app manually.
+This section provides guidance for testers to navigate through the user-testable features of MediCLI. It includes important test inputs along with the expected test results that can be copied and pasted into the app for testing purposes. 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
+<div markdown="span" class="alert alert-info">:information_source: **INFO**: These instructions only provide a starting point for testers to work on. Testers are expected to do more *exploratory* testing.</div>
 
-</div>
 
 ### Launch and shutdown
+#### Initial launch
+Steps:
+1. Download the jar file and copy into an empty folder.
+2. Double-click the jar file. 
 
-1. Initial launch
+Expected Outcome: 
+* Shows the GUI with a set of sample contacts. 
+* The window size may not be optimum.
 
-   1. Download the jar file and copy into an empty folder
+#### Saving window preferences
+Steps:
+1. Resize the window to an optimum size. 
+2. Move the window to a different location. 
+3. Close the window.
+4. Re-launch the app by double-clicking the jar file.<br>
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+Expected Outcome: 
+* The most recent window size and location is retained.
+                                                         
+#### Closing MediCLI
+Steps:
+1. Execute the `exit` command, or simply close the window.
 
-1. Saving window preferences
+Expected Outcome:
+* MediCLI closes without any errors.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+### Person Related Commands
+#### Adding a Patient : `addpatient`
 
-1. _{ more test cases …​ }_
+Steps:
+1. Execute the `addpatient` command with valid NRIC, name, DOB, and phone number.
+2. Verify that the patient is successfully added to the system.
+3. Try adding a patient with an existing NRIC and verify that the command fails.
+4. Attempt to add a patient with invalid or missing fields and confirm appropriate error handling.
 
-### Deleting a person
+Valid Inputs:
+* Valid NRIC, name, DOB, and phone number.
+* Example: `addpatient i/S1234567A n/David Li d/2000-01-01 p/98765432` 
 
-1. Deleting a person while all persons are being shown
+Expected Outcome:
+* Patient is successfully added to the system.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+Invalid Inputs:
+* Missing or invalid fields (e.g. invalid NRIC format, missing name).
+* Example: `addpatient i/1234567A n/ d/2000-01-01 p/12345678`
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+Expected Error:
+* Command fails with the 'Invalid command format' error message indicating the required command format.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+#### Adding a Doctor : `adddoctor`
+Steps:
+1. Use the `adddoctor` command with valid NRIC, name, DOB, and phone number.
+2. Verify that the doctor is added to the system.
+3. Test adding a doctor with an existing NRIC and check if the command fails.
+4. Test adding a doctor with invalid or missing fields and observe error handling.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+Valid Inputs:
+* Valid NRIC, name, DOB, and phone number.
+* Example: `adddoctor i/S1234567A n/Dr. Jane Smith d/1975-05-15 p/98765432`
 
-1. _{ more test cases …​ }_
+Expected Outcome:
+* Doctor is successfully added to the system.
 
-### Saving data
+Invalid Inputs:
+* Missing or invalid fields (e.g. invalid phone number).
+* Example: `adddoctor i/S1234567A n/Dr. Jane Smith d/1975-05-15 p/1234567`
 
-1. Dealing with missing/corrupted data files
+Expected Error:
+* Command fails with the 'Invalid command format' error message indicating the required command format.
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+#### Editing a Person : `edit`
+Steps:
+1. Execute the `edit` command with the index of an existing person.
+2. Update one or more fields (NRIC, name, DOB, or phone number) and confirm changes.
+3. Test editing without changing any values and ensure it's handled correctly.
+4. Try editing with an invalid index and verify error handling.
 
-1. _{ more test cases …​ }_
+Valid Inputs:
+* Index of an existing person and valid fields to update.
+* Example: `edit 1 n/John Smith`
+
+Expected Outcome:
+* Person's name has been successfully updated to John Smith.
+
+Invalid Inputs:
+* Invalid index or missing fields.
+* Example: `edit 0 n/John Smith`
+* Example: `edit 1`
+
+Expected Error:
+* Command fails with the appropriate error message indicating the invalid index or missing fields.
+
+#### Finding Persons by Name : `find`
+Steps:
+1. Use the `find` command with keywords to search for both patients and doctors.
+2. Ensure the command returns expected results based on the provided keywords.
+3. Try different combinations of keywords and verify the search results.
+
+Valid Inputs:
+* Keywords matching existing persons' names.
+* Example: `find John`
+
+Expected Outcome:
+* List of persons matching the keywords is displayed.
+
+Invalid Inputs:
+* No matching keywords or invalid syntax.
+* Example: `find 123`
+
+Expected Error:
+* Results display indicates '0 persons listed', and the Persons panel is empty. 
+                
+#### Finding Persons by all Fields : `patient`, `doctor`
+Steps:                                                                              
+1. Use the `patient` command with keywords to search for patients only.    
+2. Ensure the command returns expected results based on the provided keywords.
+3. Similarly, use the `doctor` command to search for doctors.
+4. Try different combinations of keywords and verify the search results.           
+                                                                                   
+Valid Inputs:                                                                      
+* Keywords exactly matching or substring matching existing persons' nric, name, date of birth, or phone number.                                       
+* Example: `patient S1234`
+* Example: `patient Doe`
+* Example: `doctor 30 Jan`
+* Example: `doctor 98765432`
+                                                                                   
+Expected Outcome:                                                                  
+* List of patients or doctors exactly matching or substring matching the keywords is displayed.                              
+                                                                                   
+Invalid Inputs:                                                                    
+* No matching keywords or invalid syntax.                                          
+* Example: `patient`
+* Example: `doctor @`
+                                                                                   
+Expected Error:                                                                    
+* Command fails with the appropriate error message indicating the required command format.
+* Or the results display indicates '0 persons listed', and the Persons panel is empty.
+
+#### Deleting a Person (delete)                                              
+Steps:                                                                       
+1. Use the `list` command to display a list of persons.                        
+2. Execute the `delete` command with the index of a person to delete them.     
+3. Confirm that the person is removed from MediCLI.                       
+4. Verify that associated appointments are also deleted recursively.         
+5. Test deleting a person with an invalid index and observe error handling.  
+                                                                            
+Valid Inputs:                                                                
+ * Index of an existing person.                                               
+ * Example: `delete 1`                                                          
+                                                                              
+Expected Outcome:                                                            
+ * Person is successfully deleted from the system.      
+
+Invalid Inputs:          
+* Invalid index.         
+* Example: `delete 0`      
+    
+Expected Error:                                                               
+* Command fails with appropriate error message indicating the required command format and parameter requirements.  
+
+                                                                              
+### Appointment Related Commands
+#### Adding an Appointment : `addappt`
+Steps:
+1. Execute the `addappt` command with valid datetime, doctor's NRIC, and patient's NRIC.
+2. Ensure the appointment is successfully added to the system.
+3. Test adding an appointment with invalid datetime or NRICs and verify error handling.
+
+Valid Inputs:
+* Valid datetime, doctor's NRIC, and patient's NRIC.
+* Example: `addappt ad/2024-08-11 12:00 dn/S1234567A pn/S7654321B`
+
+Expected Outcome:
+* Appointment is successfully added to the system.
+
+Invalid Inputs:
+* Missing or invalid datetime, doctor's NRIC, or patient's NRIC.
+* Example: `addappt ad/2024-08-11 dn/S1234567A pn/S7654321B`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+#### Editing an Appointment : `editappt`
+Steps:
+1. Use the editappt command with the index of an existing appointment.
+2. Update the datetime of the appointment and confirm changes.
+3. Test editing without changing any values and ensure it's handled correctly.
+4. Try editing with an invalid index and verify error handling.
+
+Valid Inputs:
+* Index of an existing appointment and valid datetime to update.
+* Example: `editappt 1 ad/2024-08-12 14:00`
+
+Expected Outcome:
+* Appointment datetime is successfully updated.
+
+Invalid Inputs:
+* Invalid index or missing datetime.
+* Example: `editappt 0 ad/2024-08-12 14:00`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+#### Querying Appointments by Patient's NRIC : `apptforpatient`
+Steps:
+1. Execute the `apptforpatient` command with a patient's exact NRIC.
+2. Verify that all appointments involving the specified patient are listed.
+3. Test with different patient NRICs and confirm the results.
+
+Valid Inputs:
+* Patient's NRIC.
+* Example: `apptforpatient S7654321B`
+
+Expected Outcome:
+* List of appointments involving the specified patient is displayed.
+
+Invalid Inputs:
+* No matching patient NRIC, missing NRIC or invalid NRIC.
+* Example: `apptforpatient S1234567A`
+* Example: `apptforpatient`
+* Example: `apptforpatient S123456`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format. 
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty
+
+#### Querying Appointments by Doctor's NRIC : `apptfordoctor`
+Steps:
+1. Use the `apptfordoctor` command with a doctor's NRIC.
+2. Ensure that all appointments involving the specified doctor are listed.
+3. Test with different doctor NRICs and verify the results.
+
+Valid Inputs:
+* Doctor's NRIC.
+* Example: `apptfordoctor S1234567A`
+
+Expected Outcome:
+* List of appointments involving the specified doctor is displayed.
+
+Invalid Inputs:                                                                                       
+* No matching patient NRIC, missing NRIC or invalid NRIC.                                             
+* Example: `apptfordoctor S1234567A`                                                                 
+* Example: `apptfordoctor`                                                                           
+* Example: `apptfordoctor S123456`                                                                   
+                                                                                                      
+Expected Error:                                                                                       
+* Command fails with appropriate error message indicating the required command format.                
+* Or the results display indicates '0 appointments listed', and the appointments panel is empty       
+
+#### Deleting an Appointment : `deleteappt`
+Steps:
+1. Use the `list` command to display a list of appointments.
+2. Execute the `deleteappt` command with the index of an appointment to delete it.
+3. Confirm that the appointment is removed from the system.
+4. Test deleting an appointment with an invalid index and observe error handling.
+
+Valid Inputs:
+* Index of an existing appointment.
+* Example: `deleteappt 1`
+
+Expected Outcome:
+* Appointment is successfully deleted from the system.
+
+Invalid Inputs:
+* Invalid index.
+* Example: `deleteappt 0`
+
+Expected Error:
+* Command fails with appropriate error message indicating the required command format.
+
+### Miscellaneous Commands
+#### Viewing Help : `help`
+Steps:
+1. Execute the `help` command and ensure the help message is displayed.
+2. Verify that the 'Help' pop up is displayed, and click the 'Copy URL' button.
+3. Verify that pasting the URL in your browser leads you to MediCLI's updated User-Guide page.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* 'Help' pop up is displayed successfully.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Listing All Persons and Appointments : `list`
+Steps:
+1. Use the `list` command to display all persons and appointments.
+2. Confirm that the Persons Panel and the Appointments Panel includes all existing patients, doctors, and appointments existing in MediCLI.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* All persons and appointments are displayed.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Clearing All Entries : `clear`
+Steps:
+1. Execute the `clear` command and confirm if all data is wiped from MediClI.
+2. Ensure there is no remaining data after executing this command.
+3. Verify that there is no confirmation prompt and data deletion is immediate.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* All data is wiped from MediCLI.
+* Results display indicates that 'MediCLI's storage has been cleared!' 
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
+
+#### Exiting the Program : `exit`
+Steps:
+1. Execute the `exit` command and ensure the program exits gracefully.
+
+Valid Inputs:
+* None
+
+Expected Outcome:
+* Program exits without errors.
+
+Invalid Inputs:
+* None
+
+Expected Error:
+* None
