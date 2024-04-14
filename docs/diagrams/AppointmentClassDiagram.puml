@@ -4,22 +4,17 @@ skinparam arrowThickness 1.1
 skinparam arrowColor UI_COLOR_T4
 skinparam classBackgroundColor UI_COLOR
 
-package Appointment\n <<Rectangle>>{
 Class "Appointment" as Appointment
 Class Nric
-Class AppointmentDate
 Class AppointmentId
-}
+Class AppointmentDateTime
 
 
 
-Class HiddenOutside #FFFFFF
-HiddenOutside ..> Appointment
-
-Appointment -down-> "1" Nric : Doctor's
-Appointment -down-> "1" Nric : Patient's
-Appointment -down-> "1" AppointmentDate
-Appointment -down-> "1" AppointmentId
+Appointment -down-> "1" Nric : Doctor's NRIC\t
+Appointment -down-> "1" Nric : Patient's NRIC\t\t
+Appointment -down-> "\t1" AppointmentDateTime
+Appointment -down-> "\t1" AppointmentId
 
 
 @enduml
