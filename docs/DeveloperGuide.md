@@ -158,11 +158,17 @@ The activity diagram below demonstrates the error handling process in more detai
 
 <img src="images/AddPersonActivityDiagram.png" width="800" />
 
+The sequence diagram below demonstrates the command execution steps for `execute` method in `AddpatientCommand`.
+
+<img src="images/AddPatientCommandExecuteSequenceDiagram.png" width="800" />
+
 This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
 Add command execution sequence:
 * Step 1. The `execute` method of the `AddPatientCommand` is called.
-* Step 2. The method calls the `hasPerson` method of `model` to check if there are any duplicate patients and throws an exception if there is.
-* Step 3. The `addPerson` method of `model` is then called and the control is passed back to the `execute` method.
+* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients and throws an exception if there is.
+    * If there is a duplicate person, the method calls the `log` method of `logger` to log the incident.
+* Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
+* Step 4. The `log` method of `logger` is then called to log the successful command execution.
 * Step 4. A new `CommandResult` object with the success message is then created and returned by `execute`.
 
 #### Design considerations:
@@ -187,10 +193,21 @@ The activity diagram below demonstrates the error handling process in more detai
 
 <img src="images/EditPersonActivityDiagram.png" width="800" />
 
+The sequence diagram below demonstrates the command execution steps for `execute` method in `EditCommand`.
+
+<img src="images/EditCommandExecuteSequenceDiagram.png" width="800" />
+
 This is the sequence of command execution for `execute` in `EditCommand`, however `EditAppointmentCommand` follow a similar design pattern within the `execute` command.
 * Step 1. The `execute` method of the `EditCommand` is called.
-* Step 2. The method calls the `getFilteredPersonList` method of `model`.
-* Step 3. The ``
+* Step 2. The method calls the `getFilteredPersonList` method of `Model` and returns the list.
+* Step 3. The command checks whether the index of the command is valid by comparing the value returned by the `getZeroBased` method of `index` to the size of the list.
+    * If the index is invalid, the command throws `CommandException`.
+* Step 4. The `createEditedPerson` method is called and returns a new edited person.
+* Step 5. The method calls the `hasPerson` method of `Model` to check if there are any duplicate persons.
+    * If there are duplicates, the command throws `CommandException`.
+* Step 6. The `setPerson` method of `Model` is called and control is then passed back to the `execute` method.
+* Step 7. The `updateFilteredPersonList` method of `Model` is called to update the list.
+* Step 8. A new `CommandResult` with the success message is then created and returned by `execute`.
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
