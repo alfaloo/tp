@@ -9,7 +9,22 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+### Dong Cheng-Yu's Acknowledgements
+- Used ChatGPT to assist in writing Javadocs for AddDoctorCommandParser, AddDoctorCommand, and DeleteAppointmentCommandParser.
+
+### Lu Zhiyang's Acknowledgements
+- Used ChatGPT to assist in writing Javadocs for AddPatientCommandParser, AddPatientCommand, EditAppointmentCommandParser, EditAppointmentCommand.
+
+### Lim Jia Wei's Acknowledgements
+- Used ChatGPT to assist in writing Javadocs for QueryDoctorAppointmentCommand, QueryPatientAppointmentCommand, QueryDoctorAppointmentCommandParser, QueryPatientAppointmentCommandParser, QueryPatientCommand and QueryPatientCommandParser.
+- Used ChatGPT to assist in writing parts of User Guide and Developer Guide and test code.
+
+### Sim Eugene's Acknowledgements
+- Used ChatGPT to assist in writing Javadocs for
+  EditCommand, EditCommandParser and QueryDoctorCommand
+
+### Goswami Archit's Acknowledgements
+- Used ChatGPT to assist in writing Javadocs for getPersonByNric(), addAppointment(), hasAppointment(), deleteAppointment() methods, and to write some javafx code
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -207,6 +222,84 @@ However, different commands of the same functionality are analougous to each oth
 Furthermore, all of the commands extend the main `Command` class, thus the primary difference between each of them is within their `execute` methods. For their general implementation, please refer the "Logic component" section above.
 This section will explore the implemention of the `execute` methods for each of the four functionalities.
 
+#### Add Functionality
+<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
+This reduces repetition of information and increases clarity.</i>
+
+Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
+This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
+
+Add command execution sequence:
+* Step 1. The `execute` method of the `AddPatientCommand` is called.
+* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients.
+  * If there is a duplicate person, the method throws `CommandException` and calls the `log` method of `logger` to log the incident.
+* Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
+* Step 4. The `log` method of `logger` is then called to log the successful command execution.
+* Step 5. A new `CommandResult` object with the success message is then created and returned by `execute`.
+
+This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
+<img src="images/AddPatientCommandExecuteSequenceDiagram.png" width="800" />
+
+#### Edit Functionality
+
+Edits a `doctor` or `patient` entry by indicating their `Index`.
+This command is implemented through the `EditCommand` class which extends the `Command` class.
+
+This is the sequence of command execution for `execute` in `EditCommand`, however `EditAppointmentCommand` follow a similar design pattern within the `execute` command.
+* Step 1. The `execute` method of the `EditCommand` is called.
+* Step 2. The method calls the `getFilteredPersonList` method of `Model` and returns the list.
+* Step 3. The command checks whether the index of the command is valid by comparing the value returned by the `getZeroBased` method of `index` to the size of the list.
+  * If the index is invalid, the command throws `CommandException`.
+* Step 4. The `createEditedPerson` method is called and returns a new edited person.
+* Step 5. The method calls the `hasPerson` method of `Model` to check if there are any duplicate persons.
+  * If there are duplicates, the command throws `CommandException`.
+* Step 6. The `setPerson` method of `Model` is called and control is then passed back to the `execute` method.
+* Step 7. The `updateFilteredPersonList` method of `Model` is called to update the list.
+* Step 8. A new `CommandResult` with the success message is then created and returned by `execute`.
+
+The sequence diagram below demonstrates the command execution steps for `execute` method in `EditCommand`.
+
+<img src="images/EditCommandExecuteSequenceDiagram.png" width="800" />
+
+#### Querying Functionality
+This section describes the general sequence for commands that query entities. MediCLI has 5 different commands that serve this function: `find`, `patient`, `doctor`, `apptforpatient` and `apptfordoctor`.
+Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possesses similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands that query entities are described here together in one section.
+
+* Step 1. The `execute()` method is called in an instance of `QueryPatientCommand`.
+* Step 2. The instance of `QueryPatientCommand` calls the `updateFilteredPersonList()` method with the `PatientContainsKeywordsPredicate` in an instance of the `Model` class, which filters out entries and returns only patients that match the keywords entered. Note that the other commands listed here will have their respective `predicate` requirements and implementations.
+* Step 3. Control is passed to an instance of the `Logger` class, which calls the method `log()` to log a "Success" message.
+* Step 4. The instance of `QueryPatientCommand` calls the constructor method of the `CommandResult` class, which returns the final result.
+* Step 5. Control is returned to the caller with the final result.
+
+The sequence diagram below describes the interaction between the various components during the `execute` method of the `patient` command, which uses the `QueryPatientCommand` on the backend.
+
+<img src="images/QueryPatientCommandExecuteSequenceDiagram.png" width="800" />
+
+Why is this implemented this way?
+1. All query command closely resembles the structure of the `find` command. Each of the commands here have either stricter (i.e have stricter parameter requirements e.g `apptforpatient` and `apptfordoctor`) or looser (i.e searching for more fields e.g `patient` and `doctor`) predicates, but all generally have the same flow of control between the `Command`, `Logger` and `Model` classes.
+2. Conceptually, each of the 5 commands listed here are searching for different entities, and are hence split into separate commands despite having very similar structures.
+
+Alternative implementations considered
+1. The behaviour of `patient` and `doctor`, `apptforpatient` and `apptfordoctor` have similar requirements in terms of parameters, with the main difference being either `patient` or `doctor` typed classes. We might consider combining each pair into one command, and using flags to distinguish the desired class (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that at the time of implementation, separating the commands would be a cleaner strategy, and combining methods might overcomplicate the implementation.
+2. Even if we did proceed with combining, the combined command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed were unavoidable. As such, it was prudent to start with the implementation of the distinct commands first, and leave the possibility of combining as a later increment.
+
+#### Delete Functionality
+
+Deletes a `doctor` or `patient` entry by indicating their `Index`.
+This command is implemented through the `DeleteCommand` class which extends the `Command` class.
+
+* Step 1. The `execute` method of the `DeleteCommand` is called.
+* Step 2. The `getFilteredPersonList` method of `Model` is called and finds its length.
+* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivalent.
+* Step 4. The provided index is checked against the length of the current list of people.
+  * If the provided index is out of bounds, a `CommandException` is thrown.
+* Step 4. The `deletePerson` method of `Model` is called to remove the designated person from the list of people.
+* Step 5. An instance of `CommandResult` is created with a success message for the execution of `DeleteCommand`.
+* Step 6. The instance of `CommandResult` is returned.
+
+The sequence diagram below closely describes the interaction between the various components during the `execute` method of `DeleteCommand`.
+
+<img src="images/DeleteCommandExecuteSequenceDiagram.png" width="800" />
 
 ### Incorrect user input handling process
 In this section, we will use the _add_ commands for `patients`/`doctors` and `appointments` to demonstrate how MediCLI handles incorrect inputs from the user. 
@@ -237,222 +330,6 @@ As visible, an incorrect input by the user can result in the following types of 
 - **`Patient`/`Doctor` involved in the `Appointment` does not exist in MediCLI**: informs the user that `Patient`/`Doctor` involved are not registered
 - **Provided date & time of the `Appointment` is in the past**: informs the user that appointments cannot be scheduled in the past.
 - **`Appointment` with corresponding attributes already exists in MediCLI**: informs the user that `Appointment` already exists
-
-
-
-### Add a `Patient` or `Doctor`
-<i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
-This reduces repetition of information and increases clarity.</i>
-
-Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
-This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
-
-The activity diagram below demonstrates the error handling process in more detail.
-
-<img src="images/AddPersonActivityDiagram.png" width="800" />
-
-The sequence diagram below demonstrates the command execution steps for `execute` method in `AddpatientCommand`.
-
-<img src="images/AddPatientCommandExecuteSequenceDiagram.png" width="800" />
-
-This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
-Add command execution sequence:
-* Step 1. The `execute` method of the `AddPatientCommand` is called.
-* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients.
-    * If there is a duplicate person, the method throws `CommandException` and calls the `log` method of `logger` to log the incident.
-* Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
-* Step 4. The `log` method of `logger` is then called to log the successful command execution.
-* Step 5. A new `CommandResult` object with the success message is then created and returned by `execute`.
-
-#### Design considerations:
-
-**Aspect: How editing a Person works:**
-
-* **Alternative 1 (current choice):** Removes the `originalPerson` and adds the `editedPerson`.
-    * Pros: Retains the sorted order of Persons by `Name` in the person list.
-    * Cons: May have performance issues in terms of time complexity since it requires 2 operations (`deletePerson()` and `addPerson`).
-
-* **Alternative 2:** Directly update the fields in the `originalPerson`
-    * Pros: Better performance, since this only requires searching through the person list once.
-    * Cons: The order of person list will be lost, since `Name` of a `Person` may be edited.
-
-
-### Edit `doctor` or `patient`
-
-Edits a `doctor` or `patient` entry by indicating their `Index`.
-This command is implemented through the `EditCommand` class which extends the `Command` class.
-
-The activity diagram below demonstrates the error handling process in more detail.
-
-<img src="images/EditPersonActivityDiagram.png" width="800" />
-
-The sequence diagram below demonstrates the command execution steps for `execute` method in `EditCommand`.
-
-<img src="images/EditCommandExecuteSequenceDiagram.png" width="800" />
-
-This is the sequence of command execution for `execute` in `EditCommand`, however `EditAppointmentCommand` follow a similar design pattern within the `execute` command.
-* Step 1. The `execute` method of the `EditCommand` is called.
-* Step 2. The method calls the `getFilteredPersonList` method of `Model` and returns the list.
-* Step 3. The command checks whether the index of the command is valid by comparing the value returned by the `getZeroBased` method of `index` to the size of the list.
-    * If the index is invalid, the command throws `CommandException`.
-* Step 4. The `createEditedPerson` method is called and returns a new edited person.
-* Step 5. The method calls the `hasPerson` method of `Model` to check if there are any duplicate persons.
-    * If there are duplicates, the command throws `CommandException`.
-* Step 6. The `setPerson` method of `Model` is called and control is then passed back to the `execute` method.
-* Step 7. The `updateFilteredPersonList` method of `Model` is called to update the list.
-* Step 8. A new `CommandResult` with the success message is then created and returned by `execute`.
-
-Why is this implemented this way?
-1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
-2. `Doctor` and `Patient` all exhibit similar qualities, and thus can inherit from the `Person` superclass.
-3. Eliminates the need for separate edit commands for doctor and patient.
-4. Since appointments are constructed with unique `Person` `Nric` fields, it does not make sense to have an appointment that does not have valid or outdated doctor or patient entries.
-5. As such, the solution that is inbuilt to editing a `Person`, comes with the added functionality on the backend to augment all related `Appointment` entries as well.
-6. This results in an updated `Appointments` panel, and saves the user from the hassle of needing to manually edit outdated `Appointment` entries one by one.
-
-### Delete `doctor` or `patient`
-
-Deletes a `doctor` or `patient` entry by indicating their `Index`.
-This command is implemented through the `DeleteCommand` class which extends the `Command` class.
-
-* Step 1. The `execute` method of the `DeleteCommand` is called.
-* Step 2. The `getFilteredPersonList` method of `Model` is called and finds its length.
-* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivalent.
-* Step 4. The provided index is checked against the length of the current list of people.
-    * If the provided index is out of bounds, a `CommandException` is thrown.
-* Step 4. The `deletePerson` method of `Model` is called to remove the designated person from the list of people.
-* Step 5. An instance of `CommandResult` is created with a success message for the execution of `DeleteCommand`.
-* Step 6. The instance of `CommandResult` is returned.
-
-The sequence diagram below closely describes the interaction between the various components during the `execute` method of `DeleteCommand`.
-
-<img src="images/DeleteCommandExecuteSequenceDiagram.png" width="800" />
-
-
-Why is this implemented this way?
-1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute delete operations.
-2. `Doctor` and `Patient` all exhibit similar qualities, and thus can inherit from the `Person` superclass.
-3. Eliminates the need for separate delete commands for doctor and patient.
-4. Since appointments are constructed with unique `Person` `Nric` fields, it does not make sense to have an appointment that does not have valid doctor or patient entries.
-5. As such, the solution that is inbuilt to deleting a `Person`, comes with the added functionality on the backend to delete all related `Appointment` entries as well.
-6. This results in a cleaner `Appointments` panel, and saves the user from the hassle of needing to delete unwanted `Appointment` entries one by one.
-
-
-### Add a `Appointment`
-
-Adds a new `Appointment` entry by indicating the `patientNric`, `doctorNric`, and an `appointmentDateTime`.
-The values stored in each of these attributes are self-explanatory. A key thing to note is that a `Patients` /`Doctor` with the NRIC number must already exist in the records, and the date & time must be in the future.
-
-This command is implemented through the `AddAppointmentCommand` class which extend the `Command` class.
-
-* Step 1. User enters the keyword and attributes necessary for adding an appointment as indicated above.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addAppointmentCommandParser`.
-* Step 3. The `parse` command in `addPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match constraints for the fields, a `IllegalArgumentException` is thrown.
-* Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
-* Step 6. The `execute` method in `addAppointmentCommand` performs the following checks:
-  * If a `Doctor`/`Patient` with the Nric in question not exist or the date & time is not >= current date & time, a `InvalidAppointmentException` is thrown
-  * If an appointment between the `Doctor` and `Patient` (with corresponding NRICs) on the specified date & time already exists, then a `DuplicateAppointmentException` is thrown.
-* Step 7: If both the checks above pass, the `execute` method executes and calls `addAppointment` in model to add the new appointment into the system.
-* Step 8: Success message gets printed onto the results display to notify user.
-
-The activity diagram below demonstrates this error handling process in more detail.
-<img src="images/AddAppointmentActivityDiagram.png" width="800" />
-
-### Edit `Appointment`
-Edits an `Appointment` entry by indicating their `Index`.
-This command is implemented through the `EditAppointmentCommand` class which extends the `Command` class.
-
-* Step 1. User enters an `edi`tappt` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editAppointmentCommandParser`.
-* Step 3. The `parse` command in `editAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-  * If there are any missing fields, a `CommandException` is thrown.
-  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-  * If the provided `index` is invalid, a `CommandException` is thrown.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/EditAppointmentActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `editAppointmentCommandParser` returns an instance of `editAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `editAppointmentCommand`.
-* Step 6. The `execute` method in `editAppointmentCommand` executes and calls `setAppointment` in model to set an updated appointment into the system.
-* Step 7. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `EditAppointmentCommand`.
-
-<img src="images/EditAppointmentSequenceDiagram.png" width="800" />
-
-Why is this implemented this way?
-1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with edit operations.
-2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
-3. This parallelism is also reflected in the backend code, and hence is very similar to how editing a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `EditPerson`, such as `EditAppointment`
-4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
-
-Alternative implementation for consideration
-1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle edits.
-2. This will centralise the behaviours, and reduce the amount of code needed to perform the edit function.
-3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
-
-### Delete `Appointment`
-Deletes an `Appointment` entry by indicating their `Index`.
-This command is implemented through the `DeleteAppointmentCommand` class which extend the `Command` class.
-
-* Step 1. User enters an `deleteappt` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteAppointmentCommandParser`.
-* Step 3. The `parse` command in `deleteAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the provided `index` is invalid, a `CommandException` is thrown.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/DeleteAppointmentActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `deleteAppointmentCommandParser` return an instance of `deleteAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `deleteAppointmentCommand`.
-* Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
-* Step 7. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
-
-<img src="images/DeleteAppointmentSequenceDiagram.png" width="800" />
-
-Why is this implemented this way?
-1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
-2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
-3. This parallelism is also reflected in the backend code, and hence is very similar to how deleting a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `DeletePerson`, such as `DeleteAppointment`
-4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
-
-Alternative implementation for consideration
-1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle deletions.
-2. This will centralise the behaviours, and reduce the amount of code needed to perform the delete function.
-3. A further extension is to do so with all other overlapping functionalities, such as `add` or `edit`, however we leave that possibility for future discussion and refinement.
-
-### Querying Entities in MediCLI `patient`, `doctor`, `appointment`
-This section describes the general sequence for commands that query entities. MediCLI has 5 different commands that serve this function: `find`, `patient`, `doctor`, `apptforpatient` and `apptfordoctor`.
-Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possesses similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands that query entities are described here together in one section.
-
-* Step 1. The `execute()` method is called in an instance of `QueryPatientCommand`.
-* Step 2. The instance of `QueryPatientCommand` calls the `updateFilteredPersonList()` method with the `PatientContainsKeywordsPredicate` in an instance of the `Model` class, which filters out entries and returns only patients that match the keywords entered. Note that the other commands listed here will have their respective `predicate` requirements and implementations.
-* Step 3. Control is passed to an instance of the `Logger` class, which calls the method `log()` to log a "Success" message.
-* Step 4. The instance of `QueryPatientCommand` calls the constructor method of the `CommandResult` class, which returns the final result.
-* Step 5. Control is returned to the caller with the final result.
-
-The sequence diagram below describes the interaction between the various components during the `execute` method of the `patient` command, which uses the `QueryPatientCommand` on the backend.
-
-<img src="images/QueryPatientCommandExecuteSequenceDiagram.png" width="800" />
-
-Why is this implemented this way?
-1. All query command closely resembles the structure of the `find` command. Each of the commands here have either stricter (i.e have stricter parameter requirements e.g `apptforpatient` and `apptfordoctor`) or looser (i.e searching for more fields e.g `patient` and `doctor`) predicates, but all generally have the same flow of control between the `Command`, `Logger` and `Model` classes.
-2. Conceptually, each of the 5 commands listed here are searching for different entities, and are hence split into separate commands despite having very similar structures.
-
-Alternative implementations considered
-1. The behaviour of `patient` and `doctor`, `apptforpatient` and `apptfordoctor` have similar requirements in terms of parameters, with the main difference being either `patient` or `doctor` typed classes. We might consider combining each pair into one command, and using flags to distinguish the desired class (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that at the time of implementation, separating the commands would be a cleaner strategy, and combining methods might overcomplicate the implementation.
-2. Even if we did proceed with combining, the combined command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed were unavoidable. As such, it was prudent to start with the implementation of the distinct commands first, and leave the possibility of combining as a later increment.
-
 
 ### \[Proposed\] Undo/redo feature
 
@@ -579,90 +456,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
 
   * Cons: We must ensure that the implementation of each individual command are correct.
-
-
-## Planned Enhancements
-
-The MediCLI development team (consisting of 5 members) acknowledges the presense of known feature flaws in our system.
-Thus, we have planned the following 10 enhancements to be added in the near future.
-Please find them organised into their respective categories.
-
-### Appointment Functionality Enhancements
-
-<p>1</p>. Adding an end time to appointments
-
-Currently, the MediCLI system only stores the date and start time of an appointment.
-However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
-This is so that the doctor can be safely booked by another patient without worrying about potential clashes in appointment timings.
-* <b>Updated Command Format</b> - `addappt sdt/STARTDATETIME [edt/ENDDATETIME] dn/DOCTORNRIC pn/PATIENTNRIC`
-* <b>Example Input</b> - `addappt sdt/2024-05-20 10:00 edt/2024-05-20 11:00 dn/S1234567A pn/S1234567B`
-
-<p>2</p>. More robust appointment timing validation.
-
-Currently, the MediCLI system allows two appointments with the same doctor/patient and date-time to be simultaneously stored in the system.
-However, it is clearly impossible for a patient or doctor to attend two different appointments at the same time.
-Thus, we plan to implement a more robust appointment validation system to ensure that appointments with clashing or unrealistic timings can not be entered.
-
-<p>3</p>. Marking old appointments as completed.
-
-Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
-However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
-Thus, we plan to add a label (just like the patient/doctor labels) in the top right corner of each appointment card to help better distinguish them.
-* <b>New Command Format</b> - `markappt index s/STATUS` (`STATUS` can be any one of {`completed`, `missed`})
-* <b>Example Input</b> - `markappt 1 s/completed`
-* <b>Example Input</b> - `markappt 2 s/missed`
-
-### Parameter Checking Enhancements
-
-<p>4</p>. Accommodate names with symbols and/or special characters.
-
-The name parameter is currently restricted to just alphabetical characters and white-space.
-However, we recognise the existence of names that contain symbols and other special characters.
-In the future, we plan to implement a more accommodating constraint that allows UTF-8 characters instead.
-This means that names of other languages will be accepted as well.
-
-<p>5</p>. Allow foreign patients/doctors to be added to the system.
-
-The current constraints for the NRIC and phone number parameters reflect the Singaporean format.
-However, we recognise that for foreign users, this can be rather limiting.
-Thus, in the future, we plan on introducing more refined parameter checking that allows international NRIC and phone number formats.
-
-<p>6</p>. Ensure each person being added to the system is unique.
-
-While the current MediCLI system already checks to ensure every person added is unique, it is only done by comparing the NRIC of the person.
-However, this should not be the only checking condition. Two entries with the same name, date of birth, and/or phone number should also be flagged as non-unique.
-Thus, we will devise a more holistic assessment criterion to ensure no duplicates are allowed.
-
-### User Interface Enhancements
-
-<p>7</p>. Refine the user interface when the window size is minimised.
-
-The current MediCLI system is not particularly flexible when it comes to window sizing.
-Users on smaller screens may encounter the issue of scrolling being disabled or labels being truncated if a long name is entered.
-In the future, we plan to make the UI more adaptive and friendly to smaller screens.
-
-<p>8</p>Standardise displayed information.
-
-For certain fields, the MediCLI system simply displays the text exactly as entered by the user.
-However, this can introduce inconsistencies in capitalisation (especially with the NRIC field) when displayed in the user interface.
-We plan on standardising these fields by automatically capitalising the users' input.
-
-### Feature Enhancements
-
-<p>9</p>. More advanced search options
-
-Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
-However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
-(e.g. when searching for a person by full name). In the future, we plan to add more advanced search options to allow for easy querying of information.
-* <b>Updated Command Format</b> - `find t/TYPE KEYWORD`, `patient t/TYPE KEYWORD`, `doctor t/TYPE KEYWORD` (`TYPE` can be any one of {`full`, `partial`}).
-* <b>Example Input</b> - `find t/full John Doe`
-* <b>Example Input</b> - `doctor t/partial Smith Li`
-
-<p>10</p>. More detailed error messages.
-
-Some of the current error messages are not the most informative
-(e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
-To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions, e.g. `Please make sure the NRIC provided belongs to a person of the correct type as indicated by the prefix.`.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -1232,7 +1025,8 @@ Invalid Inputs:
 Expected Error:
 * None
 
--------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Effort**
 
 ### Difficulty level:
@@ -1267,3 +1061,88 @@ Some achievements we are particulary proud of are:
 - UI improvements: We are quite happy with the way `Appointments` and `Patients`/`Doctors` are integrated into the same window to allow for easy visualisation with minimal use of the mouse. We are also quite proud of the new clean and minimalist interface which we think reflects a hospital setting quite well.
 - Variety of commands: We also are happy with the suite of commands that we offer to users. We focused on the most high-impact commands and ensured that our product offers all CRUD capabilities such that it may actually be used in a functional setting for a small clinic/hospital.
 - Comprehensive testing: While we do not claim to be bug-free, we did a comprehensive amount of testing including testing our product ourselves manually, through automated tests, and even asking other teams to perform their own UAT on our product to identify pain-points/bugs/feature flaws (that we went on to address).
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+The MediCLI development team (consisting of 5 members) acknowledges the presense of known feature flaws in our system.
+Thus, we have planned the following 10 enhancements to be added in the near future.
+Please find them organised into their respective categories.
+
+### Appointment Functionality Enhancements
+
+<span>1</span>. Adding an end time to appointments
+
+Currently, the MediCLI system only stores the date and start time of an appointment.
+However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
+This is so that the doctor can be safely booked by another patient without worrying about potential clashes in appointment timings.
+* <b>Updated Command Format</b> - `addappt sdt/STARTDATETIME [edt/ENDDATETIME] dn/DOCTORNRIC pn/PATIENTNRIC`
+* <b>Example Input</b> - `addappt sdt/2024-05-20 10:00 edt/2024-05-20 11:00 dn/S1234567A pn/S1234567B`
+
+<span>2</span>. More robust appointment timing validation.
+
+Currently, the MediCLI system allows two appointments with the same doctor/patient and date-time to be simultaneously stored in the system.
+However, it is clearly impossible for a patient or doctor to attend two different appointments at the same time.
+Thus, we plan to implement a more robust appointment validation system to ensure that appointments with clashing or unrealistic timings can not be entered.
+
+<span>3</span>. Marking old appointments as completed.
+
+Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
+However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
+Thus, we plan to add a label (just like the patient/doctor labels) in the top right corner of each appointment card to help better distinguish them.
+* <b>New Command Format</b> - `markappt index s/STATUS` (`STATUS` can be any one of {`completed`, `missed`})
+* <b>Example Input</b> - `markappt 1 s/completed`
+* <b>Example Input</b> - `markappt 2 s/missed`
+
+### Parameter Checking Enhancements
+
+<span>4</span>. Accommodate names with symbols and/or special characters.
+
+The name parameter is currently restricted to just alphabetical characters and white-space.
+However, we recognise the existence of names that contain symbols and other special characters.
+In the future, we plan to implement a more accommodating constraint that allows UTF-8 characters instead.
+This means that names of other languages will be accepted as well.
+
+<span>5</span>. Allow foreign patients/doctors to be added to the system.
+
+The current constraints for the NRIC and phone number parameters reflect the Singaporean format.
+However, we recognise that for foreign users, this can be rather limiting.
+Thus, in the future, we plan on introducing more refined parameter checking that allows international NRIC and phone number formats.
+
+<span>6</span>. Ensure each person being added to the system is unique.
+
+While the current MediCLI system already checks to ensure every person added is unique, it is only done by comparing the NRIC of the person.
+However, this should not be the only checking condition. Two entries with the same name, date of birth, and/or phone number should also be flagged as non-unique.
+Thus, we will devise a more holistic assessment criterion to ensure no duplicates are allowed.
+
+### User Interface Enhancements
+
+<span>7</span>. Refine the user interface when the window size is minimised.
+
+The current MediCLI system is not particularly flexible when it comes to window sizing.
+Users on smaller screens may encounter the issue of scrolling being disabled or labels being truncated if a long name is entered.
+In the future, we plan to make the UI more adaptive and friendly to smaller screens.
+
+<span>8</span>Standardise displayed information.
+
+For certain fields, the MediCLI system simply displays the text exactly as entered by the user.
+However, this can introduce inconsistencies in capitalisation (especially with the NRIC field) when displayed in the user interface.
+We plan on standardising these fields by automatically capitalising the users' input.
+
+### Feature Enhancements
+
+<span>9</span>. More advanced search options
+
+Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
+However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
+(e.g. when searching for a person by full name). In the future, we plan to add more advanced search options to allow for easy querying of information.
+* <b>Updated Command Format</b> - `find t/TYPE KEYWORD`, `patient t/TYPE KEYWORD`, `doctor t/TYPE KEYWORD` (`TYPE` can be any one of {`full`, `partial`}).
+* <b>Example Input</b> - `find t/full John Doe`
+* <b>Example Input</b> - `doctor t/partial Smith Li`
+
+<span>10</span>. More detailed error messages.
+
+Some of the current error messages are not the most informative
+(e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
+To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions, e.g. `Please make sure the NRIC provided belongs to a person of the correct type as indicated by the prefix.`.
