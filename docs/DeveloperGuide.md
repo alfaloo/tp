@@ -254,8 +254,8 @@ The sequence diagram below demonstrates the command execution steps for `execute
 This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
 Add command execution sequence:
 * Step 1. The `execute` method of the `AddPatientCommand` is called.
-* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients and throws an exception if there is.
-    * If there is a duplicate person, the method calls the `log` method of `logger` to log the incident.
+* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients.
+    * If there is a duplicate person, the method throws `CommandException` and calls the `log` method of `logger` to log the incident.
 * Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
 * Step 4. The `log` method of `logger` is then called to log the successful command execution.
 * Step 5. A new `CommandResult` object with the success message is then created and returned by `execute`.
@@ -313,7 +313,7 @@ This command is implemented through the `DeleteCommand` class which extends the 
 
 * Step 1. The `execute` method of the `DeleteCommand` is called.
 * Step 2. The `getFilteredPersonList` method of `Model` is called and finds its length.
-* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivilent.
+* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivalent.
 * Step 4. The provided index is checked against the length of the current list of people.
     * If the provided index is out of bounds, a `CommandException` is thrown.
 * Step 4. The `deletePerson` method of `Model` is called to remove the designated person from the list of people.
@@ -332,7 +332,6 @@ Why is this implemented this way?
 4. Since appointments are constructed with unique `Person` `Nric` fields, it does not make sense to have an appointment that does not have valid doctor or patient entries.
 5. As such, the solution that is inbuilt to deleting a `Person`, comes with the added functionality on the backend to delete all related `Appointment` entries as well.
 6. This results in a cleaner `Appointments` panel, and saves the user from the hassle of needing to delete unwanted `Appointment` entries one by one.
-
 
 
 ### Add a `Appointment`
@@ -577,14 +576,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
   * Cons: We must ensure that the implementation of each individual command are correct.
 
-
-_{more aspects and alternatives to be added}_
-
-
-### \[Proposed\] Data archiving
-
-
-_{Explain here how the data archiving feature will be implemented}_
 
 ## Planned Enhancements
 
