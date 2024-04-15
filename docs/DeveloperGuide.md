@@ -828,15 +828,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Hospital clerk enters patient data
 2.  mediCLI adds the patient into database
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
 * 1a. The entered patient data is not in the correct format
-  * *1a1. mediCLI shows an error message
+  * 1a1. MediCLI shows an error message with exact issue
+  
+    Use case ends.
 
-
-Use case ends.
+* 1b. The entered patient is already in the database
+  * 1b1. MediCLI shows an error about duplicate persons 
+  
+     Use case ends.
 
 
 
@@ -852,13 +856,13 @@ Use case ends.
 3.  Hospital clerk requests to delete a specific patient in the list
 4.  mediCLI deletes the patient
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
 
-    Use case ends.
+  Use case ends.
 
 
 * 3a. The given index is invalid.
@@ -874,7 +878,19 @@ Use case ends.
 2.  Hospital clerk enters doctor and patient details
 3.  mediCLI creates the appointment
 
-Use case ends.
+    Use case ends.
+
+
+**Extensions**
+
+* 2a. The entered doctor or patient detail is invalid.
+  * 2a1. MediCLI will show an error message about invalid doctor or patient details.
+    
+    Use case ends.
+* 2b. The enetered appointment information is invalid
+  * 2b1. MediCLI will shwo an error message about which fields are invalid.
+      
+     Use case ends.
 
 **Use case: Delete an appointment**
 
@@ -884,7 +900,12 @@ Use case ends.
 2.  Hospital clerk enters appointment id
 3.  mediCLI deletes the appointment
 
-Use case ends.
+    Use case ends.
+
+* 2a. The given index is invalid.
+  * 2a1. mediCLI shows an error message about invalid Index.
+
+    Use case ends.
 
 **Use case: Query patient by name**
 
@@ -894,7 +915,7 @@ Use case ends.
 2.  Hospital clerk enters patient name
 3.  mediCLI lists patients with supplied name
 
-Use case ends.
+     Use case ends.
 
 **Extensions**
 
@@ -908,9 +929,9 @@ Use case ends.
 
 1.  Hospital clerk needs to search for appointment by patient
 2.  Hospital clerk enters patient name
-3.  mediCLI lists relevant appointments
+3.  mediCLI lists relevant appointments 
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
@@ -926,13 +947,13 @@ Use case ends.
 2.  Hospital clerk enters doctor name
 3.  mediCLI lists relevant appointments
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
 * 3a. The list is empty
 
-Use case ends.
+    Use case ends.
 
 ### Non-Functional Requirements
 
