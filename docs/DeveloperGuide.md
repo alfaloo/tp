@@ -888,7 +888,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
 * 2b. The enetered appointment information is invalid
-  * 2b1. MediCLI will shwo an error message about which fields are invalid.
+  * 2b1. MediCLI will show an error message about which fields are invalid.
       
      Use case ends.
 
