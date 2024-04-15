@@ -154,27 +154,16 @@ This reduces repetition of information and increases clarity.</i>
 Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
 This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
 
-* Step 1. User enters an `addpatient` or `adddoctor` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addPatientCommandParser` or `addDoctorCommandParser`.
-* Step 3. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-  * If there are any missing fields, a `CommandException` is thrown.
-  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-  * If the patient to added already exists in the system, a `DuplicatePersonException` is thrown`.
-
 The activity diagram below demonstrates this error handling process in more detail.
 
 <img src="images/AddPersonActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `addPatientCommandParser` or `addDoctorCommandParser` return an instance of either `addPatientCommand` or `addDoctorCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addPatientCommand` or `addDoctorCommand`.
-* Step 6. The `execute` method in `addPatientCommand` or `addDoctorCommand` executes and calls `addPerson` in model to add the new patient into the system.
-* Step 7. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `AddPatientCommand`.
-
-<img src="images/AddPatientSequenceDiagram.png" width="800" />
-
-<i>Note: Sequence diagram above is the same for `AddDoctorCommand`, but instead of `AddPatientCommandParser` it is `AddDoctorCommandParser` etc.</i>
+This is the sequence of execution for `AddPatientCommand`, however, `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
+Add command execution sequence:
+* Step 1. The `execute` method of the `AddPatientCommand` is called.
+* Step 2. The method calls the `hasPerson` method of `model` to check if there are any duplicate patients and throws an exception if there is.
+* Step 3. The `addPerson` method of `model` is then called and the control is passed back to the `execute` method.
+* Step 4. A new `CommandResult` object with the success message is then created and returned by `execute`.
 
 #### Design considerations:
 
@@ -820,19 +809,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  Hospital clerk enters patient data
 2.  mediCLI adds the patient into database
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
 * 1a. The entered patient data is not in the correct format
-  * 1a1. MediCLI shows an error message with exact issue
-  
-    Use case ends.
+  * *1a1. mediCLI shows an error message
 
-* 1b. The entered patient is already in the database
-  * 1b1. MediCLI shows an error about duplicate persons 
-  
-     Use case ends.
+
+Use case ends.
 
 
 
@@ -848,13 +833,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  Hospital clerk requests to delete a specific patient in the list
 4.  mediCLI deletes the patient
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
 
-  Use case ends.
+    Use case ends.
 
 
 * 3a. The given index is invalid.
@@ -870,19 +855,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters doctor and patient details
 3.  mediCLI creates the appointment
 
-    Use case ends.
-
-
-**Extensions**
-
-* 2a. The entered doctor or patient detail is invalid.
-  * 2a1. MediCLI will show an error message about invalid doctor or patient details.
-    
-    Use case ends.
-* 2b. The enetered appointment information is invalid
-  * 2b1. MediCLI will show an error message about which fields are invalid.
-      
-     Use case ends.
+Use case ends.
 
 **Use case: Delete an appointment**
 
@@ -892,12 +865,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters appointment id
 3.  mediCLI deletes the appointment
 
-    Use case ends.
-
-* 2a. The given index is invalid.
-  * 2a1. mediCLI shows an error message about invalid Index.
-
-    Use case ends.
+Use case ends.
 
 **Use case: Query patient by name**
 
@@ -907,7 +875,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters patient name
 3.  mediCLI lists patients with supplied name
 
-     Use case ends.
+Use case ends.
 
 **Extensions**
 
@@ -921,9 +889,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  Hospital clerk needs to search for appointment by patient
 2.  Hospital clerk enters patient name
-3.  mediCLI lists relevant appointments 
+3.  mediCLI lists relevant appointments
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
@@ -939,13 +907,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters doctor name
 3.  mediCLI lists relevant appointments
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
 * 3a. The list is empty
 
-    Use case ends.
+Use case ends.
 
 ### Non-Functional Requirements
 
