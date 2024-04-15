@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
@@ -22,6 +26,8 @@ public class QueryDoctorCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
+    private static Logger logger = LogsCenter.getLogger(QueryDoctorCommand.class);
+
     private final DoctorContainsKeywordsPredicate predicate;
 
     public QueryDoctorCommand(DoctorContainsKeywordsPredicate predicate) {
@@ -31,7 +37,10 @@ public class QueryDoctorCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.log(Level.INFO, "Executing QueryDoctorCommand");
         model.updateFilteredPersonList(predicate);
+        int numberOfDoctors = model.getFilteredPersonList().size();
+        logger.log(Level.INFO, "Number of Doctor found: " + numberOfDoctors);
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }

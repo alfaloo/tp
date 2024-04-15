@@ -9,7 +9,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import seedu.address.Main;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -38,7 +37,7 @@ public class AddDoctorCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New doctor added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    private static Logger logger = LogsCenter.getLogger(Main.class);
+    private static Logger logger = LogsCenter.getLogger(AddDoctorCommand.class);
 
     private final Doctor toAdd;
 
@@ -60,6 +59,7 @@ public class AddDoctorCommand extends Command {
         }
 
         model.addPerson(toAdd);
+        logger.log(Level.INFO, "Doctor successfully added (when executing command: adddoctor)");
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

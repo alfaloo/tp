@@ -51,6 +51,7 @@ public class DeleteCommand extends Command {
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
+        logger.log(Level.INFO, "Person succesfully deleted. (when executing command: delete)");
         String message = (personToDelete.getType() == Type.PATIENT
                 ? MESSAGE_DELETE_PATIENT_SUCCESS
                 : MESSAGE_DELETE_DOCTOR_SUCCESS);
