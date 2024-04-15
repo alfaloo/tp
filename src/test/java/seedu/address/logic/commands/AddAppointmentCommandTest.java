@@ -40,7 +40,7 @@ class AddAppointmentCommandTest {
     @Test
     void execute_invalidCommand_missingPerson() throws CommandException, ParseException {
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertThrows(CommandException.class, () -> ad.execute(modelManager));
     }
@@ -49,7 +49,7 @@ class AddAppointmentCommandTest {
     void execute_invalidCommand_throwsInvalidAppointmentException() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(ALICE.getNric(), BROWN.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertThrows(InvalidAppointmentException.class, () -> ad.execute(modelManager));
     }
@@ -58,7 +58,7 @@ class AddAppointmentCommandTest {
     void execute_invalidCommandAppointmentExists_throwsCommandException() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         modelManager.addAppointment(appt);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertThrows(CommandException.class, () -> ad.execute(modelManager));
@@ -68,7 +68,7 @@ class AddAppointmentCommandTest {
     void equals_sameCommandButDifferentObject_returnsTrue() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         AddAppointmentCommand ad2 = new AddAppointmentCommand(appt);
         assertTrue(ad.equals(ad2));
@@ -78,7 +78,7 @@ class AddAppointmentCommandTest {
     void equals_sameCommandSameObject_returnsTrue() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertTrue(ad.equals(ad));
     }
@@ -87,7 +87,7 @@ class AddAppointmentCommandTest {
     void equals_differentClass_returnsFalse() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertFalse(ad.equals("hi"));
     }
@@ -96,7 +96,7 @@ class AddAppointmentCommandTest {
     void toString_returnsValidString() throws ParseException {
         this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"));
+                new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         assertEquals(ad.toString(), "seedu.address.logic.commands.AddAppointmentCommand{toAdd="
                 + appt.toString()

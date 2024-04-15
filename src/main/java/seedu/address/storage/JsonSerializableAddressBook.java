@@ -32,7 +32,11 @@ class JsonSerializableAddressBook {
     @JsonCreator
     public JsonSerializableAddressBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
                                        @JsonProperty("appointments") List<JsonAdaptedAppointment> appointments) {
+
+        assert persons != null : "persons should not be null";
         this.persons.addAll(persons);
+
+        assert appointments != null : "appointments should not be null";
         this.appointments.addAll(appointments);
     }
 

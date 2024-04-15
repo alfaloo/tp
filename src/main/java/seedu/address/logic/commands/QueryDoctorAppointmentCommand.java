@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -11,7 +12,7 @@ import seedu.address.model.appointment.AppointmentContainsDoctorPredicate;
 
 /**
  * Represents a command for querying appointments for a specific doctor.
- * The command searches for appointments of doctors whose NRICs/names contain any of the specified keywords
+ * The command searches for appointments of doctors whose NRICs contain any of the specified keywords
  * (case-insensitive) and displays them as a list with index numbers.
  */
 public class QueryDoctorAppointmentCommand extends Command {
@@ -28,17 +29,27 @@ public class QueryDoctorAppointmentCommand extends Command {
 
     private final AppointmentContainsDoctorPredicate predicate;
 
+    /**
+     * Constructs a QueryDoctorAppointmentCommand with the given predicate.
+     *
+     * @param predicate The predicate to be used for querying doctor appointments.
+     * @throws NullPointerException if the predicate is null.
+     */
     public QueryDoctorAppointmentCommand(AppointmentContainsDoctorPredicate predicate) {
+        requireNonNull(predicate, "Predicate cannot be null in QueryDoctorAppointmentCommand constructor.");
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
-        requireNonNull(model);
-        logger.info("Executing QueryDoctorAppointmentCommand");
+        requireNonNull(model, "Model cannot be null in execute method of QueryDoctorAppointmentCommand.");
+
+        logger.log(Level.INFO, "Executing QueryDoctorAppointmentCommand");
+
         model.updateFilteredAppointmentList(predicate);
         int numberOfAppointments = model.getFilteredAppointmentList().size();
-        logger.info("Number of appointments found: " + numberOfAppointments);
+        logger.log(Level.INFO, "Number of appointments found: " + numberOfAppointments);
+
         return new CommandResult(
                 String.format(Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, numberOfAppointments));
     }
@@ -49,7 +60,6 @@ public class QueryDoctorAppointmentCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof QueryDoctorAppointmentCommand)) {
             return false;
         }

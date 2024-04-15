@@ -27,6 +27,7 @@ public class Nric {
      */
     public Nric(String nric) {
         requireNonNull(nric);
+        assert nric.length() == 9 : "Person nric string is of incorrect length";
         checkArgument(isValidNric(nric), MESSAGE_CONSTRAINTS);
         this.nric = nric;
     }

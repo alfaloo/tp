@@ -38,66 +38,32 @@ public class Appointment {
     private final AppointmentId appointmentId;
 
     /**
-     * Constructs a new appointment instance.
-     *
-     * @param doctorNric doctor in charge.
-     * @param patientNric patient of the appointment.
-     * @param appointmentDateTime date of the appointment.
+     * Constructs a new appointment instance
+     * @param doctorNric doctor in charge
+     * @param patientNric patient of the appointment
+     * @param appointmentDateTime date of the appointment
+     * @param isInitialised a boolean value indication whether this was initialised by the json file
+     * @throws ParseException
      */
-    public Appointment(
-            Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime) throws ParseException {
+    public Appointment(Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime,
+                       Boolean isInitialised) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
         logger.log(Level.INFO, "Going to create new appointment instance");
 
-        try {
-            checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
-        } catch (IllegalArgumentException e) {
-            logger.log(Level.INFO, "Appointment parameter check failed");
-            throw new ParseException(e.getMessage());
+        if (!isInitialised) {
+            try {
+                checkArgument(isValidAppointmentDateTime(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
+            } catch (IllegalArgumentException e) {
+                logger.log(Level.INFO, "Appointment parameter check failed");
+                throw new ParseException(e.getMessage());
+            }
         }
 
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
         this.appointmentDateTime = appointmentDateTime;
-        this.appointmentId = new AppointmentId();
-        logger.log(Level.INFO, "New appointment was created");
     }
 
-    /**
-     * Constructs a new appointment instance
-     * @param doctorNric doctor in charge
-     * @param patientNric patient of the appointment
-     * @param appointmentDateTime date and time of the appointment
-     * @param appointmentId id of the appointment
-     */
-    public Appointment(Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime,
-                       AppointmentId appointmentId) {
-        requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
-        checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
-        this.doctorNric = doctorNric;
-        this.patientNric = patientNric;
-        this.appointmentDateTime = appointmentDateTime;
-        this.appointmentId = appointmentId;
-    }
-
-    /**
-     * constructs a new appointment instance
-     * @param doctorNric doctor in charge
-     * @param patientNric patient of the appointment
-     * @param appointmentDateTime dateTime of the appointment
-     * @param isInitialised a boolean value indication whether this was initialised by the json file
-     * @throws ParseException
-     */
-    public Appointment(
-            Nric doctorNric, Nric patientNric,
-            AppointmentDateTime appointmentDateTime,
-            AppointmentId appointmentId, Boolean isInitialised) throws ParseException {
-        requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
-        this.doctorNric = doctorNric;
-        this.patientNric = patientNric;
-        this.appointmentDateTime = appointmentDateTime;
-        this.appointmentId = new AppointmentId();
-    }
     /**
      * Checks if appointment is valid by comparing appointment date against current date.
      * A valid new appointment can only be in the future, not the past.
@@ -105,7 +71,7 @@ public class Appointment {
      * @param appointmentDate Date to check validity of
      * @return boolean if appointment is valid or not
      */
-    public boolean isValidAppointment(AppointmentDateTime appointmentDate) {
+    public boolean isValidAppointmentDateTime(AppointmentDateTime appointmentDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         AppointmentDateTime currentDateTime = new AppointmentDateTime(LocalDateTime.now().format(formatter));
         return appointmentDate.compareTo(currentDateTime) > -1;
@@ -226,7 +192,6 @@ public class Appointment {
                 .add("Date", getAppointmentDateTime())
                 .add("Doctor", getDoctorNric())
                 .add("Patient", getPatientNric())
-                .add("Id", getAppointmentId())
                 .toString();
     }
 }

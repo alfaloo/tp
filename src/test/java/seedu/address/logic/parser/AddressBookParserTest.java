@@ -129,7 +129,7 @@ public class AddressBookParserTest {
         Doctor doctor = new DoctorBuilder().build();
         String today = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
         Appointment appointment = new Appointment(doctor.getNric(), patient.getNric(),
-                new AppointmentDateTime(today));
+                new AppointmentDateTime(today), false);
         EditAppointmentDescriptor descriptor = new EditAppointmentDescriptor();
         descriptor.setDateTime(new AppointmentDateTime("3" + today.substring(1)));
         EditAppointmentCommand command = (EditAppointmentCommand) parser

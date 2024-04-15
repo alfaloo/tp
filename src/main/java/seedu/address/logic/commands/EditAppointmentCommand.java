@@ -7,7 +7,11 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENTS;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.Main;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -37,6 +41,7 @@ public class EditAppointmentCommand extends Command {
     public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book.";
+    private static Logger logger = LogsCenter.getLogger(Main.class);
 
     private final Index index;
     private final EditAppointmentDescriptor editAppointmentDescriptor;
@@ -59,6 +64,7 @@ public class EditAppointmentCommand extends Command {
         List<Appointment> lastShownList = model.getFilteredAppointmentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.log(Level.INFO, "Specified index is not valid! (when executing command: editappt)");
             throw new CommandException(Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
 
@@ -66,11 +72,13 @@ public class EditAppointmentCommand extends Command {
 
         Appointment editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
         if (appointmentToEdit.isSameAppointment(editedAppointment) && model.hasAppointment(editedAppointment)) {
+            logger.log(Level.INFO, "Duplicate appointment detected! (when executing command: editappt)");
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
         }
 
         model.setAppointment(appointmentToEdit, editedAppointment);
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        logger.log(Level.INFO, "Edit appointment success! (when executing command: editappt)");
         return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, Messages.format(editedAppointment)));
     }
 
@@ -94,7 +102,7 @@ public class EditAppointmentCommand extends Command {
                 .getDate().orElse(appointmentToEdit.getAppointmentDateTime());
 
         try {
-            return new Appointment(doctorNric, patientNric, updatedDateTime);
+            return new Appointment(doctorNric, patientNric, updatedDateTime, false);
         } catch (ParseException e) {
             throw new CommandException("Unable to edit appointment due to invalid inputs");
         }

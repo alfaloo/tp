@@ -24,6 +24,7 @@ public class AppointmentDateTime {
      * @param dateStr input string to be stored.
      */
     public AppointmentDateTime(String dateStr) {
+        assert dateStr.length() == 16 : "Appointment date-time string is of incorrect length";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         requireNonNull(dateStr);
         checkArgument(isValidDate(dateStr), MESSAGE_CONSTRAINTS);

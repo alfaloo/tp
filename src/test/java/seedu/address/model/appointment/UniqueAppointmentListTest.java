@@ -43,7 +43,12 @@ public class UniqueAppointmentListTest {
     @Test
     public void contains_appointmentWithSameIdentityFieldsInList_returnsTrue() throws ParseException {
         uniqueAppointmentList.add(VALID_APPT);
-        Appointment editedAppt = new AppointmentBuilder(VALID_APPT).build();
+        Appointment editedAppt = new Appointment(
+                VALID_APPT.getDoctorNric(),
+                VALID_APPT.getPatientNric(),
+                VALID_APPT.getAppointmentDateTime(),
+                false
+        );
         assertTrue(uniqueAppointmentList.contains(editedAppt));
     }
 
@@ -80,7 +85,12 @@ public class UniqueAppointmentListTest {
     @Test
     public void setAppointment_editedAppointmentHasSameIdentity_success() throws ParseException {
         uniqueAppointmentList.add(VALID_APPT);
-        Appointment editedAppt = new AppointmentBuilder(VALID_APPT).build();
+        Appointment editedAppt = new Appointment(
+                VALID_APPT.getDoctorNric(),
+                VALID_APPT.getPatientNric(),
+                VALID_APPT.getAppointmentDateTime(),
+                false
+        );
         uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt);
         expectedUniqueAppointmentList.add(editedAppt);
         assertEquals(expectedUniqueAppointmentList, uniqueAppointmentList);
@@ -89,7 +99,12 @@ public class UniqueAppointmentListTest {
     @Test
     public void setAppointment_editedAppointmentHasDifferentIdentity_success() throws ParseException {
         uniqueAppointmentList.add(VALID_APPT);
-        Appointment editedAppt = new AppointmentBuilder(VALID_APPT).withDoctor((Doctor) BROWN).build();
+        Appointment editedAppt = new Appointment(
+                BROWN.getNric(),
+                VALID_APPT.getPatientNric(),
+                VALID_APPT.getAppointmentDateTime(),
+                false
+        );
         uniqueAppointmentList.setAppointment(VALID_APPT, editedAppt);
         expectedUniqueAppointmentList.add(editedAppt);
         assertEquals(expectedUniqueAppointmentList, uniqueAppointmentList);
@@ -116,7 +131,13 @@ public class UniqueAppointmentListTest {
     public void setAppointments_uniqueAppointmentList_replacesOwnListWithProvidedUniqueAppointmentList()
             throws ParseException, DuplicateAppointmentException {
         uniqueAppointmentList.add(VALID_APPT);
-        Appointment editedAppt = new AppointmentBuilder(VALID_APPT).withDoctor((Doctor) BROWN).build();
+        UniqueAppointmentList expectedUniqueAppointmentList = new UniqueAppointmentList();
+        Appointment editedAppt = new Appointment(
+                BROWN.getNric(),
+                VALID_APPT.getPatientNric(),
+                VALID_APPT.getAppointmentDateTime(),
+                false
+        );
         expectedUniqueAppointmentList.add(editedAppt);
         uniqueAppointmentList.setAppointments(expectedUniqueAppointmentList.asUnmodifiableObservableList());
         assertEquals(expectedUniqueAppointmentList, uniqueAppointmentList);
@@ -131,7 +152,12 @@ public class UniqueAppointmentListTest {
     public void setAppointments_list_replacesOwnListWithProvidedList()
             throws DuplicateAppointmentException, ParseException {
         uniqueAppointmentList.add(VALID_APPT);
-        Appointment editedAppt = new AppointmentBuilder(VALID_APPT).build();
+        Appointment editedAppt = new Appointment(
+                VALID_APPT.getDoctorNric(),
+                VALID_APPT.getPatientNric(),
+                VALID_APPT.getAppointmentDateTime(),
+                false
+        );
         List<Appointment> appointmentList = Collections.singletonList(editedAppt);
         uniqueAppointmentList.setAppointments(appointmentList);
         expectedUniqueAppointmentList.add(editedAppt);

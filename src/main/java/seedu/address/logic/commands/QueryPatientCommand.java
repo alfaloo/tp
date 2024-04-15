@@ -2,19 +2,24 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.PatientContainsKeywordsPredicate;
 
 /**
- * Queries and returns all patients whose name matches the input string.
- * Keyword matching is case insensitive.
- * Query more than one name at a time is supported
+ * Queries and returns all patients whose name, NRIC, DoB and phone number matches
+ * or substring matches the input string.
+ * Keyword matching is case-insensitive.
+ * Query more than one name, nric, date of birth and phone number at a time is supported
  */
 public class QueryPatientCommand extends Command {
 
     public static final String COMMAND_WORD = "patient";
+    private static final Logger logger = Logger.getLogger(QueryPatientCommand.class.getName());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients whose name, "
             + "NRIC, DoB or phone number contains any of "
@@ -24,16 +29,29 @@ public class QueryPatientCommand extends Command {
 
     private final PatientContainsKeywordsPredicate predicate;
 
+    /**
+     * Constructs a QueryPatientCommand with the given predicate.
+     *
+     * @param predicate The predicate to be used for querying patients.
+     * @throws NullPointerException if the predicate is null.
+     */
     public QueryPatientCommand(PatientContainsKeywordsPredicate predicate) {
+        requireNonNull(predicate, "Predicate cannot be null in QueryPatientCommand constructor.");
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
-        requireNonNull(model);
+        requireNonNull(model, "Model cannot be null in execute method of QueryPatientCommand.");
+
+        logger.log(Level.INFO, "Executing QueryPatientCommand");
+
         model.updateFilteredPersonList(predicate);
+        int numberOfPatients = model.getFilteredPersonList().size();
+        logger.log(Level.INFO, "Number of patients found: " + numberOfPatients);
+
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, numberOfPatients));
     }
 
     @Override
@@ -42,7 +60,6 @@ public class QueryPatientCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof QueryPatientCommand)) {
             return false;
         }
@@ -57,5 +74,4 @@ public class QueryPatientCommand extends Command {
                 .add("predicate", predicate)
                 .toString();
     }
-
 }

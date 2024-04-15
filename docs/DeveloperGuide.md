@@ -268,10 +268,61 @@ Why is this implemented this way?
 5. As such, the solution that is inbuilt to deleting a `Person`, comes with the added functionality on the backend to delete all related `Appointment` entries as well.
 6. This results in a cleaner `Appointments` panel, and saves the user from the hassle of needing to delete unwanted `Appointment` entries one by one.
 
+### Understanding Appointments: A new entity type
+MediCLI offers support for appointments, represented by the `Appointment` class on top of existing support for Doctors and Patients. 
+At the crux of it, the `Appointment` class aims to reflect the essence of a medical appointment in real life, which involves a doctor and a patient and takes place at a specific time.
+
+The class diagram below displays the structure of the `Appointment` class.
+<img src="images/AppointmentClassDiagram.png" width="800" />
+
+As visible, the `Appointment` class contains references to the following classes:
+- **`Nric`**: a doctor's & a patient's NRIC number
+- **`AppointmentDateTime`**: Date and time of the appointment
+- **`AppointmentId`**: An ID automatically assigned to the appointment
+
+The appointment class must have reference to exactly 2 `Nric` classes and 1 `AppointmentDateTime` and `AppointmentId`
+
+Below is an object diagram demonstrating a possible appointment object.
+<img src="images/AppointmentObjectDiagram.png" width="800" />
+
+In the object diagram you see that two instances of the Nric class have been instantiated, one as `doctorNric`, and one as `patientNric`. This of course is along with the `appointmentDate` and `appointmentId` objects.
+
+An instance of the `Appointment` class can only be created if the date & time of the appointment is >= the current date and time. This is enforced through the `isValidAppointmentDateTime` method in the `Appointment` class.
+
+#### Context and thought process behind implementation:
+Implementing Appointments naturally involved many design decisions, and here we have attempted to outline the thought process behind our current implementation:
+* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors.
+* The idea is that at the end of the day, the appointment is simply another type of entry being tracked.
+* Nevertheless, it is natural that both in the UI and backend, we would want to differentiate the appointment entries from the patient/doctor entries to ensure that the system is more flexible and easy to expand on in the future.
+* Hence, while similar in terms of the functionality, a lot of the infrastructure to handle appointments was built parallel to the one for persons.
+* For instance, there is a separate `UniqueAppointmentList` class for storing and manipulating appointments that functions very similar to the equivalent list for persons.
+
+#### Implementation and justification:
+* Based on the thought process, the approach was to ensure MediCLI had the same way of handling `Appointments` and `Patients`/`Doctors`.
+* The overall structure including how `Appointments` are stored, managed etc. is largely similar to support debugging and improve readability and comprehension.
+* In other words, if you understand how MediCLI manages `Patients`/`Doctors`, you will also understand how it manages `Appointments`.
+* Some differences are however inevitable and have been listed below:
+  * `Appointment` objects include `doctorNric`, `patientNric` as attributes. A `Doctor` and `Patient` with the corresponding NRIC number must already exist before the `Appointment` was created.
+  * Each `Appointment` object is also assigned a `AppointmentId`, and the ID itself is generated in by the `generateNewId` method of the `Idutil` class. While the `AppointmentID` does not serve a functional purpose at the moment and has not been fully fleshed-out, the current infrastructure serves as a framework on top of which further features that involve `AppointmentId` can be built.
+    * Each appointmentId is structured as `aXXXXXXXX` where each `X` is a number. 
+  * `Appointments` are stored in a separate list in the backend, called the `UniqueAppointmentList`, to allow for different operations and flexibility down the line.
+  * In terms of the UI, `Appointments` appear in a separate column to ensure that the user is able to clearly distinguish between them.
+
+
+#### Alternatives considered
+* One key alternative we looked at was storing `Appointment` objects with `Patient` and `Doctor` objects as part of the same list i.e. `UniquePersonList`.
+* This would mean changing the `Person` class to a different one such as `Entry` and have all three of `Patient` , `Doctor` and `Appointment` extend from the `Entry` class.
+* We decided against this because we thought that it was not the most OOP friendly solution and would not allow for flexibility down the line
+  * Eg: what if we wanted to add a feature that showed all `Appointments` for a set of `Patients` between a set of dates? Having them in the same list would be unintuitive and make the filtration and display quite cumbersome.
+* Furthermore, it might get confusing for the user if everything was dumped into the same list for them to sieve through. Perhaps the user was only concerned with looking up `Patients` in which case the `Appointments` would simply be added clutter.
+* The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. 
+  * Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
+
+
 ### Add a `Appointment`
 
-Adds a new `Appointment` entry by indicating the `patientNric`, `doctorNric`, and an `appointmentDate`.
-The values stored in each of these attributes are self explanatory. A key thing to note is that patients/doctors must already exist in the records, and the date must be in the future.
+Adds a new `Appointment` entry by indicating the `patientNric`, `doctorNric`, and an `appointmentDateTime`.
+The values stored in each of these attributes are self-explanatory. A key thing to note is that a `Patients` /`Doctor` with the NRIC number must already exist in the records, and the date & time must be in the future.
 
 This command is implemented through the `AddAppointmentCommand` class which extend the `Command` class.
 
@@ -280,47 +331,16 @@ This command is implemented through the `AddAppointmentCommand` class which exte
 * Step 3. The `parse` command in `addPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
     * If there are any missing fields, a `CommandException` is thrown.
     * If input arguments does not match constraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the doctor/patient does not exist or the date is not >= current date, a `InvalidAppointmentException` is thrown
-    * If an appointment between the doctor and patient on the specified date already exists, then a `DuplicateAppointmentException` is thrown.
+* Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
+* Step 6. The `execute` method in `addAppointmentCommand` performs the following checks:
+  * If a `Doctor`/`Patient` with the Nric in question not exist or the date & time is not >= current date & time, a `InvalidAppointmentException` is thrown
+  * If an appointment between the `Doctor` and `Patient` (with corresponding NRICs) on the specified date & time already exists, then a `DuplicateAppointmentException` is thrown.
+* Step 7: If both the checks above pass, the `execute` method executes and calls `addAppointment` in model to add the new appointment into the system.
+* Step 8: Success message gets printed onto the results display to notify user.
 
 The activity diagram below demonstrates this error handling process in more detail.
 <img src="images/AddAppointmentActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
-* Step 6. The `execute` method in `addAppointmentCommand` executes and calls `addAppointment` in model to add the new appointment into the system.
-* Step 7. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `AddAppointmentCommand`.
-
-<img src="images/AddAppointmentSequenceDiagram.png" width="800" />
-
-#### Context and thought process behind implementation:
-
-* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors.
-* The idea is that at the end of the day, the appointment is simply another type of entry being tracked.
-* Nevertheless, looking at it from a UI perspective, we would want to differentiate the appointment entries from the person entries.
-* Hence, while similar in terms of the code and functionality, a lot of the infrastructure to handle appointments was built parallel to the one for persons.
-* For instance, there is a separate `UniqueAppointmentList` class for storing and manipulating appointments that functions very similar to the equivalent list for persons.
-
-#### How and why it was implemented the way it was:
-* Based on the thought process, the approach was to emulate the functionality of MediCLI, except with Appointments instead of persons.
-* The overall structure including how appointments are stored, managed etc. is largely similar to support debugging and improve readability and comprehension.
-* In other words, if you understand how MediCLI manages persons, you will also understand how it manages appointments.
-* Some differences are however inevitable and have been listed below:
-  * Appointments have doctor NRIC, patient NRIC, and a Appointment Date as attributes. Doctor and patient nric must already exist before the appointment was created, and the date must be >= current date.
-  * Each appointment is also assigned a unique appointmentId. This is because while patients and doctors use NRIC as a unique identifier, appointments dont have one, hence the auto generated appoitnmentId. There is a util file to achieve this called 'idutil.java'.
-    * Each appointmentId is structured as `aXXXXXXXX` where each `X` is a number. The idUtil stores used numbers to ensure no duplicates are created.
-  * The appointments are stored in a separate list called the `UniqueAppointmentList`, to allow for different operations and flexibility down the line.
-  * In terms of the UI, the appointments appear in a separate column to ensure that the user is able to clearly distinguish between them.
-
-#### Alternatives considered
-* One key alternative we looked at was implementing the appointment as part of the same list i.e. `UniquePersonList`.
-* This would mean changing the `person` class to a different one such as `entry` and have all three of `patient` , `doctor` and `appointment` extend from the person class.
-* We decided against this because we thought that it was not the most OOP friendly solution and just didn't feel right or justifiable.
-* Furthermore, it might get confusing for the user if everything was dumped into the same list of them to sieve through. Perhaps the user was only concerned with looking up patients in which case the appointments would simple be added clutter.
-* The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
-
 
 ### Edit `Appointment`
 Edits an `Appointment` entry by indicating their `Index`.
@@ -1283,3 +1303,39 @@ Invalid Inputs:
 
 Expected Error:
 * None
+
+-------------------------------------------------
+## **Appendix: Effort**
+
+### Difficulty level:
+If AB3 was at a difficulty level of 5/10, `MediCLI` reached was at a level of 8/10. This is most significantly because of the following reasons:
+- Expansion of `Person` entity type to include `Patient` and `Doctor` entities.
+- Inclusion of a completely new `Appointment` entity type.
+
+The expansion into `Patient` and `Doctor` required us to expand the suite of commands to account for them, as well as modify the backend methods to account for the changes.
+However, the `Appointment` class required us to build a completely new parallel infrastructure from UI to the commands to the storage and significantly increased the challenge and difficulty of the project.
+
+### Challenges faced:
+We faced multiple challenges in the project, most significant of which are highlighted below:
+- Developing the `Appointments` feature: As a completely new entity type, we had to build this from the ground up while also integrating it the best way we could with the existing AB3 codebase, which was a big challenge. Even simple things like the `addAppointment` command required a large amount of implementation effort. Beyond just the functional code, writing tests for this and making sure that a sufficient portion was tested using automated tests was quite difficult as we had no existing code that we could build off-of, or modify.
+- Achieving sufficient test coverage - as we have a fairly large amount of functional LOC written, a natural consequence is that we had to write a lot of test code to ensure that they were sufficiently tested. This was a challenge, especially in the beginning when we were just familiarising ourselves with automated tests.
+- UI enhancements: As `javafx` was a completely new framework for everyone in our team, we found it rather difficult to actually make the UI enhancements that we wanted. Particularly we had to make a completely new `card` for appointments and we made changes to the general look and feel to make it more suitable for a hospital, which was a significant step away from the AB3 UI, hence the difficulty. 
+- Finally, another difficulty we faced was actually considering the edge-cases and various scenarios that may arise from interactions between the different entities we were managing:
+  - Let's say you have a `Doctor` with multiple `Appointments`, what do you do if the user deletes the `Doctor` from MediCLI? We decided that the most appropriate approach would be to recursively delete all `Appointments` associated with the doctor.
+  - Similarly, what if you want to add an `Appointment` but the `Patient` involved doesn't exist in the records? We had to implement checks to prevent this.
+  - Many other similar issues resulting from the interactions of different entities were noted and we found it quite challenging to actually identify and resolve all of them so they didn't become a bug or feature flaw down the line.
+
+### Effort required:
+In the previous sections we have already elaborated a little on the challenges and difficulties and talked about the efforts we put into addressing them. As such, for this section we have focused on quantifying the overall project effort.
+
+On the whole, the project took us the entire duration that was offered, with most of us writing upwards of 1000 lines of functional code. The `Appointments` feature was naturally the biggest cause of this and it led to a number of issues that were quite effort-intensive to resolve. 
+On a weekly basis, each of us invested about 8 hours on average in writing code, writing automated tests, documenting and manually testing the feature. 
+
+For team meetings, we would meet up twice a week, one time at the start to distribute work for the week and discuss deliverables, and one time in the end to wrap up the milestone/work for the week and submit the deliverables. Altogether we spent about 3 hours in meetings per week. 
+
+### Achievements:
+Some achievements we are particulary proud of are:
+- Robustness of `Appointments` feature: We tried to consider all the edge cases and problematic aspects of this and preemptively prevent them to make sure the user has a seamless experience.
+- UI improvements: We are quite happy with the way `Appointments` and `Patients`/`Doctors` are integrated into the same window to allow for easy visualisation with minimal use of the mouse. We are also quite proud of the new clean and minimalist interface which we think reflects a hospital setting quite well.
+- Variety of commands: We also are happy with the suite of commands that we offer to users. We focused on the most high-impact commands and ensured that our product offers all CRUD capabilities such that it may actually be used in a functional setting for a small clinic/hospital.
+- Comprehensive testing: While we do not claim to be bug-free, we did a comprehensive amount of testing including testing our product ourselves manually, through automated tests, and even asking other teams to perform their own UAT on our product to identify pain-points/bugs/feature flaws (that we went on to address).

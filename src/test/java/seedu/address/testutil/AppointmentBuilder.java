@@ -71,7 +71,7 @@ public class AppointmentBuilder {
      */
     public Appointment build() {
         try {
-            return new Appointment(doctorNric, patientNric, appointmentDateTime);
+            return new Appointment(doctorNric, patientNric, appointmentDateTime, false);
         } catch (ParseException e) {
             return null;
         }

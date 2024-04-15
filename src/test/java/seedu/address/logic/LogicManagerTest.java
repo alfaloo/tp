@@ -102,8 +102,8 @@ public class LogicManagerTest {
     public void getAppointmentList_getList_listIsNotNull() throws ParseException {
         model.addPerson(ALICE);
         model.addPerson(BROWN);
-        Appointment appt = new AppointmentBuilder().withDoctor((Doctor) BROWN).withPatient((Patient) ALICE).build();
-        model.addAppointment(appt);
+        model.addAppointment(
+                new Appointment(BROWN.getNric(), ALICE.getNric(), new AppointmentDateTime("2024-11-11 11:02"), false));
         assertTrue(model.getFilteredAppointmentList() != null);
         assertTrue(model.getFilteredAppointmentList().size() == 1);
     }
