@@ -5,9 +5,13 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
@@ -15,6 +19,8 @@ import seedu.address.model.person.Person;
  * Appointment class that describes an appointment
  */
 public class Appointment {
+
+    private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     private static final String MESSAGE_CONSTRAINTS_INVALID_DATE =
             "Appointment should be made with a date-time today onwards";
@@ -41,10 +47,11 @@ public class Appointment {
     public Appointment(
             Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
-
+        logger.log(Level.INFO, "Going to create new appointment instance");
         try {
             checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         } catch (IllegalArgumentException e) {
+            logger.log(Level.INFO, "Appointment parameter check failed");
             throw new ParseException(e.getMessage());
         }
 
@@ -52,6 +59,7 @@ public class Appointment {
         this.patientNric = patientNric;
         this.appointmentDateTime = appointmentDateTime;
         this.appointmentId = new AppointmentId();
+        logger.log(Level.INFO, "New appointment was created");
     }
 
     /**
@@ -110,7 +118,16 @@ public class Appointment {
         return doctorNric;
     }
 
-    public void setDoctorNric(Nric nric) {
+    /**
+     * Sets the doctor nric to input nric
+     * @param nric the new doctor nric
+     * @throws InvalidAppointmentException if nric is null
+     */
+    public void setDoctorNric(Nric nric) throws InvalidAppointmentException {
+        // If multiplicity is violated, throw exception. Appointment cannot have null doctor nric.
+        if (nric == null) {
+            throw new InvalidAppointmentException();
+        }
         this.doctorNric = nric;
     }
 
@@ -122,7 +139,11 @@ public class Appointment {
         return patientNric;
     }
 
-    public void setPatientNric(Nric nric) {
+    public void setPatientNric(Nric nric) throws InvalidAppointmentException {
+        // If multiplicity is violated, throw exception. Appointment cannot have null patient nric.
+        if (nric == null) {
+            throw new InvalidAppointmentException();
+        }
         this.patientNric = nric;
     }
 

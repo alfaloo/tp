@@ -78,9 +78,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      */
     public void remove(Appointment toRemove) {
         requireNonNull(toRemove);
-        //        if (!internalList.remove(toRemove)) {
-        //            throw new AppointmentNotFoundException();
-        //        }
+        assert internalList.contains(toRemove)
+                : "Internal list should contain toRemove as check is done prior to method call";
         internalList.remove(toRemove);
     }
 
@@ -148,6 +147,7 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      * Returns true if {@code appointments} contains only unique appointments.
      */
     private boolean appointmentsAreUnique(List<Appointment> appointments) {
+
         for (int i = 0; i < appointments.size() - 1; i++) {
             for (int j = i + 1; j < appointments.size(); j++) {
                 if (appointments.get(i).isSameAppointment(appointments.get(j))) {

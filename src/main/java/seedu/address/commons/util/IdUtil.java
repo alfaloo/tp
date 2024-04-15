@@ -10,6 +10,13 @@ import jdk.jshell.spi.ExecutionControl;
 
 /**
  * Generates unique  String IDs for patients, doctors, and appointments.
+ *
+ * At the moment the ID util is underutilised, but we have kept it in the code for future adaptation.
+ * When the class was orignially defined, we envisioned it being essential to our use case, however, as development
+ * progressed, we realised that it would not add much significant value at least until v1.4 of our product.
+ * However, it can serve a purpose down the line, so we have left it in, despite it not being fleshed out completely.
+ *
+ * Currently only appointments are assigned an ID upon being created, but they ID itself does not serve a purpose.
  */
 public class IdUtil {
 
@@ -73,7 +80,7 @@ public class IdUtil {
             initId = String.valueOf(random.nextInt(90000000) + 10000000);;
         }
         idSet.add(initId);
-
+        assert initId.length() == 8 : "All numeric portions of IDs must be 8 digits long";
         return entity.getLetter() + initId;
     }
 
@@ -83,7 +90,9 @@ public class IdUtil {
      */
     public static void deleteId(String id) {
         requireNonNull(id);
-        Entities entity = Entities.getEntityFromChar(id.substring(0, 1).charAt(0));
+        char firstChar = id.substring(0, 1).charAt(0);
+        assert firstChar == 'a' || firstChar == 'p' || firstChar == 'd' : "IDs can only start with these 3 letters";
+        Entities entity = Entities.getEntityFromChar(firstChar);
         HashSet<String> idSet = allIds.get(entity);
         idSet.remove(id.substring(1, id.length()));
     }
