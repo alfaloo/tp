@@ -39,7 +39,7 @@ public class AddAppointmentCommandParser {
         Nric doctorNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_DOCTORNRIC).get());
         Nric patientNric = ParserUtil.parseNric(argMultimap.getValue(PREFIX_PATIENTNRIC).get());
 
-        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDateTime);
+        Appointment appointment = new Appointment(doctorNric, patientNric, appointmentDateTime, false);
         return new AddAppointmentCommand(appointment);
     }
 

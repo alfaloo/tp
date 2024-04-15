@@ -89,7 +89,7 @@ public class EditAppointmentCommand extends Command {
                 .getDate().orElse(appointmentToEdit.getAppointmentDateTime());
 
         try {
-            return new Appointment(doctorNric, patientNric, updatedDateTime);
+            return new Appointment(doctorNric, patientNric, updatedDateTime, false);
         } catch (ParseException e) {
             throw new CommandException("Unable to edit appointment due to invalid inputs");
         }
