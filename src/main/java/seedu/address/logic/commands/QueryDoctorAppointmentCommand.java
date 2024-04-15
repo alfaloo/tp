@@ -25,7 +25,7 @@ public class QueryDoctorAppointmentCommand extends Command {
             + "list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...(Keywords have to be the "
             + "exact NRICs of the doctor(s) in question)\n"
-            + "Example: " + COMMAND_WORD + " alice bob T1234567A S7654321A";
+            + "Example: " + COMMAND_WORD + " T1234567A S7654321A";
 
     private final AppointmentContainsDoctorPredicate predicate;
 
