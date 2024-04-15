@@ -800,38 +800,41 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `mediCLI` and the **Actor** is the `hospital clerk`, unless specified otherwise)
+(For all use cases below, the **System** is the `MediCLI` and the **Actor** is the `hospital clerk`, unless specified otherwise)
+
+(Note: For all use cases, if you enter the command format wrongly, MediCLI will show an error message and return to step 1.)
 
 **Use case: Add a patient**
 
 **MSS**
 
-1.  Hospital clerk enters patient data
-2.  mediCLI adds the patient into database
+1.  Hospital clerk needs to add a patient
+2.  Hospital clerk enters patient data 
+3.  MediCLI adds the patient into database
 
 Use case ends.
 
 **Extensions**
 
-* 1a. The entered patient data is not in the correct format
-  * *1a1. mediCLI shows an error message
+* 2a. The entered patient data is not in the correct format
+  * 2a1. MediCLI shows an error message.
+  
+    Use case resumes at step 1.
 
-
-Use case ends.
-
-
-
+* 2b. The entered patient is already in the database
+  * 2b1. MediCLI shows an error message.
+  
+     Use case resumes at step 1.
 
 **Use case: Delete a patient**
 
 
 **MSS**
 
-
 1.  Hospital clerk requests to list persons
-2.  mediCLI shows a list of persons
+2.  MediCLI shows a list of persons
 3.  Hospital clerk requests to delete a specific patient in the list
-4.  mediCLI deletes the patient
+4.  MediCLI deletes the patient
 
 Use case ends.
 
@@ -839,13 +842,12 @@ Use case ends.
 
 * 2a. The list is empty.
 
-    Use case ends.
+  Use case resumes at step 1.
 
+* 3a. The given patient index is invalid.
+  * 3a1. MediCLI shows an error message.
 
-* 3a. The given index is invalid.
-  * 3a1. mediCLI shows an error message.
-
-    Use case ends.
+    Use case resumes at step 1.
 
 **Use case: Create an appointment**
 
@@ -853,19 +855,39 @@ Use case ends.
 
 1.  Hospital clerk needs to create appointment between doctor and patient
 2.  Hospital clerk enters doctor and patient details
-3.  mediCLI creates the appointment
+3.  MediCLI creates the appointment
 
-Use case ends.
+    Use case ends.
+
+
+**Extensions**
+
+* 2a. The entered doctor or patient detail is invalid.
+  * 2a1. MediCLI will show an error message.
+    
+    Use case resumes at step 1.
+
+* 2b. The entered appointment date is invalid
+  * 2b1. MediCLI will show an error message.
+      
+     Use case resumes at step 1.
 
 **Use case: Delete an appointment**
 
 **MSS**
 
 1.  Hospital clerk needs to delete appointment between doctor and patient
-2.  Hospital clerk enters appointment id
-3.  mediCLI deletes the appointment
+2.  Hospital clerk enters appointment index
+3.  MediCLI deletes the appointment
 
-Use case ends.
+    Use case ends.
+
+**Extensions**
+
+* 2a. The entered appointment index is invalid.
+  * 2a1. MediCLI shows an error message.
+
+    Use case resumes at step 1.
 
 **Use case: Query patient by name**
 
@@ -873,7 +895,7 @@ Use case ends.
 
 1.  Hospital clerk needs to search for patient
 2.  Hospital clerk enters patient name
-3.  mediCLI lists patients with supplied name
+3.  MediCLI lists patients with supplied name
 
 Use case ends.
 
@@ -881,7 +903,7 @@ Use case ends.
 
 * 3a. The list is empty
 
-  Use case ends.
+  Use case resumes at step 1.
 
 **Use case: Query appointments by patient**
 
@@ -889,7 +911,7 @@ Use case ends.
 
 1.  Hospital clerk needs to search for appointment by patient
 2.  Hospital clerk enters patient name
-3.  mediCLI lists relevant appointments
+3.  MediCLI lists relevant appointments
 
 Use case ends.
 
@@ -897,7 +919,7 @@ Use case ends.
 
 * 3a. The list is empty
 
-  Use case ends.
+  Use case resumes at step 1.
 
 **Use case: Query appointments by doctor**
 
@@ -905,7 +927,7 @@ Use case ends.
 
 1.  Hospital clerk needs to search for appointment by doctor
 2.  Hospital clerk enters doctor name
-3.  mediCLI lists relevant appointments
+3.  MediCLI lists relevant appointments
 
 Use case ends.
 
@@ -913,15 +935,20 @@ Use case ends.
 
 * 3a. The list is empty
 
-Use case ends.
+    Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `11` or above installed.
 2.  Should be able to hold up to 1000 medical staff without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-4.  mediCLI should be easy to integrate with existing medical database systems so that staff can immediately switch to the new app.
+4.  MediCLI should be easy to integrate with existing medical database systems so that staff can immediately switch to the new app.
 5.  Comprehensive documentation should be provided, including user guides, command references, and troubleshooting resources.
+6. MediCLI should not need an internet connection to run.
+7. The GUI for MediCLI should be well organised, purpose oriented and easy to understand for users of any knowledge level.
+8. MediCLI should handle the majority of common user errors and give the users suggestions to mitigate these errors.
+9. MediCLI does not support concurrent usage between multiple users.
+10. MediCLI does not support languages other than English.
 
 ### Glossary
 
