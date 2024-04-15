@@ -36,7 +36,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2324S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2324S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,7 +68,7 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2324S2-CS2103T-T15-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
@@ -149,7 +149,7 @@ This section describes some noteworthy details on how certain features are imple
 
 The section is structured as follows:
 - We first dive into the implementation of the `Appointment` - a special entity type that MediCLI tracks.
-- We then explore what happens when the `execute` method of different types of `commands` is called.
+- We then explore what happens when the `execute` method of different types of `Commands` is called.
 - Finally, we look at how MediCLI deals with incorrect user inputs for operations on both `Persons` and `Appointments`
 
 Through this, we hope to give you a thorough overview of how MediCLI's main features are implemented.
@@ -165,7 +165,7 @@ As visible, the `Appointment` class contains references to the following classes
 - **`Nric`**: a doctor's & a patient's NRIC number
 - **`AppointmentDateTime`**: Date and time of the appointment
 
-The appointment class must have reference to exactly 2 `Nric` classes and 1 `AppointmentDateTime` and `AppointmentId`
+The appointment class must have reference to exactly 2 `Nric` objects and 1 `AppointmentDateTime` object.
 
 Below is an object diagram demonstrating a possible appointment object.
 <img src="images/AppointmentObjectDiagram.png" width="800" />
@@ -202,7 +202,11 @@ Implementing `Appointments` naturally involved many design decisions, and here w
   * Eg: the class in question would have to change from `Person` to `Entry` in a number of different places.
 
 ### Understanding how MediCLI executes different types of commands
-  
+MediCLI currently supports four main types of functionality, namely: add, edit, query, and delete. Each of these functionalities are supported for both people (patient & doctor) and appointments through different command words.
+However, different commands of the same functionality are analougous to each other to enhance readablity and expandability.
+Furthermore, all of the commands extend the main `Command` class, thus the primary difference between each of them is within their `execute` methods. For their general implementation, please refer the "Logic component" section above.
+This section will explore the implemention of the `execute` methods for each of the four functionalities.
+
 
 ### Incorrect user input handling process
 In this section, we will use the _add_ commands for `patients`/`doctors` and `appointments` to demonstrate how MediCLI handles incorrect inputs from the user. 
@@ -708,7 +712,7 @@ Please find them organised into their respective categories.
 
 ### Appointment Functionality Enhancements
 
-1. Adding an end time to appointments
+<p>1</p>. Adding an end time to appointments
 
 Currently, the MediCLI system only stores the date and start time of an appointment.
 However, we recognise that in a fast-paced environment like a hospital, it'd be beneficial to also be able to indicate an end time for appointments.
@@ -716,13 +720,13 @@ This is so that the doctor can be safely booked by another patient without worry
 * <b>Updated Command Format</b> - `addappt sdt/STARTDATETIME [edt/ENDDATETIME] dn/DOCTORNRIC pn/PATIENTNRIC`
 * <b>Example Input</b> - `addappt sdt/2024-05-20 10:00 edt/2024-05-20 11:00 dn/S1234567A pn/S1234567B`
 
-2. More robust appointment timing validation.
+<p>2</p>. More robust appointment timing validation.
 
 Currently, the MediCLI system allows two appointments with the same doctor/patient and date-time to be simultaneously stored in the system.
 However, it is clearly impossible for a patient or doctor to attend two different appointments at the same time.
 Thus, we plan to implement a more robust appointment validation system to ensure that appointments with clashing or unrealistic timings can not be entered.
 
-3. Marking old appointments as completed.
+<p>3</p>. Marking old appointments as completed.
 
 Even though the MediCLI system does not allow appointments to be made in the future, it nonetheless retains entry of completed appointments.
 However, there is currently no visual distinction between future, completed, and missed appointments. This can be rather confusing for the hospital clerks.
@@ -733,20 +737,20 @@ Thus, we plan to add a label (just like the patient/doctor labels) in the top ri
 
 ### Parameter Checking Enhancements
 
-4. Accommodate names with symbols and/or special characters.
+<p>4</p>. Accommodate names with symbols and/or special characters.
 
 The name parameter is currently restricted to just alphabetical characters and white-space.
 However, we recognise the existence of names that contain symbols and other special characters.
 In the future, we plan to implement a more accommodating constraint that allows UTF-8 characters instead.
 This means that names of other languages will be accepted as well.
 
-5. Allow foreign patients/doctors to be added to the system.
+<p>5</p>. Allow foreign patients/doctors to be added to the system.
 
 The current constraints for the NRIC and phone number parameters reflect the Singaporean format.
 However, we recognise that for foreign users, this can be rather limiting.
 Thus, in the future, we plan on introducing more refined parameter checking that allows international NRIC and phone number formats.
 
-6. Ensure each person being added to the system is unique.
+<p>6</p>. Ensure each person being added to the system is unique.
 
 While the current MediCLI system already checks to ensure every person added is unique, it is only done by comparing the NRIC of the person.
 However, this should not be the only checking condition. Two entries with the same name, date of birth, and/or phone number should also be flagged as non-unique.
@@ -754,13 +758,13 @@ Thus, we will devise a more holistic assessment criterion to ensure no duplicate
 
 ### User Interface Enhancements
 
-7. Refine the user interface when the window size is minimised.
+<p>7</p>. Refine the user interface when the window size is minimised.
 
 The current MediCLI system is not particularly flexible when it comes to window sizing.
 Users on smaller screens may encounter the issue of scrolling being disabled or labels being truncated if a long name is entered.
 In the future, we plan to make the UI more adaptive and friendly to smaller screens.
 
-8. Standardise displayed information.
+<p>8</p>Standardise displayed information.
 
 For certain fields, the MediCLI system simply displays the text exactly as entered by the user.
 However, this can introduce inconsistencies in capitalisation (especially with the NRIC field) when displayed in the user interface.
@@ -768,7 +772,7 @@ We plan on standardising these fields by automatically capitalising the users' i
 
 ### Feature Enhancements
 
-9. More advanced search options
+<p>9</p>. More advanced search options
 
 Currently, the `find`, `patient`, and `doctor` commands return all entries whose details contain any of the given keywords.
 However, this implementation is not particularly effective if the user would like to search for a person that matches all the provided keywords exactly
@@ -777,7 +781,7 @@ However, this implementation is not particularly effective if the user would lik
 * <b>Example Input</b> - `find t/full John Doe`
 * <b>Example Input</b> - `doctor t/partial Smith Li`
 
-10. More detailed error messages.
+<p>10</p>. More detailed error messages.
 
 Some of the current error messages are not the most informative
 (e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
