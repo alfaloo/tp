@@ -22,6 +22,7 @@ public class Phone {
      */
     public Phone(String phone) {
         requireNonNull(phone);
+        assert phone.length() == 8 : "Person phone string is of incorrect length";
         checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
         value = phone;
     }

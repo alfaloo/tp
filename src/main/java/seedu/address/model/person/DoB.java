@@ -31,6 +31,7 @@ public class DoB {
      */
     public DoB(String dob) {
         requireNonNull(dob);
+        assert dob.length() == 10 : "Person dob string is of incorrect length";
         checkArgument(isValidDoB(dob), MESSAGE_CONSTRAINTS);
         dateOfBirth = LocalDate.parse(dob);
     }

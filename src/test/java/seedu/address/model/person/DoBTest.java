@@ -16,7 +16,7 @@ public class DoBTest {
     @Test
     public void constructor_invalidDoB_throwsIllegalArgumentException() {
         String invalidDoB = "";
-        assertThrows(IllegalArgumentException.class, () -> new DoB(invalidDoB));
+        assertThrows(AssertionError.class, () -> new DoB(invalidDoB));
     }
 
     @Test
