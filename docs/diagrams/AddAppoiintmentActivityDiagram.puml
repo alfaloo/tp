@@ -4,27 +4,31 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 
 start
-:User enters command to add a patient;
+:User inputs text command to add an appointment;
 
-if () then ([command is invalid])
-    :Show error message\nfor invalid command;
+if () then ([command word does not exist])
+    :Show error message\nfor unknown command word;
 else ([else])
     if () then ([missing required fields])
-        :Show error message\nfor missing required fields;
+        :Show error message indicating\n invalid command format;
     else ([else])
-        if () then ([doctor/patient does not exist])
-            :Show error message\nindicating that the appointment is invalid;
+        if () then ([invalid field arguments])
+                    :Show error message\nhighlighting invalid field\narguments provided;
         else ([else])
-            if () then ([appointment date is invalid])
-                :Show error message\nindicating that the appointment is invalid;
+            if () then ([doctor/patient does not exist])
+                :Show error message\nindicating that the doctor/patient is not registered;
             else ([else])
-                if () then ([Duplicate appointment detected])
-                    :Show error message\nindicating duplicate appointment;
+                if () then ([appointment date is invalid])
+                    :Show error message indicating that\n the appointment cannot be scheduled in the past;
                 else ([else])
-                    :Add the appointment\ninto the appointment list;
-                    :Update the 'appointment' panel\nin the GUI;
-                    :Show success message\nwith appointments' information;
-                endif;
+                    if () then ([Duplicate appointment detected])
+                        :Show error message\nindicating duplicate appointment;
+                    else ([else])
+                        :Add the appointment\ninto the appointment list;
+                        :Update the 'appointment' panel\nin the GUI;
+                        :Show success message\nwith appointments' information;
+                    endif;
+                endif
             endif
         endif
     endif

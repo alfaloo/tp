@@ -6,7 +6,6 @@ skinparam classBackgroundColor UI_COLOR
 
 Class "Appointment" as Appointment
 Class Nric
-Class AppointmentId
 Class AppointmentDateTime
 
 
@@ -14,7 +13,6 @@ Class AppointmentDateTime
 Appointment -down-> "1" Nric : Doctor's NRIC\t
 Appointment -down-> "1" Nric : Patient's NRIC\t\t
 Appointment -down-> "\t1" AppointmentDateTime
-Appointment -down-> "\t1" AppointmentId
 
 
 @enduml

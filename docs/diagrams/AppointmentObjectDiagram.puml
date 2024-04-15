@@ -8,13 +8,11 @@ object "__:Appointment__" as appointment
 object "__doctorNric:Nric__" as doctorNric
 object "__patientNric:Nric__" as patientNric
 object "__appointmentDateTime:AppointmentDateTime__" as appointmentDate
-object "__appointmentId:AppointmentId__" as appointmentId
 
 
 appointment -down-> doctorNric
 appointment -down-> patientNric
 appointment -down-> appointmentDate
-appointment -down-> appointmentId
 
 
 @enduml
