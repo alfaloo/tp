@@ -170,7 +170,7 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 
 ### Quick Tutorial on a Sample Use Case
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>'
+1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
 
 <div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line breaks may be omitted when copied over to the application.</div>
 
