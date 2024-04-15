@@ -24,6 +24,7 @@ public class QueryDoctorAppointmentCommandParser implements Parser<QueryDoctorAp
     public QueryDoctorAppointmentCommand parse(String args) throws ParseException {
         logger.log(Level.INFO, "Parsing QueryDoctorAppointmentCommand arguments: " + args);
         String trimmedArgs = args.trim();
+
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, QueryDoctorAppointmentCommand.MESSAGE_USAGE));
@@ -31,6 +32,7 @@ public class QueryDoctorAppointmentCommandParser implements Parser<QueryDoctorAp
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
         logger.log(Level.INFO, "Name keywords: " + Arrays.toString(nameKeywords));
+        assert nameKeywords.length > 0 : "Name keywords array cannot be empty";
 
         return new QueryDoctorAppointmentCommand(new AppointmentContainsDoctorPredicate(Arrays.asList(nameKeywords)));
     }
