@@ -1146,3 +1146,4 @@ However, this implementation is not particularly effective if the user would lik
 Some of the current error messages are not the most informative
 (e.g. If two patient NRICs are provided when creating an appointment, the system only prompts `This appointment is invalid due to invalid inputs.`).
 To decrease the learning curve for our system, we plan to replace all ambiguous error messages with more informative versions, e.g. `Please make sure the NRIC provided belongs to a person of the correct type as indicated by the prefix.`.
+
