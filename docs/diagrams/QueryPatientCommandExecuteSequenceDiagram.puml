@@ -1,0 +1,44 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":QueryPatientCommand" as QueryPatientCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Commons LOGGER_COLOR_T1
+participant ":Logger" as Logger LOGGER_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> QueryPatientCommand : execute()
+activate QueryPatientCommand
+
+QueryPatientCommand -> Model : updateFilteredPersonList(predicate)
+activate Model
+
+Model --> QueryPatientCommand
+
+deactivate Model
+
+QueryPatientCommand -> Logger: log(Level.INFO, "Success")
+activate Logger
+Logger -> Logger: log
+Logger -> QueryPatientCommand
+deactivate Logger
+
+create CommandResult
+QueryPatientCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> QueryPatientCommand : result
+deactivate CommandResult
+
+[<--QueryPatientCommand : result
+deactivate QueryPatientCommand
+
+@enduml

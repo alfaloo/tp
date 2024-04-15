@@ -1,0 +1,63 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":AddPatientCommand" as AddPatientCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Commons LOGGER_COLOR_T1
+participant ":Logger" as Logger LOGGER_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> AddPatientCommand : execute()
+activate AddPatientCommand
+
+
+AddPatientCommand -> Logger: log(Level.INFO, "Duplicate")
+activate Logger
+Logger -> Logger: log
+Logger -> AddPatientCommand
+deactivate Logger
+
+
+alt model.hasPerson(toAdd)
+    AddPatientCommand -> Model: hasPerson(toAdd)
+    activate Model
+    Model -> AddPatientCommand
+    deactivate Model
+    [<--AddPatientCommand: throw CommandException()
+else else
+    AddPatientCommand -> Model : hasPerson(toAdd)
+    activate Model
+
+    Model --> AddPatientCommand
+
+    AddPatientCommand -> Model : addPerson(toAdd)
+
+    Model --> AddPatientCommand
+    deactivate Model
+
+    AddPatientCommand -> Logger: log(Level.INFO, "Success")
+    activate Logger
+    Logger -> Logger: log
+    Logger -> AddPatientCommand
+    deactivate Logger
+
+    create CommandResult
+    AddPatientCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> AddPatientCommand : result
+    deactivate CommandResult
+
+    [<--AddPatientCommand : result
+    deactivate AddPatientCommand
+end
+
+@enduml
