@@ -158,7 +158,7 @@ The activity diagram below demonstrates the error handling process in more detai
 
 <img src="images/AddPersonActivityDiagram.png" width="800" />
 
-This is the sequence of command execution for `execute` in `AddPatientCommand`, however, `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
+This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
 Add command execution sequence:
 * Step 1. The `execute` method of the `AddPatientCommand` is called.
 * Step 2. The method calls the `hasPerson` method of `model` to check if there are any duplicate patients and throws an exception if there is.
@@ -187,7 +187,10 @@ The activity diagram below demonstrates the error handling process in more detai
 
 <img src="images/EditPersonActivityDiagram.png" width="800" />
 
-This is the sequence of command execution for `execute` in `EditCommand`, however, the sequence of execution for `
+This is the sequence of command execution for `execute` in `EditCommand`, however `EditAppointmentCommand` follow a similar design pattern within the `execute` command.
+* Step 1. The `execute` method of the `EditCommand` is called.
+* Step 2. The method calls the `getFilteredPersonList` method of `model`.
+* Step 3. The ``
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
