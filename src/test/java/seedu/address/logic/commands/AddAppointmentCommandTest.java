@@ -15,17 +15,23 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
+import seedu.address.model.person.Doctor;
+import seedu.address.model.person.Patient;
+import seedu.address.testutil.AppointmentBuilder;
 
 class AddAppointmentCommandTest {
 
     private ModelManager modelManager = new ModelManager();
 
-    @Test
-    void execute_validCommand_executesCommand() throws CommandException, ParseException {
+    private void addPersonsForTest() {
         modelManager.addPerson(ALICE);
         modelManager.addPerson(BROWN);
-        Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
-                new AppointmentDateTime("2024-09-01 11:02"), false);
+    }
+
+    @Test
+    void execute_validCommand_executesCommand() throws CommandException, ParseException {
+        this.addPersonsForTest();
+        Appointment appt = new AppointmentBuilder().withDoctor((Doctor) BROWN).withPatient((Patient) ALICE).build();
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
         CommandResult commandResult = ad.execute(modelManager);
         assertTrue(modelManager.getFilteredAppointmentList().size() == 1);
@@ -41,8 +47,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void execute_invalidCommand_throwsInvalidAppointmentException() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(ALICE.getNric(), BROWN.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
@@ -51,8 +56,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void execute_invalidCommandAppointmentExists_throwsCommandException() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         modelManager.addAppointment(appt);
@@ -62,8 +66,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void equals_sameCommandButDifferentObject_returnsTrue() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
@@ -73,8 +76,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void equals_sameCommandSameObject_returnsTrue() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
@@ -83,8 +85,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void equals_differentClass_returnsFalse() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);
@@ -93,8 +94,7 @@ class AddAppointmentCommandTest {
 
     @Test
     void toString_returnsValidString() throws ParseException {
-        modelManager.addPerson(ALICE);
-        modelManager.addPerson(BROWN);
+        this.addPersonsForTest();
         Appointment appt = new Appointment(BROWN.getNric(), ALICE.getNric(),
                 new AppointmentDateTime("2024-09-01 11:02"), false);
         AddAppointmentCommand ad = new AddAppointmentCommand(appt);

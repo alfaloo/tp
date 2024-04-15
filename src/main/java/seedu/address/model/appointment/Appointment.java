@@ -5,16 +5,22 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
- * Appointment class that describes an appointment
+ * Appointment class that describes an appointment in MediCLI.
  */
 public class Appointment {
+
+    private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     private static final String MESSAGE_CONSTRAINTS_INVALID_DATE =
             "Appointment should be made with a date-time today onwards";
@@ -28,8 +34,6 @@ public class Appointment {
     // The date of the appointment
     private final AppointmentDateTime appointmentDateTime;
 
-    // Message to outputs in case constraints are not met
-
     /**
      * Constructs a new appointment instance
      * @param doctorNric doctor in charge
@@ -41,11 +45,13 @@ public class Appointment {
     public Appointment(Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime,
                        Boolean isInitialised) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
+        logger.log(Level.INFO, "Going to create new appointment instance");
 
         if (!isInitialised) {
             try {
                 checkArgument(isValidAppointmentDateTime(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
             } catch (IllegalArgumentException e) {
+                logger.log(Level.INFO, "Appointment parameter check failed");
                 throw new ParseException(e.getMessage());
             }
         }
@@ -69,38 +75,54 @@ public class Appointment {
     }
 
     /**
-     * Gets doctor in charge
-     * @return Doctor in charge
+     * Gets Nric of doctor in charge.
+     * @return Nric of doctor in charge.
      */
     public Nric getDoctorNric() {
         return doctorNric;
     }
 
-    public void setDoctorNric(Nric nric) {
-        if (nric == null) { // Defensive Programming
-            throw new IllegalArgumentException();
+    /**
+     * Sets the doctor nric to input nric.
+     *
+     * @param nric the new doctor nric.
+     * @throws InvalidAppointmentException if nric is null.
+     */
+    public void setDoctorNric(Nric nric) throws InvalidAppointmentException {
+        // If multiplicity is violated, throw exception. Appointment cannot have null doctor nric.
+        if (nric == null) {
+            throw new InvalidAppointmentException();
         }
         this.doctorNric = nric;
     }
 
     /**
-     * Gets patient of the appointment
-     * @return patient of the appointment
+     * Gets nric of the patient of the appointment.
+     * @return nric of patient of the appointment.
      */
     public Nric getPatientNric() {
         return patientNric;
     }
 
-    public void setPatientNric(Nric nric) {
-        if (nric == null) { // Defensive Programming
-            throw new IllegalArgumentException();
+    /**
+     * Sets the patient nric to input nric.
+     *
+     * @param nric the new patient nric.
+     * @throws InvalidAppointmentException if nric is null.
+     */
+    public void setPatientNric(Nric nric) throws InvalidAppointmentException {
+        // If multiplicity is violated, throw exception. Appointment cannot have null patient nric.
+        if (nric == null) {
+            throw new InvalidAppointmentException();
         }
         this.patientNric = nric;
     }
 
+
     /**
-     * Gets date of the appointment
-     * @return date of the appointment
+     * Gets date & time of the appointment.
+     *
+     * @return date & time of the appointment.
      */
     public AppointmentDateTime getAppointmentDateTime() {
         return appointmentDateTime;
@@ -108,8 +130,9 @@ public class Appointment {
 
     /**
      * Checks if appointment is same as input one by comparing persons involved and date.
-     * @param appt input appointment to compare current appointment against
-     * @return boolean indicating if appointments are the same or not
+     *
+     * @param appt input appointment to compare current appointment against.
+     * @return boolean indicating if appointments are the same or not.
      */
     public boolean isSameAppointment(Appointment appt) {
         if (appt == this) {

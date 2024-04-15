@@ -83,8 +83,13 @@ public class EditAppointmentCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Appointment} with the details of {@code appointmentToEdit}
-     * edited with {@code editAppointmentDescriptor}.
+     * Creates and returns a {@code Appointment} with modified details of {@code appointmentToEdit}.
+     * Modified appointment is edited with {@code editAppointmentDescriptor}.
+     *
+     * @param appointmentToEdit the appointment to edit.
+     * @param editAppointmentDescriptor the descriptor to edit according to.
+     * @return Appointment with the details of appointmentToEdit.
+     * @throws CommandException if new inputs are invalid.
      */
     private static Appointment createEditedAppointment(
             Appointment appointmentToEdit,
@@ -143,6 +148,9 @@ public class EditAppointmentCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
+            if (toCopy == null) { // Defensive Coding
+                throw new IllegalArgumentException();
+            }
             setDateTime(toCopy.apptdatetime);
             setDoctorNric(toCopy.doctorNric);
             setPatientNric(toCopy.patientNric);
