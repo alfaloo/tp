@@ -82,7 +82,6 @@ public class EditCommand extends Command {
         if (index.getZeroBased() >= lastShownList.size()) {
             logger.log(Level.WARNING, "Index not within valid parameters! (when executing command: edit)");
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
