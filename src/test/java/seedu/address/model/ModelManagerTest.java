@@ -185,7 +185,8 @@ public class ModelManagerTest {
         Patient p = (Patient) ALICE;
         modelManager.addPerson(d);
         modelManager.addPerson(p);
-        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(), new AppointmentDateTime("2024-08-30 11:02"));
+        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(),
+                new AppointmentDateTime("2024-08-30 11:02"), false);
         assertFalse(modelManager.isValidAppointment(a));
     }
 }
