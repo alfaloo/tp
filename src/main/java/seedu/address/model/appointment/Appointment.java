@@ -16,7 +16,7 @@ import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
 /**
- * Appointment class that describes an appointment
+ * Appointment class that describes an appointment in MediCLI.
  */
 public class Appointment {
 
@@ -35,19 +35,20 @@ public class Appointment {
     private final AppointmentDateTime appointmentDateTime;
 
     // Message to outputs in case constraints are not met
-
     private final AppointmentId appointmentId;
 
     /**
-     * Constructs a new appointment instance
-     * @param doctorNric doctor in charge
-     * @param patientNric patient of the appointment
-     * @param appointmentDateTime date of the appointment
+     * Constructs a new appointment instance.
+     *
+     * @param doctorNric doctor in charge.
+     * @param patientNric patient of the appointment.
+     * @param appointmentDateTime date of the appointment.
      */
     public Appointment(
             Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime) throws ParseException {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
         logger.log(Level.INFO, "Going to create new appointment instance");
+
         try {
             checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         } catch (IllegalArgumentException e) {
@@ -111,17 +112,18 @@ public class Appointment {
     }
 
     /**
-     * Gets doctor in charge
-     * @return Doctor in charge
+     * Gets Nric of doctor in charge.
+     * @return Nric of doctor in charge.
      */
     public Nric getDoctorNric() {
         return doctorNric;
     }
 
     /**
-     * Sets the doctor nric to input nric
-     * @param nric the new doctor nric
-     * @throws InvalidAppointmentException if nric is null
+     * Sets the doctor nric to input nric.
+     *
+     * @param nric the new doctor nric.
+     * @throws InvalidAppointmentException if nric is null.
      */
     public void setDoctorNric(Nric nric) throws InvalidAppointmentException {
         // If multiplicity is violated, throw exception. Appointment cannot have null doctor nric.
@@ -132,13 +134,19 @@ public class Appointment {
     }
 
     /**
-     * Gets patient of the appointment
-     * @return patient of the appointment
+     * Gets nric of the patient of the appointment.
+     * @return nric of patient of the appointment.
      */
     public Nric getPatientNric() {
         return patientNric;
     }
 
+    /**
+     * Sets the patient nric to input nric.
+     *
+     * @param nric the new patient nric.
+     * @throws InvalidAppointmentException if nric is null.
+     */
     public void setPatientNric(Nric nric) throws InvalidAppointmentException {
         // If multiplicity is violated, throw exception. Appointment cannot have null patient nric.
         if (nric == null) {
@@ -147,13 +155,19 @@ public class Appointment {
         this.patientNric = nric;
     }
 
+    /**
+     * Gets the ID of the appointment.
+     *
+     * @return AppointmentId of the appointment.
+     */
     public AppointmentId getAppointmentId() {
         return this.appointmentId;
     }
 
     /**
-     * Gets date of the appointment
-     * @return date of the appointment
+     * Gets date & time of the appointment.
+     *
+     * @return date & time of the appointment.
      */
     public AppointmentDateTime getAppointmentDateTime() {
         return appointmentDateTime;
@@ -161,8 +175,9 @@ public class Appointment {
 
     /**
      * Checks if appointment is same as input one by comparing persons involved and date.
-     * @param appt input appointment to compare current appointment against
-     * @return boolean indicating if appointments are the same or not
+     *
+     * @param appt input appointment to compare current appointment against.
+     * @return boolean indicating if appointments are the same or not.
      */
     public boolean isSameAppointment(Appointment appt) {
         if (appt == this) {

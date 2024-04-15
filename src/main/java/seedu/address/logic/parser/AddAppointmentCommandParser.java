@@ -14,14 +14,15 @@ import seedu.address.model.appointment.AppointmentDateTime;
 import seedu.address.model.person.Nric;
 
 /**
- * Parses addAppointment Command
+ * Parses addAppointment Command.
  */
 public class AddAppointmentCommandParser {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand
-     * and returns an AddAppointmentCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Parses the given {@code String} of arguments in the context of the AddAppointmentCommand.
+     * Returns an AddAppointmentCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format.
      */
     public AddAppointmentCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
@@ -44,7 +45,7 @@ public class AddAppointmentCommandParser {
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given.
      * {@code ArgumentMultimap}.
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {

@@ -16,14 +16,12 @@ import seedu.address.model.Model;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.ui.UiManager;
 
 /**
  * Command to add an appointment to MediCLI
  */
 public class AddAppointmentCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(AddAppointmentCommand.class);
 
     public static final String COMMAND_WORD = "addappt";
 
@@ -39,6 +37,8 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New Appointment added: %1$s";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the MediCLI";
+
+    private static final Logger logger = LogsCenter.getLogger(AddAppointmentCommand.class);
 
     private final Appointment toAdd;
 

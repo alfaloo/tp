@@ -25,7 +25,6 @@ import seedu.address.model.person.Patient;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.AddressBookBuilder;
 import seedu.address.testutil.AppointmentBuilder;
-import seedu.address.testutil.TypicalPersons;
 
 public class ModelManagerTest {
 

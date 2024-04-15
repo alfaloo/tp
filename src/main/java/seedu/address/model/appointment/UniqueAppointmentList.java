@@ -17,9 +17,7 @@ import seedu.address.model.person.Person;
  * An appointment is considered unique by comparing using {@code Appointment#isSameAppointment(Appointment)}.
  * As such, adding and updating of appointments uses Appointment#isSameAppointment(Appointment) for equality
  * so as to ensure that the Appointment being added or updated is
- * unique in terms of identity in the UniqueAppointmentList. However, the removal of a person uses
- * Appointment#equals(Object) so as to ensure that the person with exactly the same fields will be removed.
- *
+ * unique in terms of identity in the UniqueAppointmentList.
  * Supports a minimal set of list operations.
  *
  * @see Appointment#isSameAppointment(Appointment)
@@ -31,6 +29,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     /**
      * Returns true if the list contains an equivalent appointment as the given argument.
+     * @param toCheck Appointment to check for in the list.
+     * @return boolean indicating if appointment is contained.
      */
     public boolean contains(Appointment toCheck) {
         requireNonNull(toCheck);
@@ -39,8 +39,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     /**
      * Returns a list of appointments if the appointment contains the person. Checked via person's NRIC
-     * @param person target person
-     * @return list of appointments
+     * @param person target person.
+     * @return list of appointments.
      */
     public List<Appointment> contains(Person person) {
         requireNonNull(person);
@@ -52,6 +52,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Adds an appointment to the list.
      * The appointment must not already exist in the list.
+     *
+     * @param toAdd Appointment toAdd
      */
     public void add(Appointment toAdd) {
         requireNonNull(toAdd);
@@ -63,6 +65,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
      * {@code target} must exist in the list.
      * The appointment details of {@code editedAppointment} must not be the same as another
      * existing appointment in the list.
+     *
+     * @param target the Appointment to replace.
+     * @param editedAppointment the Appointment to edit.
      */
     public void setAppointment(Appointment target, Appointment editedAppointment) {
         requireAllNonNull(target, editedAppointment);
@@ -75,6 +80,8 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     /**
      * Removes the equivalent appointment from the list.
      * The appointment must exist in the list.
+     *
+     * @param toRemove the Appointment to remove from the list.
      */
     public void remove(Appointment toRemove) {
         requireNonNull(toRemove);
@@ -83,14 +90,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         internalList.remove(toRemove);
     }
 
-    public void setPersons(UniqueAppointmentList replacement) {
-        requireNonNull(replacement);
-        internalList.setAll(replacement.internalList);
-    }
 
     /**
      * Replaces the contents of this list with {@code appointments}.
      * {@code appointments} must not contain duplicate appointments.
+     *
+     * @param appointments the list of Appointments to replace the current list with.
      */
     public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
         requireAllNonNull(appointments);
@@ -101,13 +106,24 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         internalList.setAll(appointments);
     }
 
+    /**
+     * Replaces the contents of this list with {@code appointments}.
+     * {@code appointments} must not contain duplicate appointments.
+     *
+     * This method does not throw DuplicateAppointmentException because it is only called when resetting the data.
+     * @param appointments
+     */
     public void setAppointmentsExistingBook(List<Appointment> appointments) {
         requireAllNonNull(appointments);
+        boolean isAllAppointmentsUnique = appointmentsAreUnique(appointments);
+        assert isAllAppointmentsUnique == true : "when this method is called appointments should be unique";
         internalList.setAll(appointments);
     }
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
+     *
+     * @return ObservableList the backing list
      */
     public ObservableList<Appointment> asUnmodifiableObservableList() {
         return internalUnmodifiableList;
@@ -145,6 +161,9 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 
     /**
      * Returns true if {@code appointments} contains only unique appointments.
+     *
+     * @param appointments the list of appointments to check for uniqueness.
+     * @return boolean value indicating if appointments are unique.
      */
     private boolean appointmentsAreUnique(List<Appointment> appointments) {
 

@@ -110,17 +110,33 @@ public class ModelManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
+    /**
+     * Checks if the specified appointment is present in the list of appointments.
+     *
+     * @param appointment The appointment to check in the list. It must not be null.
+     * @return true if the appointment is present in the list, false otherwise.
+     */
     @Override
     public boolean hasAppointment(Appointment appointment) {
         requireNonNull(appointment);
         return addressBook.hasAppointment(appointment);
     }
 
+    /**
+     * Removes the specified appointment from the list of appointments.
+     *
+     * @param appointment The appointment to be removed from the list. It must not be null.
+     */
     @Override
     public void deleteAppointment(Appointment appointment) {
         addressBook.deleteAppointment(appointment);
     }
 
+    /**
+     * Adds the specified appointment to the list of appointments.
+     *
+     * @param appointment The appointment to add to the list. It must not be null.
+     */
     @Override
     public void addAppointment(Appointment appointment) {
         addressBook.addAppointment(appointment);
@@ -187,8 +203,8 @@ public class ModelManager implements Model {
 
     /**
      * Checks if an appointment is valid by comparing if doctor and patient involved exist.
-     * @param appointment appointment to check validity of
-     * @return boolean indicating if appointment is valid
+     * @param appointment appointment to check validity of.
+     * @return boolean indicating if appointment is valid.
      */
     public boolean isValidAppointment(Appointment appointment) throws PersonNotFoundException {
         Nric doctorNric = appointment.getDoctorNric();

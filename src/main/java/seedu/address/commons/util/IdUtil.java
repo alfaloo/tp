@@ -22,6 +22,8 @@ public class IdUtil {
 
     /**
      * Enum containing all possible entity types in our system.
+     *
+     * Associated characters are the first letter of each type of entity.
      */
     public enum Entities {
         PATIENT("p"),
@@ -65,8 +67,8 @@ public class IdUtil {
     /**
      * Generates a new id based on input entity.
      *
-     * @param entity type of id to generate
-     * @return String id
+     * @param entity type of id to generate.
+     * @return String id.
      */
     public static String generateNewId(Entities entity) {
         HashSet<String> idSet = allIds.get(entity);
@@ -74,19 +76,23 @@ public class IdUtil {
             idSet = new HashSet<>();
             allIds.put(entity, idSet);
         }
+
         Random random = new Random();
         String initId = String.valueOf(random.nextInt(90000000) + 10000000);
         while (idSet.contains(initId)) {
             initId = String.valueOf(random.nextInt(90000000) + 10000000);;
         }
+
         idSet.add(initId);
         assert initId.length() == 8 : "All numeric portions of IDs must be 8 digits long";
+
         return entity.getLetter() + initId;
     }
 
     /**
      * Deletes Id that is inputted.
-     * @param id String id to delete
+     *
+     * @param id String id to delete.
      */
     public static void deleteId(String id) {
         requireNonNull(id);
@@ -99,7 +105,8 @@ public class IdUtil {
 
     /**
      * Returns allIds as an unmodifiable map.
-     * @return unmodifiable map containing ids
+     *
+     * @return unmodifiable map containing ids.
      */
     public static boolean hasId(String id) {
         requireNonNull(id);
@@ -111,7 +118,8 @@ public class IdUtil {
     /**
      * Updates map with initial values from storage.
      * To be implemented in the future as it does not affect or impact current functionality.
-     * @throws ExecutionControl.NotImplementedException
+     *
+     * @throws ExecutionControl.NotImplementedException as it is not implemented yet and shouldn't be used.
      */
     public static void initalMapUpdate() throws ExecutionControl.NotImplementedException {
         throw new ExecutionControl.NotImplementedException("to be implemented");
