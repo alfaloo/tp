@@ -393,8 +393,6 @@ Alternative implementation for consideration
 2. This will centralise the behaviours, and reduce the amount of code needed to perform the edit function.
 3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
 
-
-
 ### Delete `Appointment`
 Deletes an `Appointment` entry by indicating their `Index`.
 This command is implemented through the `DeleteAppointmentCommand` class which extend the `Command` class.
@@ -430,139 +428,27 @@ Alternative implementation for consideration
 2. This will centralise the behaviours, and reduce the amount of code needed to perform the delete function.
 3. A further extension is to do so with all other overlapping functionalities, such as `add` or `edit`, however we leave that possibility for future discussion and refinement.
 
-### Find `Person`
-Queries a `Person` entry, either `Doctor` or `Patient` by indicating their name or a substring of their name.
-This command is implemented through the `FindCommand` class which extends the `Command` class.
+### Querying Entities in MediCLI `patient`, `doctor`, `appointment`
+This section describes the general sequence for commands that query entities. MediCLI has 5 different commands that serve this function: `find`, `patient`, `doctor`, `apptforpatient` and `apptfordoctor`.
+Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possesses similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands that query entities are described here together in one section.
 
-The `find` command is able to take in multiple parameters (at least one), each of these parameters are read as strings, and act as separate queries. This is a feature of the `find` command, to have the capability of parsing both parameters as a short-hand feature.
-Example, the command `find hans doe` is equivalent of returning the logical 'or' result of `find hans` and `find doe`.
+* Step 1. The `execute()` method is called in an instance of `QueryPatientCommand`.
+* Step 2. The instance of `QueryPatientCommand` calls the `updateFilteredPersonList()` method with the `PatientContainsKeywordsPredicate` in an instance of the `Model` class, which filters out entries and returns only patients that match the keywords entered. Note that the other commands listed here will have their respective `predicate` requirements and implementations.
+* Step 3. Control is passed to an instance of the `Logger` class, which calls the method `log()` to log a "Success" message.
+* Step 4. The instance of `QueryPatientCommand` calls the constructor method of the `CommandResult` class, which returns the final result.
+* Step 5. Control is returned to the caller with the final result.
 
-* Step 1. User enters a `find` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `findCommandParser`.
-* Step 3. The `parse` command in `FindCommandParser` checks if at least one parameter is present.
-    * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
+The sequence diagram below describes the interaction between the various components during the `execute` method of the `patient` command, which uses the `QueryPatientCommand` on the backend.
 
-The activity diagram below demonstrates this error handling process in more detail.
+<img src="images/QueryPatientCommandExecuteSequenceDiagram.png" width="800" />
 
-<img src="images/FindActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `FindCommandParser` returns an instance of `FindCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `FindCommand`.
-* Step 6. The `execute` method in `FindCommand` executes and calls `updateFilteredPersonList` in model with the `NameContainsKeywordsPredicate` to get a filtered list of person entries of the entered keyword(s), both `patient` and `doctor` entries can be displayed.
-* Step 7. A Success message gets printed onto the results display to notify user and the list of matching results is produced.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `FindCommand`.
-
-<img src="images/FindPersonSequenceDiagram.png" width="800" />
+Why is this implemented this way?
+1. All query command closely resembles the structure of the `find` command. Each of the commands here have either stricter (i.e have stricter parameter requirements e.g `apptforpatient` and `apptfordoctor`) or looser (i.e searching for more fields e.g `patient` and `doctor`) predicates, but all generally have the same flow of control between the `Command`, `Logger` and `Model` classes.
+2. Conceptually, each of the 5 commands listed here are searching for different entities, and are hence split into separate commands despite having very similar structures.
 
 Alternative implementations considered
-1. The following sections describes the behaviour of querying `doctor` and `patient` entries by separate commands by all of the entry's fields, both following a very similar logic to how the `find` command is implemented. We might consider using flags to be more precise with our searches, (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that this approach overloaded the `find` method too much, and overcomplicated the `find` command's usage.
-2. Even if the `find` command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed by the `find` command was unavoidable. As such, it was prudent to start with the implementation of the distinct commands first (as described in the following sections, each tied to a specific command), and leave the overloading of the `find` command as a later increment.
-
-
-### Query `doctor`
-Queries a `doctor` entry by indicating the exact string, or substring of any of a `doctor`'s fields - name, nric, phone number and date of birth (as displayed on the UI. e.g 30 January 2023).
-This command is implemented through the `QueryDoctorCommand` class which extends the `Command` class.
-
-Similar to the `find` command, the `doctor` query command is able to take in multiple parameters (at least one), each of these parameters are read as strings, and act as separate queries, with the result returned being the logical 'or' result of applying a `doctor` query to each parameter separately.
-
-* Step 1. User enters a `doctor` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryDoctorCommandParser`.
-* Step 3. The `parse` command in `QueryDoctorCommandParser` checks if at least one parameter is present.
-  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/QueryDoctorActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `QueryDoctorCommandParser` returns an instance of `QueryDoctorCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `QueryDoctorCommand`.
-* Step 6. The `execute` method in `QueryDoctorCommand` executes and calls `updateFilteredPersonList` in model with the `DoctorContainsKeywordsPredicate` to get a filtered list of only `Doctor` entries of the entered keywords(s).
-* Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
-
-
-Why is this implemented this way?
-1. The backend execution of the `doctor` command and the `find` command are very similar, however the choice to separate the two query commands is justified due to the expansion of fields in the `doctor` query, conceptually making them distinct commands.
-2. Furthermore, there is an additional check to check if an entry is of type `doctor` that is not present in the `find` command.
-
-
-### Query `patient`
-Queries a `patient` entry by indicating the exact string, or substring of any of a `patient`'s fields - name, nric, phone number and date of birth (as displayed on the UI. e.g 30 January 2023).
-This command is implemented through the `QueryPatientCommand` class which extends the `Command` class.
-
-Similar to the `find` command, the `patient` query command is able to take in multiple parameters (at least one), each of these parameters are read as strings, and act as separate queries, with the result returned being the logical 'or' result of applying a `patient` query to each parameter separately.
-
-* Step 1. User enters a `patient` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryPatientCommandParser`.
-* Step 3. The `parse` command in `QueryPatientCommandParser` checks if at least one parameter is present.
-  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/QueryPatientActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `QueryPatientCommandParser` returns an instance of `QueryPatientCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `QueryPatientCommand`.
-* Step 6. The `execute` method in `QueryPatientCommand` executes and calls `updateFilteredPersonList` in model with the `PatientContainsKeywordsPredicate` to get a filtered list of only `Patient` entries of the entered keywords(s).
-* Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
-
-
-Why is this implemented this way?
-1. The backend execution of the `patient` command and the `find` command are very similar, however the choice to separate the two query commands is justified due to the expansion of fields in the `patient` query, conceptually making them distinct commands.
-2. Furthermore, there is an additional check to check if an entry is of type `patient` that is not present in the `find` command.
-
-
-### Query `apptfordoctor`
-Queries an `appointment` entry that has the associated `doctor`'s `Nric`, by indicating the exact `Nric` of the doctor as the search parameter.
-This command is implemented through the `apptfordoctor` class which extends the `Command` class.
-
-The `apptfordoctor` command takes in multiple parameters (at least one), and each of these parameters are read as strings (not case-sensitive, i.e S1234567A is equivalent to s1234567a), and returns the logical 'or' result of applying the `apptfordoctor` command to each parameter separately. <u>**Note that no errors will not be thrown if the inputted `Nric`(s) are not of the appropriate form** </u>(i.e Begins with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter), but rather the expected return result is that no queries will be found.
-
-* Step 1. User enters an `QueryDoctorAppointment` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryDoctorAppointmentCommandParser`.
-* Step 3. The `parse` command in `QueryDoctorAppointmentCommandParser` checks if at least one parameter is present.
-  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/QueryDoctorAppointmentActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `QueryDoctorAppointmentCommandParser` returns an instance of `QueryDoctorAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `QueryDoctorAppointmentCommand`.
-* Step 6. The `execute` method in `QueryDoctorAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model with the `AppointmentContainsDoctorPredicate` to get a filtered list of appointment entries with the entered keyword(s), only those `appointment`(s) that have the associated `doctor`'s `Nric` entries are be displayed.
-* Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
-
-
-Why is this implemented this way?
-1. This command closely resembles the `find` command, but can be seen as a stricter version as the results queried do not include substring searches. Therefore, it is justified to separate this command from the `find` command as two distinct commands with distinct `commandParsers`.
-2. The rationale behind excluding substring searches for `appointment`(s) is that if a hospital clerk is searching for a specific `doctor`'s scheduled `appointment`(s), the hospital clerk already has the `doctor`'s unique `Nric` and hence including substring querying is irrelevant.
-
-
-### Query `apptforpatient`
-
-Queries an `appointment` entry that has the associated `patient`'s `Nric`, by indicating the exact `Nric` of the patient as the search parameter.
-This command is implemented through the `apptforpatient` class which extends the `Command` class.
-
-The `apptforpatient` command takes in multiple parameters (at least one), and each of these parameters are read as strings (not case-sensitive, i.e S1234567A is equivalent to s1234567a), and returns the logical 'or' result of applying the `apptforpatient` command to each parameter separately. <u>**Note that no errors will not be thrown if the inputted `Nric`(s) are not of the appropriate form** </u>(i.e Begins with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter), but rather the expected return result is that no queries will be found.
-
-* Step 1. User enters an `QueryPatientAppointment` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `QueryPatientAppointmentCommandParser`.
-* Step 3. The `parse` command in `QueryPatientAppointmentCommandParser` checks if at least one parameter is present.
-  * If the field is missing, a `ParseException` is thrown, and the UI displays an error message.
-
-The activity diagram below demonstrates this error handling process in more detail.
-
-<img src="images/QueryPatientAppointmentActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `QueryPatientAppointmentCommandParser` returns an instance of `QueryPatientAppointmentCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `QueryPatientAppointmentCommand`.
-* Step 6. The `execute` method in `QueryPatientAppointmentCommand` executes and calls `updateFilteredAppointmentList` in model with the `AppointmentContainsPatientPredicate` to get a filtered list of appointment entries with the entered keyword(s), only those `appointment`(s) that have the associated `patient`'s `Nric` entries are be displayed.
-* Step 7. Success message gets printed onto the results display to notify user and the list of matching results is produced.
-
-
-Why is this implemented this way?
-1. This command closely resembles the `find` command, but can be seen as a stricter version as the results queried do not include substring searches. Therefore, it is justified to separate this command from the `find` command as two distinct commands with distinct `commandParsers`.
-2. The rationale behind excluding substring searches for `appointment`(s) is that if a hospital clerk is searching for a specific `patient`'s scheduled `appointment`(s), the hospital clerk already has the `patient`'s unique `Nric` and hence including substring querying is irrelevant.
+1. The behaviour of `patient` and `doctor`, `apptforpatient` and `apptfordoctor` have similar requirements in terms of parameters, with the main difference being either `patient` or `doctor` typed classes. We might consider combining each pair into one command, and using flags to distinguish the desired class (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that at the time of implementation, separating the commands would be a cleaner strategy, and combining methods might overcomplicate the implementation.
+2. Even if we did proceed with combining, the combined command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed were unavoidable. As such, it was prudent to start with the implementation of the distinct commands first, and leave the possibility of combining as a later increment.
 
 
 ### \[Proposed\] Undo/redo feature

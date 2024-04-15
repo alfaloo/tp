@@ -18,7 +18,7 @@ end box
 [-> QueryPatientCommand : execute()
 activate QueryPatientCommand
 
-QueryPatientCommand -> Model : updateFilteredPersonList(predicate)
+QueryPatientCommand -> Model : updateFilteredPersonList(PatientContainsKeywordsPredicate)
 activate Model
 
 Model --> QueryPatientCommand
