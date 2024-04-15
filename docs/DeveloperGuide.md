@@ -254,8 +254,8 @@ The sequence diagram below demonstrates the command execution steps for `execute
 This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
 Add command execution sequence:
 * Step 1. The `execute` method of the `AddPatientCommand` is called.
-* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients and throws an exception if there is.
-    * If there is a duplicate person, the method calls the `log` method of `logger` to log the incident.
+* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients.
+    * If there is a duplicate person, the method throws `CommandException` and calls the `log` method of `logger` to log the incident.
 * Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
 * Step 4. The `log` method of `logger` is then called to log the successful command execution.
 * Step 5. A new `CommandResult` object with the success message is then created and returned by `execute`.
