@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
@@ -111,6 +112,9 @@ public class Appointment {
     }
 
     public void setDoctorNric(Nric nric) {
+        if (nric == null) { // Defensive Programming
+            throw new IllegalArgumentException();
+        }
         this.doctorNric = nric;
     }
 
@@ -123,6 +127,9 @@ public class Appointment {
     }
 
     public void setPatientNric(Nric nric) {
+        if (nric == null) { // Defensive Programming
+            throw new IllegalArgumentException();
+        }
         this.patientNric = nric;
     }
 
