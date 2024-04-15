@@ -169,7 +169,7 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void isValidAppointment_validAppointment_returnsTrue() {
+    public void isValidAppointment_validAppointment_returnsTrue() throws ParseException {
         this.addPersonsForTest();
         Appointment a = new AppointmentBuilder().withDoctor((Doctor) BROWN).withPatient((Patient) ALICE).build();
         assertTrue(modelManager.isValidAppointment(a));
@@ -178,11 +178,12 @@ public class ModelManagerTest {
     @Test
     public void isValidAppointment_invalidAppointment_returnsFalse() throws ParseException {
         this.addPersonsForTest();
-        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(), new AppointmentDateTime("2024-08-30 11:02"));
+        Appointment a = new Appointment(ALICE.getNric(), BROWN.getNric(),
+                new AppointmentDateTime("2024-08-30 11:02"), false);
         assertFalse(modelManager.isValidAppointment(a));
     }
 
-    private void addPersonsForTest() {
+    private void addPersonsForTest() throws ParseException {
         Doctor d = (Doctor) BROWN;
         Patient p = (Patient) ALICE;
         modelManager.addPerson(d);

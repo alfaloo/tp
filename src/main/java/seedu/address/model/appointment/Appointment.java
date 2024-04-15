@@ -34,9 +34,6 @@ public class Appointment {
     // The date of the appointment
     private final AppointmentDateTime appointmentDateTime;
 
-    // Message to outputs in case constraints are not met
-    private final AppointmentId appointmentId;
-
     /**
      * Constructs a new appointment instance
      * @param doctorNric doctor in charge
@@ -121,14 +118,6 @@ public class Appointment {
         this.patientNric = nric;
     }
 
-    /**
-     * Gets the ID of the appointment.
-     *
-     * @return AppointmentId of the appointment.
-     */
-    public AppointmentId getAppointmentId() {
-        return this.appointmentId;
-    }
 
     /**
      * Gets date & time of the appointment.

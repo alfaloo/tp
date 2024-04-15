@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.Doctor;
 import seedu.address.testutil.AppointmentBuilder;
 
 public class UniqueAppointmentListTest {
