@@ -145,7 +145,96 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 ## **Implementation**
 
-This section describes some noteworthy details on how certain features are implemented.
+This section describes some noteworthy details on how certain features are implemented. 
+
+The section is structured as follows:
+- We first dive into the implementation of the `Appointment` - a special entity type that MediCLI tracks.
+- We then explore what happens when the `execute` method of different types of `commands` is called.
+- Finally, we look at how MediCLI deals with incorrect user inputs for operations on both `Persons` and `Appointments`
+
+Through this, we hope to give you a thorough overview of how MediCLI's main features are implemented.
+
+### Understanding `Appointments`: A new entity type
+MediCLI offers support for appointments, represented by the `Appointment` class on top of existing support for Doctors and Patients.
+At the crux of it, the `Appointment` class aims to reflect the essence of a medical appointment in real life, which involves a doctor and a patient and takes place at a specific time.
+
+The class diagram below displays the structure of the `Appointment` class.
+<img src="images/AppointmentClassDiagram.png" width="800" />
+
+As visible, the `Appointment` class contains references to the following classes:
+- **`Nric`**: a doctor's & a patient's NRIC number
+- **`AppointmentDateTime`**: Date and time of the appointment
+
+The appointment class must have reference to exactly 2 `Nric` classes and 1 `AppointmentDateTime` and `AppointmentId`
+
+Below is an object diagram demonstrating a possible appointment object.
+<img src="images/AppointmentObjectDiagram.png" width="800" />
+
+In the object diagram you see that two instances of the Nric class have been instantiated, one as `doctorNric`, and one as `patientNric`. This of course is along with the `appointmentDateTime`.
+
+An instance of the `Appointment` class can only be created if the date & time of the appointment is >= the current date and time. This is enforced through the `isValidAppointmentDateTime` method in the `Appointment` class.
+
+#### Context and thought process behind implementation:
+Implementing `Appointments` naturally involved many design decisions, and here we have attempted to outline the thought process behind our current implementation:
+* One key focus of the `Appointment` implementation was to keep it as similar to the implementation of `Patients` and `Doctors`.
+* The idea is that at the end of the day, the `Appointment` is simply another type of entry being tracked.
+* Nevertheless, it is natural that both in the UI and backend, we would want to differentiate the `Appointment` entries from the `Patient`/`Doctor` entries to ensure that the system is more flexible and easy to expand on in the future.
+* Hence, while similar in terms of the functionality, a lot of the infrastructure to handle `Appointments` was built parallel to the one for `Patient`/`Doctor` entries.
+  * For instance, there is a separate `UniqueAppointmentList` class for storing and manipulating `Appointments` that functions very similar to the equivalent list for `Patient`/`Doctor` entries (`UniquePersonList`).
+
+#### Implementation and justification:
+* Based on the thought process, the approach taken was to ensure MediCLI had the same way of handling `Appointments` and `Patients`/`Doctors`.
+* The overall structure including how `Appointments` are stored, managed etc. is largely similar to support debugging and improve readability and comprehension.
+* In other words, if you understand how MediCLI manages `Patients`/`Doctors`, you will also understand how it manages `Appointments`.
+* Some differences are however inevitable and have been listed below:
+  * `Appointment` objects include `doctorNric`, `patientNric` as attributes. A `Doctor` and `Patient` with the corresponding NRIC number must already exist before the `Appointment` was created.
+  * `Appointments` are stored in a separate list in the backend, called the `UniqueAppointmentList`, to allow for different operations and flexibility down the line.
+  * In terms of the UI, `Appointments` appear in a separate column to ensure that the user is able to clearly distinguish between them.
+
+
+#### Alternatives considered
+* One key alternative we looked at was storing `Appointment` objects with `Patient` and `Doctor` objects as part of the same list i.e. `UniquePersonList`.
+* This would mean changing the `Person` class to a different one such as `Entry` and have all three of `Patient` , `Doctor` and `Appointment` extend from the `Entry` class.
+* We decided against this because we thought that it was not the most OOP friendly solution and would not allow for flexibility down the line.
+  * Eg: what if we wanted to add a feature that showed all `Appointments` for a set of `Patients` between a set of dates? Having them in the same list would be unintuitive and make the filtration and display quite cumbersome.
+* Furthermore, it might get confusing for the user if everything was dumped into the same list for them to sieve through. Perhaps the user was only concerned with looking up `Patients` in which case the `Appointments` would simply be added clutter.
+* The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated, exposing the system to more risks and potential for bugs.
+  * Eg: the class in question would have to change from `Person` to `Entry` in a number of different places.
+
+### Understanding how MediCLI executes different types of commands
+  
+
+### Incorrect user input handling process
+In this section, we will use the _add_ commands for `patients`/`doctors` and `appointments` to demonstrate how MediCLI handles incorrect inputs from the user. 
+
+#### Incorrect input handling process for commands that involve operations on the `Person` class
+The activity diagram below demonstrates this incorrect input handling process of a command that operates on the `Person` class.
+Specifically, we look at the process of adding a `Person` to MediCLI i.e. `addpatient` or `adddoctor` commands, potential mistakes that the user might make, and how they are handled by MediCLI.
+
+<img src="images/AddPersonActivityDiagram.png" width="800" />
+
+As visible, an incorrect input by the user can result in the following types of errors depending on the type of mistake:
+- **Command word is incorrect**: informs the user that command word is unowkown.
+- **Missing required field arguments**: informs the user of invalid command format. 
+- **Invalid field arguments**: highlights to the user that invalid field arguments were provided.
+- **`Patient`/`Doctor` with corresponding attributes already exists in the system**: informs the user that `Patient`/`Doctor` already exists in the system.
+
+
+#### Incorrect user input handling process for the `Appointment` class
+The activity diagram below demonstrates this incorrect input handling process of a command that operates on the `Appointment` class.
+Specifically, we look at the process of adding an `Appointment` to MediCLI i.e. `addappt` command, potential mistakes that the user might make, and how they are handled by MediCLI.
+
+<img src="images/AddAppointmentActivityDiagram.png" width="800" />
+
+As visible, an incorrect input by the user can result in the following types of errors depending on the type of mistake:
+- **Command word is incorrect**: informs the user that command word is unowkown
+- **Missing required field arguments**: informs the user of invalid command format
+- **Invalid field arguments**: highlights to the user that invalid field arguments were provided
+- **`Patient`/`Doctor` involved in the `Appointment` does not exist in MediCLI**: informs the user that `Patient`/`Doctor` involved are not registered
+- **Provided date & time of the `Appointment` is in the past**: informs the user that appointments cannot be scheduled in the past.
+- **`Appointment` with corresponding attributes already exists in MediCLI**: informs the user that `Appointment` already exists
+
+
 
 ### Add a `Patient` or `Doctor`
 <i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
@@ -222,26 +311,18 @@ Why is this implemented this way?
 Deletes a `doctor` or `patient` entry by indicating their `Index`.
 This command is implemented through the `DeleteCommand` class which extends the `Command` class.
 
-* Step 1. User enters an `delete` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteCommandParser`.
-* Step 3. The `parse` command in `deleteCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the provided `index` is invalid, a `CommandException` is thrown.
+* Step 1. The `execute` method of the `DeleteCommand` is called.
+* Step 2. The `getFilteredPersonList` method of `Model` is called and finds its length.
+* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivilent.
+* Step 4. The provided index is checked against the length of the current list of people.
+    * If the provided index is out of bounds, a `CommandException` is thrown.
+* Step 4. The `deletePerson` method of `Model` is called to remove the designated person from the list of people.
+* Step 5. An instance of `CommandResult` is created with a success message for the execution of `DeleteCommand`.
+* Step 6. The instance of `CommandResult` is returned.
 
-The activity diagram below demonstrates this error handling process in more detail.
+The sequence diagram below closely describes the interaction between the various components during the `execute` method of `DeleteCommand`.
 
-<img src="images/DeletePersonActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `deleteCommandParser` return an instance of `deleteCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `deleteCommand`.
-* Step 6. The `execute` method in `deleteCommand` executes and calls `deletePerson` in model to remove doctor or patient from the system.
-* Step 7. The `execute` method in `deleteCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be deleted, and calls the `deleteAppointmentCommand` as well.
-* Step 8. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteCommand`.
-
-<img src="images/DeletePersonSequenceDiagram.png" width="800" />
+<img src="images/DeleteCommandExecuteSequenceDiagram.png" width="800" />
 
 
 Why is this implemented this way?
@@ -252,55 +333,6 @@ Why is this implemented this way?
 5. As such, the solution that is inbuilt to deleting a `Person`, comes with the added functionality on the backend to delete all related `Appointment` entries as well.
 6. This results in a cleaner `Appointments` panel, and saves the user from the hassle of needing to delete unwanted `Appointment` entries one by one.
 
-### Understanding Appointments: A new entity type
-MediCLI offers support for appointments, represented by the `Appointment` class on top of existing support for Doctors and Patients. 
-At the crux of it, the `Appointment` class aims to reflect the essence of a medical appointment in real life, which involves a doctor and a patient and takes place at a specific time.
-
-The class diagram below displays the structure of the `Appointment` class.
-<img src="images/AppointmentClassDiagram.png" width="800" />
-
-As visible, the `Appointment` class contains references to the following classes:
-- **`Nric`**: a doctor's & a patient's NRIC number
-- **`AppointmentDateTime`**: Date and time of the appointment
-- **`AppointmentId`**: An ID automatically assigned to the appointment
-
-The appointment class must have reference to exactly 2 `Nric` classes and 1 `AppointmentDateTime` and `AppointmentId`
-
-Below is an object diagram demonstrating a possible appointment object.
-<img src="images/AppointmentObjectDiagram.png" width="800" />
-
-In the object diagram you see that two instances of the Nric class have been instantiated, one as `doctorNric`, and one as `patientNric`. This of course is along with the `appointmentDate` and `appointmentId` objects.
-
-An instance of the `Appointment` class can only be created if the date & time of the appointment is >= the current date and time. This is enforced through the `isValidAppointmentDateTime` method in the `Appointment` class.
-
-#### Context and thought process behind implementation:
-Implementing Appointments naturally involved many design decisions, and here we have attempted to outline the thought process behind our current implementation:
-* One key focus of the appointment implementation was to keep it as similar to the implementation of patients and doctors.
-* The idea is that at the end of the day, the appointment is simply another type of entry being tracked.
-* Nevertheless, it is natural that both in the UI and backend, we would want to differentiate the appointment entries from the patient/doctor entries to ensure that the system is more flexible and easy to expand on in the future.
-* Hence, while similar in terms of the functionality, a lot of the infrastructure to handle appointments was built parallel to the one for persons.
-* For instance, there is a separate `UniqueAppointmentList` class for storing and manipulating appointments that functions very similar to the equivalent list for persons.
-
-#### Implementation and justification:
-* Based on the thought process, the approach was to ensure MediCLI had the same way of handling `Appointments` and `Patients`/`Doctors`.
-* The overall structure including how `Appointments` are stored, managed etc. is largely similar to support debugging and improve readability and comprehension.
-* In other words, if you understand how MediCLI manages `Patients`/`Doctors`, you will also understand how it manages `Appointments`.
-* Some differences are however inevitable and have been listed below:
-  * `Appointment` objects include `doctorNric`, `patientNric` as attributes. A `Doctor` and `Patient` with the corresponding NRIC number must already exist before the `Appointment` was created.
-  * Each `Appointment` object is also assigned a `AppointmentId`, and the ID itself is generated in by the `generateNewId` method of the `Idutil` class. While the `AppointmentID` does not serve a functional purpose at the moment and has not been fully fleshed-out, the current infrastructure serves as a framework on top of which further features that involve `AppointmentId` can be built.
-    * Each appointmentId is structured as `aXXXXXXXX` where each `X` is a number. 
-  * `Appointments` are stored in a separate list in the backend, called the `UniqueAppointmentList`, to allow for different operations and flexibility down the line.
-  * In terms of the UI, `Appointments` appear in a separate column to ensure that the user is able to clearly distinguish between them.
-
-
-#### Alternatives considered
-* One key alternative we looked at was storing `Appointment` objects with `Patient` and `Doctor` objects as part of the same list i.e. `UniquePersonList`.
-* This would mean changing the `Person` class to a different one such as `Entry` and have all three of `Patient` , `Doctor` and `Appointment` extend from the `Entry` class.
-* We decided against this because we thought that it was not the most OOP friendly solution and would not allow for flexibility down the line
-  * Eg: what if we wanted to add a feature that showed all `Appointments` for a set of `Patients` between a set of dates? Having them in the same list would be unintuitive and make the filtration and display quite cumbersome.
-* Furthermore, it might get confusing for the user if everything was dumped into the same list for them to sieve through. Perhaps the user was only concerned with looking up `Patients` in which case the `Appointments` would simply be added clutter.
-* The increased level of integration would also be problems for implementation and testing as existing functionality would have to be adapated exposing the system to more risks and potential for bugs. 
-  * Eg: the classes would have to change from `Person` to `Entry` in a number of different places.
 
 
 ### Add a `Appointment`
@@ -330,7 +362,7 @@ The activity diagram below demonstrates this error handling process in more deta
 Edits an `Appointment` entry by indicating their `Index`.
 This command is implemented through the `EditAppointmentCommand` class which extends the `Command` class.
 
-* Step 1. User enters an `editappt` command.
+* Step 1. User enters an `edi`tappt` command.
 * Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editAppointmentCommandParser`.
 * Step 3. The `parse` command in `editAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
   * If there are any missing fields, a `CommandException` is thrown.

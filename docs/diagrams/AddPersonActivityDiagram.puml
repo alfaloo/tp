@@ -4,10 +4,10 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 
 start
-:User enters command to add a patient/doctor;
+:User inputs text command to add a patient/doctor;
 
-if () then ([command is invalid])
-    :Show error message\nfor invalid command;
+if () then ([command word does not exist])
+    :Show error message\nfor unknown command;
 else ([else])
     if () then ([missing required fields])
         :Show error message\nfor missing required fields;
