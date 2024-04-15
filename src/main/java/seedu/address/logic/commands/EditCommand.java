@@ -12,7 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import seedu.address.Main;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -53,6 +57,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    private static Logger logger = LogsCenter.getLogger(Main.class);
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -75,13 +80,16 @@ public class EditCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.log(Level.WARNING, "Index not within valid parameters! (when executing command: edit)");
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        assert editedPerson != null;
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            logger.log(Level.WARNING, "Duplicate person detected! (when executing command: edit)");
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -95,6 +103,7 @@ public class EditCommand extends Command {
         for (Appointment appt : model.getFilteredAppointmentList()) {
             if (appt.getDoctorNric().equals(personToEdit.getNric())) {
                 appt.setDoctorNric(editedPerson.getNric());
+                assert appt.getDoctorNric() == editedPerson.getNric();
             }
         }
 
@@ -105,11 +114,12 @@ public class EditCommand extends Command {
         for (Appointment appt : model.getFilteredAppointmentList()) {
             if (appt.getPatientNric().equals(personToEdit.getNric())) {
                 appt.setPatientNric(editedPerson.getNric());
+                assert appt.getPatientNric() == editedPerson.getNric();
             }
         }
 
         model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
-
+        logger.log(Level.INFO, "Edit person success! (when executing command: edit)");
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
