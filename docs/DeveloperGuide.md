@@ -154,11 +154,11 @@ This reduces repetition of information and increases clarity.</i>
 Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
 This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
 
-The activity diagram below demonstrates this error handling process in more detail.
+The activity diagram below demonstrates the error handling process in more detail.
 
 <img src="images/AddPersonActivityDiagram.png" width="800" />
 
-This is the sequence of execution for `AddPatientCommand`, however, `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
+This is the sequence of command execution for `execute` in `AddPatientCommand`, however, `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
 Add command execution sequence:
 * Step 1. The `execute` method of the `AddPatientCommand` is called.
 * Step 2. The method calls the `hasPerson` method of `model` to check if there are any duplicate patients and throws an exception if there is.
@@ -183,28 +183,11 @@ Add command execution sequence:
 Edits a `doctor` or `patient` entry by indicating their `Index`.
 This command is implemented through the `EditCommand` class which extends the `Command` class.
 
-* Step 1. User enters an `edit` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editCommandParser`.
-* Step 3. The `parse` command in `editCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the provided `index` is invalid, a `CommandException` is thrown.
-
-The activity diagram below demonstrates this error handling process in more detail.
+The activity diagram below demonstrates the error handling process in more detail.
 
 <img src="images/EditPersonActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `editCommandParser` return an instance of `editCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `editCommand`.
-* Step 6. The `execute` method in `editCommand` executes and creates a new edited person.
-* Step 6. The `execute` method in `editCommand` calls the `setPerson` in model to update the details of the respective person.
-* Step 7. The `execute` method in `editCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be edited, and calls the `setDoctorNric` or `setPatientNric` methods to update all relevant appointments related to the patient or doctor.
-* Step 8. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `EditCommand`.
-
-<img src="images/EditPersonSequenceDiagram.png" width="800" />
-
+This is the sequence of command execution for `execute` in `EditCommand`, however, the sequence of execution for `
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
