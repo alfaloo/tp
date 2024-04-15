@@ -23,14 +23,14 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 <div markdown="span" class="alert alert-primary">
 
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
+:bulb: **Tip:** The `.puml` files used to create diagrams in this document are in the `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 </div>
 
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="280" />
 
-The ***Architecture Diagram*** given above explains the high-level design of the App.
+The ***Architecture Diagram*** given above explains the high-level design of MediCLI and the various components.
 
 Given below is a quick overview of main components and how they interact with each other.
 
@@ -51,7 +51,7 @@ The bulk of the app's work is done by the following four components:
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `addpatient`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -111,8 +111,8 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddPatientCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddPatientCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* All `XYZCommandParser` classes (e.g., `AddPatientCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
@@ -122,17 +122,9 @@ How the parsing works:
 The `Model` component,
 
 * stores the address book data i.e., all `Person` derivative objects (which are contained in a `UniquePersonList` object) and
-* all `Appointment` objects (which are contained in a `UniqueAppointmentList` object)
-* stores the currently 'selected' `Person` objects (e.g., results of a search query, either a `Patient` or `Doctor` instance) and `Appointment` object (e.g results of an query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` and `ObservableList<Appointment>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* all `Appointment` objects (which are contained in a `UniqueAppointmentList` object) stores the currently 'selected' `Person` objects (e.g., results of a search query, either a `Patient` or `Doctor` instance) and `Appointment` object (e.g results of an query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` and `ObservableList<Appointment>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** For a clearer Class Diagram image, please refer to the handdrawn version below, it is exactly the same as the Class Diagram generated above, only drawn with straight lines for clarity and neatness.<br>
-
-<img src="images/ModelClassDiagramHandDrawn.png" width="450" />
-
-</div>
-
 
 ### Storage component
 
@@ -143,7 +135,7 @@ The `Model` component,
 The `Storage` component,
 * can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
 * inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model` such as `Appointment` and `Patient`)
 
 ### Common classes
 
@@ -248,8 +240,25 @@ As visible, an incorrect input by the user can result in the following types of 
 <i><b>Note</b>: Add `patient` and `doctor` has been grouped together as they are very similar in implementation.
 This reduces repetition of information and increases clarity.</i>
 
+Adds a new `Patient` or `Doctor` entry by indicating their `NRIC`, `Name`, `DoB`, and `Phone`.
+This command is implemented through the `AddPatientCommand` for patient and `AddDoctorCommand` for doctor class which both extend the `Command` class.
 
-<i>Note: Sequence diagram above is the same for `AddDoctorCommand`, but instead of `AddPatientCommandParser` it is `AddDoctorCommandParser` etc.</i>
+The activity diagram below demonstrates the error handling process in more detail.
+
+<img src="images/AddPersonActivityDiagram.png" width="800" />
+
+The sequence diagram below demonstrates the command execution steps for `execute` method in `AddpatientCommand`.
+
+<img src="images/AddPatientCommandExecuteSequenceDiagram.png" width="800" />
+
+This is the sequence of command execution for `execute` in `AddPatientCommand`, however `AddDoctorCommand` and `AddAppointmentCommand` follow similar design patterns within the execute command.
+Add command execution sequence:
+* Step 1. The `execute` method of the `AddPatientCommand` is called.
+* Step 2. The method calls the `hasPerson` method of `Model` to check if there are any duplicate patients and throws an exception if there is.
+    * If there is a duplicate person, the method calls the `log` method of `logger` to log the incident.
+* Step 3. The `addPerson` method of `Model` is then called and the control is passed back to the `execute` method.
+* Step 4. The `log` method of `logger` is then called to log the successful command execution.
+* Step 5. A new `CommandResult` object with the success message is then created and returned by `execute`.
 
 #### Design considerations:
 
@@ -269,28 +278,25 @@ This reduces repetition of information and increases clarity.</i>
 Edits a `doctor` or `patient` entry by indicating their `Index`.
 This command is implemented through the `EditCommand` class which extends the `Command` class.
 
-* Step 1. User enters an `edit` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editCommandParser`.
-* Step 3. The `parse` command in `editCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the provided `index` is invalid, a `CommandException` is thrown.
-
-The activity diagram below demonstrates this error handling process in more detail.
+The activity diagram below demonstrates the error handling process in more detail.
 
 <img src="images/EditPersonActivityDiagram.png" width="800" />
 
-* Step 4. The `parse` command in `editCommandParser` return an instance of `editCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `editCommand`.
-* Step 6. The `execute` method in `editCommand` executes and creates a new edited person.
-* Step 6. The `execute` method in `editCommand` calls the `setPerson` in model to update the details of the respective person.
-* Step 7. The `execute` method in `editCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be edited, and calls the `setDoctorNric` or `setPatientNric` methods to update all relevant appointments related to the patient or doctor.
-* Step 8. Success message gets printed onto the results display to notify user.
+The sequence diagram below demonstrates the command execution steps for `execute` method in `EditCommand`.
 
-The sequence diagram below closely describes the interaction between the various components during the execution of the `EditCommand`.
+<img src="images/EditCommandExecuteSequenceDiagram.png" width="800" />
 
-<img src="images/EditPersonSequenceDiagram.png" width="800" />
-
+This is the sequence of command execution for `execute` in `EditCommand`, however `EditAppointmentCommand` follow a similar design pattern within the `execute` command.
+* Step 1. The `execute` method of the `EditCommand` is called.
+* Step 2. The method calls the `getFilteredPersonList` method of `Model` and returns the list.
+* Step 3. The command checks whether the index of the command is valid by comparing the value returned by the `getZeroBased` method of `index` to the size of the list.
+    * If the index is invalid, the command throws `CommandException`.
+* Step 4. The `createEditedPerson` method is called and returns a new edited person.
+* Step 5. The method calls the `hasPerson` method of `Model` to check if there are any duplicate persons.
+    * If there are duplicates, the command throws `CommandException`.
+* Step 6. The `setPerson` method of `Model` is called and control is then passed back to the `execute` method.
+* Step 7. The `updateFilteredPersonList` method of `Model` is called to update the list.
+* Step 8. A new `CommandResult` with the success message is then created and returned by `execute`.
 
 Why is this implemented this way?
 1. Making both `Doctor` and `Patient` class extend the `Person` class makes it easier to execute edit operations.
@@ -804,7 +810,11 @@ To decrease the learning curve for our system, we plan to replace all ambiguous 
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manages the hospital database (querying/updating/creating/deleting) faster than a typical mouse/GUI driven database management app
+**Value proposition**: 
+
+MediCLI is a hospital management system that offers clerks the ability to execute querying/updating/creating/deleting commands faster than a typical mouse/GUI driven hospital management system, significantly speeding up the data entry/update/retrieval process.
+
+As clerks likely execute many such commands each day, this offers a significant amount of time savings when considered on the whole. While this would be beneficial in any situation, this is especially important in a hospital setting where the stakes are much higher, and staff are required to perform at a very high level of efficiency with limited room for error
 
 
 ### User stories
@@ -838,10 +848,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  Hospital clerk needs to add a patient
-2. Hospital clerk enters patient data
-2.  MediCLI adds the patient into database
+2.  Hospital clerk enters patient data 
+3.  MediCLI adds the patient into database
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
@@ -865,14 +875,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3.  Hospital clerk requests to delete a specific patient in the list
 4.  MediCLI deletes the patient
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
 * 2a. The list is empty.
 
   Use case resumes at step 1.
-
 
 * 3a. The given patient index is invalid.
   * 3a1. MediCLI shows an error message.
@@ -927,7 +936,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters patient name
 3.  MediCLI lists patients with supplied name
 
-     Use case ends.
+Use case ends.
 
 **Extensions**
 
@@ -941,9 +950,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  Hospital clerk needs to search for appointment by patient
 2.  Hospital clerk enters patient name
-3.  MediCLI lists relevant appointments 
+3.  MediCLI lists relevant appointments
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
@@ -959,7 +968,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Hospital clerk enters doctor name
 3.  MediCLI lists relevant appointments
 
-    Use case ends.
+Use case ends.
 
 **Extensions**
 
