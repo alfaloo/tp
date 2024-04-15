@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.appointment.exceptions.InvalidAppointmentException;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 
