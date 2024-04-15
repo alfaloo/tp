@@ -184,6 +184,9 @@ public class EditCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+            if (toCopy == null) { // Defensive Coding
+                throw new IllegalArgumentException();
+            }
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setNric(toCopy.nric);

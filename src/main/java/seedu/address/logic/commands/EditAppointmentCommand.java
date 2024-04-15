@@ -148,6 +148,9 @@ public class EditAppointmentCommand extends Command {
          * A defensive copy of {@code tags} is used internally.
          */
         public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
+            if (toCopy == null) { // Defensive Coding
+                throw new IllegalArgumentException();
+            }
             setDateTime(toCopy.apptdatetime);
             setDoctorNric(toCopy.doctorNric);
             setPatientNric(toCopy.patientNric);
