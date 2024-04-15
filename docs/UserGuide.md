@@ -6,7 +6,7 @@ title: MediCLI User Guide
 ## Welcome to MediCLI!
 Welcome to MediCLI - the solution to all your hospital management needs! 
 
-MediCLI is a desktop-based application that streamlines the management of patients, doctors, and appointments within a hospital. By combining the efficiency of a Command Line Interface (CLI) with an intuitive and comprehensive visual display, MediCLI presents itself as a robust solution for hospital clerks and administrators such as yourself. This guide will equip you with all the knowledge to become a MediCLI power-user and truly transform your hospital management experience.
+MediCLI is a desktop-based application that streamlines the management of patients, doctors, and appointments within a hospital. By combining the efficiency of a Command Line Interface (CLI) with an intuitive and comprehensive visual display, MediCLI presents itself as a robust solution for hospital clerks and administrators such as yourself. This guide will equip you with all the knowledge to become a MediCLI power user and truly transform your hospital management experience.
 
 
 ## Who can benefit from MediCLI?
@@ -15,7 +15,7 @@ MediCLI is tailored built for hospital clerks/administrators or anyone who manag
 ### Prior knowledge:
 MediCLI will be particularly beneficial for you are either (or both of):
 - a fast-typer or,
-- and familar with a CLI,
+- and familiar with a CLI,
 enabling you to get up to speed and perform tasks swiftly and efficiently.
 
 That being said, even if you do not meet the above criteria, do not fret! Follow this guide, practice a little, and in only a couple of days you too can take full advantage of MediCLI's features to manage doctors, patients, and appointments seamlessly.
@@ -26,10 +26,10 @@ That being said, even if you do not meet the above criteria, do not fret! Follow
 
 ---------------------------------------------------------
 ## Purpose of UG
-This User Guide (UG) guide provides step-by-step instructions, explanations, and tips to help users to make the most out of MediCLI regardless of experience.
+This User Guide (UG) guide provides step-by-step instructions, explanations, and tips to help users make the most out of MediCLI regardless of experience.
 
 #### For new users
-This UG offers a comprehensive overview of the features on offer, and provide you with a step-by-step guide on how to get started.
+This UG offers a comprehensive overview of the features on offer, and provides you with a step-by-step guide on how to get started.
 
 #### For experienced MediCLI users:
 You may skip to the features section which elaborates on the individual commands that you can run to get the most out of the system.
@@ -37,12 +37,12 @@ You may skip to the features section which elaborates on the individual commands
 ## How to use this UG
 As you read through this MediCLI User Guide, you will come across a variety of different types of text formats. The table below will explain to you what they mean.
 
-| Text Format        | What it means                                                                                          |
-|--------------------|--------------------------------------------------------------------------------------------------------|
-| [hyperlink]()      | Text in blue are hyperlinks and will take you to a different page.                                     |
-| `command`          | Text in lowercase with grey background box are MediCLI commands.                                       |
-| `FIELD`            | Text in uppercase with grey background box are inputs to MediCLI commands                              |
-| `[OPTIONAL_FIELD]` | Text in uppercase with grey background box and square brackets are optional inputs to MediCLI commands |
+| Text Format        | What it means                                                                                            |
+|--------------------|----------------------------------------------------------------------------------------------------------|
+| [hyperlink]()      | Text in blue are hyperlinks and will take you to a different page.                                       |
+| `command`          | Text in lowercase with a grey background box are MediCLI commands.                                       |
+| `FIELD`            | Text in uppercase with a grey background box are inputs to MediCLI commands                              |
+| `[OPTIONAL_FIELD]` | Text in uppercase with a grey background box and square brackets are optional inputs to MediCLI commands |
 
 Take note of these text-boxes, as they give you important information for using MediCLI.
 <div markdown="span" class="alert alert-success">:bulb: **TIP**: Tip call-outs give you helpful pointers in MediCLI!</div>
@@ -53,7 +53,7 @@ Take note of these text-boxes, as they give you important information for using 
 ## Key Product Information
 
 ### Product Description
-MediCLI is a Java-based desktop-application that allows you to manage your hospital with ease. Let's now explore the product in more detail.
+MediCLI is a Java-based desktop application that allows you to manage your hospital with ease. Let's now explore the product in more detail.
 
 ### Overview of main features
 
@@ -74,13 +74,13 @@ MediCLI allows you to perform the following operations of each of the entities a
 On top of the primary entities and operations highlighted above, MediCLI also provides the following capabilities:
 - Persistent storage of information across restarts of the application
 - A clean and minimalist display to view relevant information on entities
-- Thorough error messages and in-app prompts guiding you on how to overcome any issues you may run into.
+- Thorough error messages and in-app prompts guide you on how to overcome any issues you may run into.
 
 
 ## Quick Start Guide
 
 Ready to step into the world of MediCLI? This section will provide detailed information on how users can get started,
-which includes basic system requirements, installation instructions, overview of the main window,
+which includes basic system requirements, installation instructions, an overview of the main window,
 and a tutorial on using the command-line interface (CLI).
 
 ### System Compatibility
@@ -104,17 +104,17 @@ Recommended Minimum System Requirements:
 
 <div markdown="span" class="alert alert-info">:information_source: **INFO**: The MediCLI jar file can be found at the bottom of the release notes</div>
 
-1. We recommend you to copy the file into the folder you want to use as the _home folder_ for MediCLI. This is because running the application will create additional storage and logging files.
+1. We recommend you copy the file into the folder you want to use as the _home folder_ for MediCLI. This is because running the application will create additional storage and logging files.
 
 1. Congratulations! You now have MediCLI successfully downloaded on your computer.
 
 ### Starting up MediCLI
 
-Once you have installed MediCLI onto your computer (refer to the sub-section above), navigate to the instruction specific to your operating system below.
+Once you have installed MediCLI onto your computer (refer to the sub-section above), navigate to the instructions specific to your operating system below.
 
 #### Windows
 
-1. Open file explorer and navigate to the home folder containing the MediCLI jar file.
+1. Open File Explorer and navigate to the home folder containing the MediCLI jar file.
 
 2. Double-click on the MediCLI application and it should start up!<br>
 
@@ -122,7 +122,7 @@ Once you have installed MediCLI onto your computer (refer to the sub-section abo
 
 #### macOS
 
-1. Open finder and navigate to the home folder containing the MediCLI jar file.
+1. Open Finder and navigate to the home folder containing the MediCLI jar file.
 
 2. Double-click on the MediCLI application and it should start up!<br>
 
@@ -131,7 +131,7 @@ Once you have installed MediCLI onto your computer (refer to the sub-section abo
 #### CLI Alternative Solution
 
 1. Open a command terminal, `cd` into the home folder containing the MediCLI jar file, and use the `java -jar MediCLI.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the one below should appear in a few seconds. Note how the app contains some sample data.<br>
 
    ![Ui](images/InitialState.png)
 
@@ -158,21 +158,21 @@ MediCLI is operated using typed commands to the command line interface (CLI). Do
 
 ![Ui](images/cli_format.png)
 
-| CLI Format        | What it means                                                                                                                                                                                                                                                        |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Command           | The command tells MediCLI what action you want to perform.                                                                                                                                                                                                           |
-| Index             | Certain MediCLI commands have an `INDEX` field, which is a number that is assigned to a particular patient, doctor or appointment. Index must be larger than 1 and can be up to the maximum number of patients/doctors or appointments as listed in the MediCLI GUI. |
-| Parameter Prefix  | Fields typically have a prefix like `i/` or `n/` followed by the field content. This tells MediCLI what field you are entering.                                                                                                                                      |
-| Command Parameter | The command parameter is the parameter prefix followed by field content. For example, the command parameter to enter NRIC would be `i/S1234567A`                                                                                                                     |
+| CLI Format        | What it means                                                                                                                                                                                                                                                         |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Command           | The command tells MediCLI what action you want to perform.                                                                                                                                                                                                            |
+| Index             | Certain MediCLI commands have an `INDEX` field, which is a number that is assigned to a particular patient, doctor, or appointment. Index must be larger than 1 and can be up to the maximum number of patients/doctors or appointments as listed in the MediCLI GUI. |
+| Parameter Prefix  | Fields typically have a prefix like `i/` or `n/` followed by the field content. This tells MediCLI what field you are entering.                                                                                                                                       |
+| Command Parameter | The command parameter is the parameter prefix followed by field content. For example, the command parameter to enter NRIC would be `i/S1234567A`                                                                                                                      |
 
-<div markdown="span" class="alert alert-success">:bulb: **TIP**: If you forget the command foramt, you can simply type the command word and press enter. MediCLI will prompt you with the format and an example.</div>
+<div markdown="span" class="alert alert-success">:bulb: **TIP**: If you forget the command format, you can simply type the command word and press enter. MediCLI will prompt you with the format and an example.</div>
 <div markdown="span" class="alert alert-info">:information_source: **INFO**: Not all MediCLI commands have fields! For example, the command to clear all data is simply `clear`.</div>
 
 ### Quick Tutorial on a Sample Use Case
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>'
 
-<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.</div>
+<div markdown="span" class="alert alert-danger">:exclamation: **DANGER**: If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line breaks may be omitted when copied over to the application.</div>
 
 Some example commands you can try (Assuming MediCLI is opened for the first time and is in its initial state with the default sample data):
 
@@ -200,7 +200,7 @@ Some example commands you can try (Assuming MediCLI is opened for the first time
   e.g. in `addpatient i/NRIC n/NAME d/DOB p/PHONE`, `NAME` is a parameter which can be used as `n/John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]` can be used as `edit 1 n/John Doe` or as `edit 1 i/t1234567s`.
+  e.g. `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]` can be used as `edit 1 n/John Doe` or as `edit 1 i/t1234567s`.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
@@ -219,9 +219,9 @@ Adds a patient into the MediCLI system.
 Format: `addpatient i/NRIC n/NAME d/DOB p/PHONE`
 
 Field Constraints:
-* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then end with an alphabetical letter. This field is non-case-sensitive.
 * **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **DOB** : Only contain numerical characters in the format yyyy-MM-dd. Acceptable date range is from 1900 January 1st to today's date.
 * **PHONE** : Only contain numerical characters and of exactly 8 digits long.
 
 Command Constraints:
@@ -242,9 +242,9 @@ Adds a doctor into the MediCLI system.
 Format: `adddoctor i/NRIC n/NAME d/DOB p/PHONE`                                                                                                                                                     
                                                                                                                                                                                                     
 Field Constraints:                                                                                                                                                                                  
-* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive. 
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then end with an alphabetical letter. This field is non-case-sensitive. 
 * **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.                                                                                                     
-* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.                                                            
+* **DOB** : Only contain numerical characters in the format yyyy-MM-dd. Acceptable date range is from 1900 January 1st to today's date.                                                            
 * **PHONE** : Only contain numerical characters and of exactly 8 digits long.                                                                                                                       
                                                                                                                                                                                                     
 Command Constraints:                                                                                                                                                                                
@@ -269,9 +269,9 @@ Existing values will be updated to the input values.
 Format: `edit INDEX [i/NRIC] [n/NAME] [p/PHONE] [d/DOB]`
 
 Field Constraints:
-* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+* **NRIC** : Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then end with an alphabetical letter. This field is non-case-sensitive.
 * **NAME** : Only contain alphabetical characters and spaces. This field is non-case-sensitive.
-* **DOB** : Only contain numerical characters in the format yyyy-mm-dd. Acceptable date range is from 1900 Janurary 1st to today's date.
+* **DOB** : Only contain numerical characters in the format yyyy-MM-dd. Acceptable date range is from 1900 January 1st to today's date.
 * **PHONE** : Only contain numerical characters and of exactly 8 digits long.
 
 Command Constraints:
@@ -288,13 +288,13 @@ Examples:
 
 ### Finding both doctor and patient by name : `find`
 
-Finds `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
+Find `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
 
 Format for querying patients or doctors: `find KEYWORD [MORE_KEYWORDS]`
 
 Command Constraints:
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name field is searched.
 * Both full words and substrings will be matched e.g. `Han` will match `Hans`
@@ -311,13 +311,13 @@ Examples:
 
 ### Querying patients by name : `patient`
 
-Finds `Patient`(s) whose details contain any of the given keywords.
+Find `Patient`(s) whose details contain any of the given keywords.
 
 Format for querying Patients: `patient KEYWORD [MORE_KEYWORDS]`
 
 Command Constraints:
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All person fields are searched and matched (Name, NRIC, Phone Number, DoB).
 * Both full words and substrings will be matched e.g. `Han` will match `Hans`
@@ -334,13 +334,13 @@ Examples:
 
 ### Querying doctors by name : `doctor`
 
-Finds `Doctors`(s) whose details contain any of the given keywords.
+Find `Doctors`(s) whose details contain any of the given keywords.
 
 Format for querying Doctors: `doctor KEYWORD [MORE_KEYWORDS]`
 
 Command Constraints:
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g. `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * All person fields are searched and matched (Name, NRIC, Phone Number, DoB).
 * Both full words and substrings will be matched e.g. `Han` will match `Hans`
@@ -364,7 +364,7 @@ Deletes the specified doctor / patient from the MediCLI system. <b>Note that all
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd doctor / patient in the mediCLI system.
+* `list` followed by `delete 2` deletes the 2nd doctor / patient in the MediCLI system.
 * `patient John` followed by `delete 1` deletes the 1st patient in the results of the `patient` search command.
 * `doctor Steve` followed by `delete 2` deletes the 2nd doctor in the results of the `doctor` search command.
 
@@ -376,16 +376,16 @@ Examples:
 ### Adding an appointment : `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
-Note that while you cannot create a new appointment with the date and time in the past, appointments that were valid when created but are now past their date and time will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient/doctors past appointments.
+Note that while you cannot create a new appointment with the date and time in the past, appointments that were valid when created but are now past their date and time will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient / doctors past appointments.
 
 Format: `addappt ad/DATETIME dn/DOCTOR_NRIC pn/PATIENT_NRIC`
 
 <div markdown="span" class="alert alert-success">:bulb: **TIP**: You can use the <code>patient</code> and <code>doctor</code> commands to retrieve their NRIC number if you only remember their name.</div>
 
 Field Constraints:
-- **DATETIME**: Input must be in the format `yyyy-MM-dd HH:MM`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
-- **DOCTOR_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
-- **PATIENT_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then ended by an alphabetical letter. This field is non-case-sensitive.
+- **DATETIME**: Input must be in the format `yyyy-MM-dd HH:mm`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
+- **DOCTOR_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then end with an alphabetical letter. This field is non-case-sensitive.
+- **PATIENT_NRIC**: Follows the correct Singapore NRIC format. Begin with one of S, T, G, F, or M, followed by 7 numerical digits, then end with an alphabetical letter. This field is non-case-sensitive.
 
 Command Constraints:
 - All of the above fields (`DATETIME`, `DOCTOR_NRIC`, `PATIENT_NRIC`) are compulsory and must be non-empty.
@@ -410,7 +410,7 @@ Format: `editappt INDEX ad/DATETIME`
 * Existing values will be updated to the input values.                                                                                                                          
 
 Field Constraints:
-* **DATETIME** : Input must be in the format `yyyy-MM-dd HH:MM`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
+* **DATETIME** : Input must be in the format `yyyy-MM-dd HH:mm`. Specified date and time must be later than the current date and time. i.e. appointment cannot be scheduled in the past.
 
 Command Constraints:
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -428,7 +428,7 @@ Examples:
 Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
                                                        
 Command Constraints:                                                                          
-* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                        
+* The search is case-insensitive. e.g. `s1234562a` will match `S1234562A`                                                        
 * The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                                    
 match appointments that involve `S1234562A` and `S1234561A`.                                                                  
 * Only the NRIC field of `Patient` is searched and matched.                                                       
@@ -451,12 +451,12 @@ Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`
                                                                                                                         
 Command Constraints:                                                                                                    
                                                                                                                         
-* The search is case-insensitive. e.g `s1234562a` will match `S1234562A`                                                
+* The search is case-insensitive. e.g. `s1234562a` will match `S1234562A`                                                
 * The order of the keywords does not matter. e.g. `S1234562A S1234561A` will                                            
 match appointments that involve `S1234562A` and `S1234561A`.                                                            
   * Only the NRIC field of `Doctor` is searched and matched.                                                            
 * Only exact NRICs will be matched e.g. `S123456` will not match `S1234562A`                                            
-* Appointments with `Doctor`s whose NRICs match at least one keyword will be returned (i.e. `OR` search).               
+* Appointments with `Doctor`s whose NRICs match at least one keyword will be returned (e.g. `OR` search).               
                                                                                                                         
 Example:                                                                                                                
 * `apptfordoctor s1234561a` returns all `Appointment` object(s) that `Doctor` with NRIC `S1234561A` is involved in.     
@@ -479,7 +479,7 @@ Format: `deleteappt INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `deleteappt 2` deletes the 2nd appointment in the mediCLI system.
+* `list` followed by `deleteappt 2` deletes the 2nd appointment in the MediCLI system.
 * `apptforpatient S1234567A` followed by `deleteappt 1` deletes the 1st appointment in the results of the `apptforpatient` search command.
 * `apptfordoctor S1234567B` followed by `deleteappt 2` deletes the 2nd appointment in the results of the `apptfordoctor` search command.
 
@@ -528,11 +528,11 @@ MediCLI data are saved in the hard disk automatically after any command that cha
 
 ### Editing the data file
 
-MediCLI data are saved automatically as a JSON file `[JAR file location]/data/medicli.json`. Advanced users are welcome to update data directly by editing that data file.
+MediCLI data are saved automatically as a JSON file `[JAR file location]/data/MediCLI.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-danger">:exclamation: **DANGER**:
-If your changes to the data file makes its format invalid, mediCLI will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file make its format invalid, MediCLI will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the MediCLI to behave in unexpected ways (e.g. if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -540,7 +540,7 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MediCLI home folder.
+**A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MediCLI home folder.
 
 **Q**: Can I use MediCLI on different operating systems?<br>
 **A**: Yes, MediCLI is compatible with multiple operating systems as long as you have Java 11 or above installed. You can run it on Windows, macOS, or Linux.
@@ -586,24 +586,24 @@ Furthermore, certain edits can cause the mediCLI to behave in unexpected ways (e
 
    **Impact**: Users may face challenges reading or finding long names when reading from MediCLI, especially on smaller displays.
 
-   **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name .
+   **Workaround**: Users can reduce the amount of characters typed into the name field or search for longer names based on the first few characters shown instead of the entire name.
 
-6. **Issue**: When the name entered into the system contains acute accents (e.g `Aimée`), Chinese characters or dash `-`, the system will reject it.
+6. **Issue**: When the name entered into the system contains acute accents (e.g. `Aimée`), Chinese characters, or dash `-`, the system will reject it.
 
-   **Impact**: Users may face challenges entering information of patient / doctors with foreign names into MediCLI.
+   **Impact**: Users may face challenges entering information about patient / doctors with foreign names into MediCLI.
 
-   **Workaround**: Users can replace the accented characters with normal alphabets (e.g `é` with `e`), omit the dash and romanize Chinese names.
+   **Workaround**: Users can replace the accented characters with normal alphabets (e.g. `é` with `e`), omit the dash and romanize Chinese names.
 
 7. **Issue**: MediCLI will only accept Singaporean NRIC
 
-   **Impact**: Users may face challenges entering information of patients who are not from Singapore (i.e those without NRIC).
+   **Impact**: Users may face challenges entering information about patients who are not from Singapore (e.g. those without NRIC).
 
    **Workaround**: There is currently no workaround, but the MediCLI development team will add this feature enhancement in the near future.
-8. **Issue**: MediCLI currently allows scheduling of appointments between the same doctor but different patients at identical times (i.e overlapping appointments).
+8. **Issue**: MediCLI currently allows scheduling of appointments between the same doctor but different patients at identical times (e.g. overlapping appointments).
 
     **Impact**: Users may schedule two or more patients with the same doctor at the same time when the doctor can only see one patient at any given time.
 
-    **Workaround**: Users can first look up the appointments of the doctor and visually confirming the doctor is free at given time before scheduling a patient with them.
+    **Workaround**: Users can first look up the appointments of the doctor and visually confirm the doctor is free at a given time before scheduling a patient with them.
 
 --------------------------------------------------------------------------------------------------------------------
 
