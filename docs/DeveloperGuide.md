@@ -414,7 +414,7 @@ Alternative implementation for consideration
 
 ### Querying Entities in MediCLI `patient`, `doctor`, `appointment`
 This section describes the general sequence for commands that query entities. MediCLI has 5 different commands that serve this function: `find`, `patient`, `doctor`, `apptforpatient` and `apptfordoctor`.
-Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possess as similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands with query entities are described together in one section.
+Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possesses similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands that query entities are described here together in one section.
 
 * Step 1. The `execute()` method is called in an instance of `QueryPatientCommand`.
 * Step 2. The instance of `QueryPatientCommand` calls the `updateFilteredPersonList()` method with the `PatientContainsKeywordsPredicate` in an instance of the `Model` class, which filters out entries and returns only patients that match the keywords entered. Note that the other commands listed here will have their respective `predicate` requirements and implementations.
