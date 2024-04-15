@@ -210,9 +210,9 @@ Some example commands you can try (Assuming MediCLI is opened for the first time
 
 </div>
 
-## Person Related Commands
+### Person Related Commands
 
-### Adding a patient : `addpatient`
+#### Adding a patient : `addpatient`
 
 Adds a patient into the MediCLI system.
 
@@ -235,7 +235,7 @@ Examples:
 
 ![add_patient_result](images/addPatient.png)
 
-### Adding a doctor : `adddoctor`                                                                                                                                                                    
+#### Adding a doctor : `adddoctor`                                                                                                                                                                    
                                                                                                                                                                                                     
 Adds a doctor into the MediCLI system.                                                                                                                                                              
                                                                                                                                                                                                     
@@ -258,7 +258,7 @@ Examples:
 
 ![add_doctor_result](images/addDoctor.png)
 
-### Editing a person : `edit`
+#### Editing a person : `edit`
 
 Edits an existing person in the MediCLI system. Edits the patient or doctor at the specified `INDEX`. The index refers to the index number shown in the displayed person list.
 Existing values will be updated to the input values.
@@ -286,7 +286,7 @@ Examples:
 ![add_appointment_result](images/editPerson.png)
 
 
-### Finding both doctor and patient by name : `find`
+#### Finding both doctor and patient by name : `find`
 
 Find `Patient`(s) or `Doctor`(s) whose details contain any of the given keywords.
 
@@ -309,7 +309,7 @@ Examples:
 
 <div markdown="span" class="alert alert-success">:bulb: **TIP**: You can use the <code>find</code> command to filter people for commands that require a person's `INDEX`.</div>
 
-### Querying patients by name : `patient`
+#### Querying patients by name : `patient`
 
 Find `Patient`(s) whose details contain any of the given keywords.
 
@@ -332,7 +332,7 @@ Examples:
 ![result for 'patient alex david'](images/findPatient.png)
 
 
-### Querying doctors by name : `doctor`
+#### Querying doctors by name : `doctor`
 
 Find `Doctors`(s) whose details contain any of the given keywords.
 
@@ -355,7 +355,7 @@ Examples:
 ![result for 'doctor alex david'](images/findDoctor.png)
 
 
-### Deleting a doctor or patient : `delete`
+#### Deleting a doctor or patient : `delete`
 
 Deletes the specified doctor / patient from the MediCLI system. <b>Note that all associated appointments with this doctor / patient will also be recursively deleted.</b> Please exercise caution when using the delete command and removing a patient or a doctor from MediCLI, as this action cannot be undone.
 
@@ -371,9 +371,9 @@ Examples:
 ![result for 'delete 1'](images/deletePerson.png)
 
 
-## Appointment Related Commands
+### Appointment Related Commands
 
-### Adding an appointment : `addappt`
+#### Adding an appointment : `addappt`
 
 Adds an appointment to MediCLI. Appointments are between a doctor with the specified `DOCTOR_NRIC` and a patient with the `PATIENT_NRIC` on a specific date and time.
 Note that while you cannot create a new appointment with the date and time in the past, appointments that were valid when created but are now past their date and time will be allowed to remain in the system. This is an intended feature to allow the hospital admins to track a patient / doctors past appointments.
@@ -398,7 +398,7 @@ Examples:
 
 ![add_appointment_result](images/addAppointment.png)
 
-### Editing an appointment : `editappt`
+#### Editing an appointment : `editappt`
 Edits an existing appointment in the MediCLI system. Edits the appointment at the specified `INDEX`. The index refers to the index number shown in the displayed appointments list.
 Existing values will be updated to the input values.
 
@@ -423,7 +423,7 @@ Examples:
 ![add_appointment_result](images/editAppointment.png)
                                  
 
-### Querying appointments by patient's NRIC : `apptforpatient`                                                             
+#### Querying appointments by patient's NRIC : `apptforpatient`                                                             
                                                                                                                                  
 Format: `apptforpatient KEYWORD [MORE_KEYWORDS]`                                    
                                                        
@@ -445,7 +445,7 @@ Example:
 ![result for 'apptforpatient S0123456A'](images/findAppointmentResultPatient.png)                                       
             
 
-### Querying appointments by doctor's NRIC : `apptfordoctor`                                                                       
+#### Querying appointments by doctor's NRIC : `apptfordoctor`                                                                       
                                                                                                                         
 Format: `apptfordoctor KEYWORD [MORE_KEYWORDS]`                                                                         
                                                                                                                         
@@ -468,7 +468,7 @@ Example:
 ![result for 'apptfordoctor S1234561A'](images/findAppointmentResultDoctor.png)                                        
 
 
-### Deleting appointment : `deleteappt`
+#### Deleting appointment : `deleteappt`
 
 Deletes the specified appointment from the MediCLI system.
 
@@ -490,9 +490,9 @@ Visual Guide
   ![result for 'deleteappt 1'](images/deleteApptFinalState.png)
 
 
-## Miscellaneous Commands
+### Miscellaneous Commands
 
-### Viewing help : `help`
+#### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -500,13 +500,13 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-### Listing all persons : `list`
+#### Listing all persons : `list`
 
 Shows a list of all persons (patients & doctors) and appointments in the MediCLI system.
 
 Format: `list`
 
-### Clearing all entries : `clear`                                                                  
+#### Clearing all entries : `clear`                                                                  
                                                                                                  
 Clears all entries from MediCLI.
 
@@ -516,7 +516,7 @@ Format: `clear`
 
 ![result for 'clear'](images/clear.png)
 
-### Exiting the program : `exit`
+#### Exiting the program : `exit`
 
 Exits the program.
 
