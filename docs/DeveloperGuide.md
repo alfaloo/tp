@@ -337,7 +337,7 @@ As visible, an incorrect input by the user can result in the following types of 
 #### Proposed Implementation
 
 
-The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `mediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedMediCLI`. It extends `MediCLI` with an undo/redo history, stored internally as an `MediCLIStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
 
 * `VersionedMediCLI#commit()` — Saves the current MediCLI state in its history.
@@ -359,19 +359,19 @@ Step 1. The user launches the  application for the first time. The `VersionedMed
 ![UndoRedoState0](images/UndoRedoState0.png)
 
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI()`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `mediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the MediCLI. The `delete` command calls `Model#commitMediCLI()`, causing the modified state of the MediCLI after the `delete 5` command executes to be saved in the `MediCLIStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
 
-Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI()`, causing another modified MediCLI state to be saved into the `mediCLIStateList`.
+Step 3. The user executes `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` to add a new person. The `add` command also calls `Model#commitMediCLI()`, causing another modified MediCLI state to be saved into the `MediCLIStateList`.
 
 
 ![UndoRedoState2](images/UndoRedoState2.png)
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI()`, so the MediCLI state will not be saved into the `mediCLIStateList`.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitMediCLI()`, so the MediCLI state will not be saved into the `MediCLIStateList`.
 
 
 </div>
@@ -412,19 +412,19 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 The `redo` command does the opposite — it calls `Model#redoMediCLI()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the MediCLI to that state.
 
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `mediCLIStateList.size() - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `MediCLIStateList.size() - 1`, pointing to the latest MediCLI state, then there are no undone MediCLI states to restore. The `redo` command uses `Model#canRedoMediCLI()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 
 </div>
 
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI()`, `Model#undoMediCLI()` or `Model#redoMediCLI()`. Thus, the `mediCLIStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the MediCLI, such as `list`, will usually not call `Model#commitMediCLI()`, `Model#undoMediCLI()` or `Model#redoMediCLI()`. Thus, the `MediCLIStateList` remains unchanged.
 
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
 
-Step 6. The user executes `clear`, which calls `Model#commitMediCLI()`. Since the `currentStatePointer` is not pointing at the end of the `mediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitMediCLI()`. Since the `currentStatePointer` is not pointing at the end of the `MediCLIStateList`, all MediCLI states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `addpatient i/S1234567A n/John Doe d/2003-01-30 p/98765432` command. This is the behavior that most modern desktop applications follow.
 
 
 ![UndoRedoState5](images/UndoRedoState5.png)
@@ -992,7 +992,7 @@ Expected Error:
 
 #### Clearing All Entries : `clear`
 Steps:
-1. Execute the `clear` command and confirm if all data is wiped from MediClI.
+1. Execute the `clear` command and confirm if all data is wiped from MediCLI.
 2. Ensure there is no remaining data after executing this command.
 3. Verify that there is no confirmation prompt and data deletion is immediate.
 
