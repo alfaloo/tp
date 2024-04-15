@@ -334,6 +334,122 @@ Why is this implemented this way?
 6. This results in a cleaner `Appointments` panel, and saves the user from the hassle of needing to delete unwanted `Appointment` entries one by one.
 
 
+### Add a `Appointment`
+
+Adds a new `Appointment` entry by indicating the `patientNric`, `doctorNric`, and an `appointmentDateTime`.
+The values stored in each of these attributes are self-explanatory. A key thing to note is that a `Patients` /`Doctor` with the NRIC number must already exist in the records, and the date & time must be in the future.
+
+This command is implemented through the `AddAppointmentCommand` class which extend the `Command` class.
+
+* Step 1. User enters the keyword and attributes necessary for adding an appointment as indicated above.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `addAppointmentCommandParser`.
+* Step 3. The `parse` command in `addPatientCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+    * If there are any missing fields, a `CommandException` is thrown.
+    * If input arguments does not match constraints for the fields, a `IllegalArgumentException` is thrown.
+* Step 4. The `parse` command in `addAppointmentCommandParser` return an instance of `addAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `addAppointmentCommand`.
+* Step 6. The `execute` method in `addAppointmentCommand` performs the following checks:
+  * If a `Doctor`/`Patient` with the Nric in question not exist or the date & time is not >= current date & time, a `InvalidAppointmentException` is thrown
+  * If an appointment between the `Doctor` and `Patient` (with corresponding NRICs) on the specified date & time already exists, then a `DuplicateAppointmentException` is thrown.
+* Step 7: If both the checks above pass, the `execute` method executes and calls `addAppointment` in model to add the new appointment into the system.
+* Step 8: Success message gets printed onto the results display to notify user.
+
+The activity diagram below demonstrates this error handling process in more detail.
+<img src="images/AddAppointmentActivityDiagram.png" width="800" />
+
+### Edit `Appointment`
+Edits an `Appointment` entry by indicating their `Index`.
+This command is implemented through the `EditAppointmentCommand` class which extends the `Command` class.
+
+* Step 1. User enters an `edi`tappt` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `editAppointmentCommandParser`.
+* Step 3. The `parse` command in `editAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+  * If there are any missing fields, a `CommandException` is thrown.
+  * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+  * If the provided `index` is invalid, a `CommandException` is thrown.
+
+The activity diagram below demonstrates this error handling process in more detail.
+
+<img src="images/EditAppointmentActivityDiagram.png" width="800" />
+
+* Step 4. The `parse` command in `editAppointmentCommandParser` returns an instance of `editAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `editAppointmentCommand`.
+* Step 6. The `execute` method in `editAppointmentCommand` executes and calls `setAppointment` in model to set an updated appointment into the system.
+* Step 7. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `EditAppointmentCommand`.
+
+<img src="images/EditAppointmentSequenceDiagram.png" width="800" />
+
+Why is this implemented this way?
+1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with edit operations.
+2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
+3. This parallelism is also reflected in the backend code, and hence is very similar to how editing a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `EditPerson`, such as `EditAppointment`
+4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
+
+Alternative implementation for consideration
+1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle edits.
+2. This will centralise the behaviours, and reduce the amount of code needed to perform the edit function.
+3. A further extension is to do so with all other overlapping functionalities, such as `add` or `delete`, however we leave that possibility for future discussion and refinement.
+
+### Delete `Appointment`
+Deletes an `Appointment` entry by indicating their `Index`.
+This command is implemented through the `DeleteAppointmentCommand` class which extend the `Command` class.
+
+* Step 1. User enters an `deleteappt` command.
+* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteAppointmentCommandParser`.
+* Step 3. The `parse` command in `deleteAppointmentCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
+    * If there are any missing fields, a `CommandException` is thrown.
+    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
+    * If the provided `index` is invalid, a `CommandException` is thrown.
+
+The activity diagram below demonstrates this error handling process in more detail.
+
+<img src="images/DeleteAppointmentActivityDiagram.png" width="800" />
+
+* Step 4. The `parse` command in `deleteAppointmentCommandParser` return an instance of `deleteAppointmentCommand`.
+* Step 5. The `LogicManager` calls the `execute` method in `deleteAppointmentCommand`.
+* Step 6. The `execute` method in `deleteAppointmentCommand` executes and calls `deleteAppointment` in model to remove appointment from the system.
+* Step 7. Success message gets printed onto the results display to notify user.
+
+The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteAppointmentCommand`.
+
+<img src="images/DeleteAppointmentSequenceDiagram.png" width="800" />
+
+Why is this implemented this way?
+1. The `Appointment` class has very similar functionalities to that of the `Person` class, in which both classes deal with deletion operations.
+2. Furthermore on the UI, the `Appointment` column runs parallel to the `Person` column, as such, the behaviours (UX) of operating on the `Person` panel should have a similar feel and experience when dealing with `Appointment` objects.
+3. This parallelism is also reflected in the backend code, and hence is very similar to how deleting a `Person` is implemented - this is mostly seen through the naming conventions of the classes related to `DeletePerson`, such as `DeleteAppointment`
+4. This results in a more familiar experience for both users and developers alike as there is familiarity and some level of consistency when dealing with `Person` and `Appointment` classes.
+
+Alternative implementation for consideration
+1. Since both classes exhibit similarities in both code structure and behaviour, we might consider creating a generic class distinguished between `Person` and `Appointment` via enums to handle deletions.
+2. This will centralise the behaviours, and reduce the amount of code needed to perform the delete function.
+3. A further extension is to do so with all other overlapping functionalities, such as `add` or `edit`, however we leave that possibility for future discussion and refinement.
+
+### Querying Entities in MediCLI `patient`, `doctor`, `appointment`
+This section describes the general sequence for commands that query entities. MediCLI has 5 different commands that serve this function: `find`, `patient`, `doctor`, `apptforpatient` and `apptfordoctor`.
+Although this section describes only the `patient` command, each of the other commands, while lined with different predicates and have different requirements for their parameters, possesses similar implementation. Hence, the flow of method calls between classes are generally similar, and all 5 commands that query entities are described here together in one section.
+
+* Step 1. The `execute()` method is called in an instance of `QueryPatientCommand`.
+* Step 2. The instance of `QueryPatientCommand` calls the `updateFilteredPersonList()` method with the `PatientContainsKeywordsPredicate` in an instance of the `Model` class, which filters out entries and returns only patients that match the keywords entered. Note that the other commands listed here will have their respective `predicate` requirements and implementations.
+* Step 3. Control is passed to an instance of the `Logger` class, which calls the method `log()` to log a "Success" message.
+* Step 4. The instance of `QueryPatientCommand` calls the constructor method of the `CommandResult` class, which returns the final result.
+* Step 5. Control is returned to the caller with the final result.
+
+The sequence diagram below describes the interaction between the various components during the `execute` method of the `patient` command, which uses the `QueryPatientCommand` on the backend.
+
+<img src="images/QueryPatientCommandExecuteSequenceDiagram.png" width="800" />
+
+Why is this implemented this way?
+1. All query command closely resembles the structure of the `find` command. Each of the commands here have either stricter (i.e have stricter parameter requirements e.g `apptforpatient` and `apptfordoctor`) or looser (i.e searching for more fields e.g `patient` and `doctor`) predicates, but all generally have the same flow of control between the `Command`, `Logger` and `Model` classes.
+2. Conceptually, each of the 5 commands listed here are searching for different entities, and are hence split into separate commands despite having very similar structures.
+
+Alternative implementations considered
+1. The behaviour of `patient` and `doctor`, `apptforpatient` and `apptfordoctor` have similar requirements in terms of parameters, with the main difference being either `patient` or `doctor` typed classes. We might consider combining each pair into one command, and using flags to distinguish the desired class (e.g a -doctor or -patient flag to indicate we wish to search for only `doctor` and `patient` entries respectively) so as to avoid the need to create additional commands. However, we felt that at the time of implementation, separating the commands would be a cleaner strategy, and combining methods might overcomplicate the implementation.
+2. Even if we did proceed with combining, the combined command was to be overloaded with flags, we foresaw that the creation of distinct commands to fit the flags parsed were unavoidable. As such, it was prudent to start with the implementation of the distinct commands first, and leave the possibility of combining as a later increment.
+
+
 ### \[Proposed\] Undo/redo feature
 
 
