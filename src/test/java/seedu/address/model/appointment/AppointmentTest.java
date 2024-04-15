@@ -49,15 +49,15 @@ class AppointmentTest {
     }
 
     @Test
-    void isValidAppointment_validDate_returnsTrue() throws ParseException {
+    void isValidAppointmentDateTime_validDate_returnsTrue() throws ParseException {
         AppointmentDateTime futureDateTime = new AppointmentDateTime(LocalDateTime.now().plusDays(1));
         Appointment appointment = new Appointment(new Nric("S1234567A"), new Nric("T1234567A"), futureDateTime);
 
-        assertTrue(appointment.isValidAppointment(futureDateTime));
+        assertTrue(appointment.isValidAppointmentDateTime(futureDateTime));
     }
 
     @Test
-    void isValidAppointment_pastDate_returnsFalse() {
+    void isValidAppointmentDateTime_pastDate_returnsFalse() {
         AppointmentDateTime pastDateTime = new AppointmentDateTime(LocalDateTime.now().minusDays(1));
         // Use assertThrows to check if IllegalArgumentException is thrown
         assertThrows(ParseException.class, () -> {

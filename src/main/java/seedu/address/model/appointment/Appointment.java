@@ -43,7 +43,7 @@ public class Appointment {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
 
         try {
-            checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
+            checkArgument(isValidAppointmentDateTime(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
@@ -64,7 +64,7 @@ public class Appointment {
     public Appointment(Nric doctorNric, Nric patientNric, AppointmentDateTime appointmentDateTime,
                        AppointmentId appointmentId) {
         requireAllNonNull(doctorNric, patientNric, appointmentDateTime);
-        checkArgument(isValidAppointment(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
+        checkArgument(isValidAppointmentDateTime(appointmentDateTime), MESSAGE_CONSTRAINTS_INVALID_DATE);
         this.doctorNric = doctorNric;
         this.patientNric = patientNric;
         this.appointmentDateTime = appointmentDateTime;
@@ -96,7 +96,7 @@ public class Appointment {
      * @param appointmentDate Date to check validity of
      * @return boolean if appointment is valid or not
      */
-    public boolean isValidAppointment(AppointmentDateTime appointmentDate) {
+    public boolean isValidAppointmentDateTime(AppointmentDateTime appointmentDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         AppointmentDateTime currentDateTime = new AppointmentDateTime(LocalDateTime.now().format(formatter));
         return appointmentDate.compareTo(currentDateTime) > -1;
