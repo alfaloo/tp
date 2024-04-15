@@ -23,7 +23,7 @@ public class Appointment {
     private static final Logger logger = LogsCenter.getLogger(Appointment.class);
 
     private static final String MESSAGE_CONSTRAINTS_INVALID_DATE =
-            "Appointment should be made with a date-time today onwards";
+            "Appointments should not be scheduled in the past.";
 
     // The doctor in charge of the appointment
     private Nric doctorNric;
