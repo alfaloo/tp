@@ -305,26 +305,18 @@ Why is this implemented this way?
 Deletes a `doctor` or `patient` entry by indicating their `Index`.
 This command is implemented through the `DeleteCommand` class which extends the `Command` class.
 
-* Step 1. User enters an `delete` command.
-* Step 2. The `AddressBookParser` will call `parseCommand` on the user's input string and return an instance of `deleteCommandParser`.
-* Step 3. The `parse` command in `deleteCommandParser` calls `ParserUtil` to create instances of objects for each of the fields.
-    * If there are any missing fields, a `CommandException` is thrown.
-    * If input arguments does not match contraints for the fields, a `IllegalArgumentException` is thrown.
-    * If the provided `index` is invalid, a `CommandException` is thrown.
+* Step 1. The `execute` method of the `DeleteCommand` is called.
+* Step 2. The `getFilteredPersonList` method of `Model` is called and finds its length.
+* Step 3. The `getZeroBased` method of `Index` is called to convert the provided index to its zero-based equivilent.
+* Step 4. The provided index is checked against the length of the current list of people.
+    * If the provided index is out of bounds, a `CommandException` is thrown.
+* Step 4. The `deletePerson` method of `Model` is called to remove the designated person from the list of people.
+* Step 5. An instance of `CommandResult` is created with a success message for the execution of `DeleteCommand`.
+* Step 6. The instance of `CommandResult` is returned.
 
-The activity diagram below demonstrates this error handling process in more detail.
+The sequence diagram below closely describes the interaction between the various components during the `execute` method of `DeleteCommand`.
 
-<img src="images/DeletePersonActivityDiagram.png" width="800" />
-
-* Step 4. The `parse` command in `deleteCommandParser` return an instance of `deleteCommand`.
-* Step 5. The `LogicManager` calls the `execute` method in `deleteCommand`.
-* Step 6. The `execute` method in `deleteCommand` executes and calls `deletePerson` in model to remove doctor or patient from the system.
-* Step 7. The `execute` method in `deleteCommand` also iterates through the `ObservableList<Appointments>` and retrieves all appointments that have the person to be deleted, and calls the `deleteAppointmentCommand` as well.
-* Step 8. Success message gets printed onto the results display to notify user.
-
-The sequence diagram below closely describes the interaction between the various components during the execution of the `DeleteCommand`.
-
-<img src="images/DeletePersonSequenceDiagram.png" width="800" />
+<img src="images/DeleteCommandExecuteSequenceDiagram.png" width="800" />
 
 
 Why is this implemented this way?
