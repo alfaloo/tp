@@ -148,10 +148,11 @@ public class ParserUtil {
     }
 
     /**
-     * Parses AppointmentDate from string to return an AppointmentDate object
-     * @param apptDateTime String to parse
-     * @return instance of AppointmentDate
-     * @throws ParseException if string is invalid date
+     * Parses AppointmentDateTime from string to return an AppointmentDateTime object.
+     *
+     * @param apptDateTime String to parse.
+     * @return instance of AppointmentDateTime.
+     * @throws ParseException if string is invalid date.
      */
     public static AppointmentDateTime parseAppointmentDateTime(String apptDateTime) throws ParseException {
         requireNonNull(apptDateTime);

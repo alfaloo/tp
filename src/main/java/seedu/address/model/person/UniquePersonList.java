@@ -40,8 +40,9 @@ public class UniquePersonList implements Iterable<Person> {
 
     /**
      * Check if list contains person with the nric in question.
-     * @param nricToCheck String nric in questions
-     * @return boolean indicating if person is in list
+     *
+     * @param nricToCheck String nric in question.
+     * @return boolean indicating if person is in list.
      */
     public boolean containsNric(String nricToCheck) {
         requireNonNull(nricToCheck);
@@ -160,6 +161,16 @@ public class UniquePersonList implements Iterable<Person> {
         return true;
     }
 
+    /**
+     * Retrieves a {@code Person} object from the list of persons based on the specified NRIC.
+     * The method iterates through an internal list of persons, comparing the NRIC of each person
+     * with the given NRIC object. If a match is found, the corresponding {@code Person} object
+     * is returned.
+     *
+     * @param nricObj The NRIC object used to identify the person. It must not be null.
+     * @return The {@code Person} object that matches the given NRIC.
+     * @throws PersonNotFoundException If no person with the given NRIC can be found in the list.
+     */
     public Person getPersonByNric(Nric nricObj) throws PersonNotFoundException {
         ArrayList<Person> personList = new ArrayList<Person>(internalList);
 

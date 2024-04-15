@@ -138,11 +138,6 @@ public class AddressBookTest {
         assertThrows(PersonNotFoundException.class, () -> addressBook.getPersonByNric(ALICE.getNric()));
     }
 
-    @Test
-    public void hasPersonNric_validNric_returnsTrue() {
-        addressBook.addPerson(ALICE);
-        assertTrue(addressBook.hasPersonNric(ALICE.getNric().toString()));
-    }
 
     @Test
     public void setAppointments_validSet_setsAppointments() throws DuplicateAppointmentException {

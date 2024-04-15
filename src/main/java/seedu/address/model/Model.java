@@ -55,12 +55,12 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in MediCLI.
      */
     boolean hasPerson(Person person);
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if an appointment with the same identity as {@code appointment} exists in MediCLI.
      */
     boolean hasAppointment(Appointment appointment);
 
@@ -72,19 +72,19 @@ public interface Model {
 
     /**
      * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * {@code person} must not already exist in MediCLI.
      */
     void addPerson(Person person);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given appointment.
+     * The appointment must exist in MediCLI.
      */
     void deleteAppointment(Appointment appointment);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given appointment.
+     * {@code appointment} must not already exist in MediCLI.
      */
     void addAppointment(Appointment appointment);
 
@@ -113,10 +113,15 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Checks if appointment is valid and returns boolean with the answer.
+     *
+     * @param toAdd Appointment to check
+     * @return boolean indicating is appointment is valid.
+     */
     boolean isValidAppointment(Appointment toAdd);
 
     /** Returns an unmodifiable view of the appointment list */
-
     ObservableList<Appointment> getFilteredAppointmentList();
 
     /**

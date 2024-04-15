@@ -64,6 +64,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.appointments.setAppointments(appointments);
     }
 
+    /**
+     * Replaces the contents of the appointment list with {@code appointments}.
+     * This method does not throw exception because it is only called when resetting data.
+     *
+     * @param appointments the appointments to update with no duplicates.
+     */
     public void setAppointmentsExistingBook(List<Appointment> appointments) {
         this.appointments.setAppointmentsExistingBook(appointments);
     }
@@ -88,20 +94,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(person);
     }
 
+    /**
+     * Returns person (if any) with the provided NRIC in MediCLI.
+     *
+     * @param nricObj the NRIC to lookup.
+     * @return Person with corresponding NRIC.
+     * @throws PersonNotFoundException if no such Person exists.
+     */
     public Person getPersonByNric(Nric nricObj) throws PersonNotFoundException {
         requireNonNull(nricObj);
         return persons.getPersonByNric(nricObj);
     }
 
-    /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
-     * @param nric input nric string
-     * @return boolean stating if addressbook contains nric
-     */
-    public boolean hasPersonNric(String nric) {
-        requireNonNull(nric);
-        return persons.containsNric(nric);
-    }
 
     /**
      * Adds a person to the address book.
@@ -147,14 +151,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         return appointments.contains(person);
     }
 
+
+    /**
+     * Adds the specified appointment to the list of appointments.
+     *
+     * @param appointment The appointment to add to the list. It must not be null.
+     */
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
     }
 
+    /**
+     * Removes the specified appointment from the list of appointments.
+     *
+     * @param appointment The appointment to be removed from the list. It must not be null.
+     */
     public void deleteAppointment(Appointment appointment) {
         appointments.remove(appointment);
     }
 
+    /**
+     * Checks if the specified appointment is present in the list of appointments.
+     *
+     * @param appointment The appointment to check in the list. It must not be null.
+     * @return true if the appointment is present in the list, false otherwise.
+     */
     public boolean hasAppointment(Appointment appointment) {
         return appointments.contains(appointment);
     }

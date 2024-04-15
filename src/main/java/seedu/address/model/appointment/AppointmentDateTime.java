@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Class encapsulating an appointment's date and corresponding methods
+ * Class encapsulating an appointment's date/time and corresponding methods.
  */
 public class AppointmentDateTime {
 
@@ -20,8 +20,8 @@ public class AppointmentDateTime {
     public final LocalDateTime appointmentDateTime;
 
     /**
-     * Constructs new AppointmentDate object using an input date string in yyyy-MM-dd HH:mm format
-     * @param dateStr input string to be stored
+     * Constructs new AppointmentDate object using an input date string in yyyy-MM-dd HH:mm format.
+     * @param dateStr input string to be stored.
      */
     public AppointmentDateTime(String dateStr) {
         assert dateStr.length() == 16 : "Appointment date-time string is of incorrect length";
@@ -32,8 +32,8 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Overloaded constructor that constructs a new instance using a LocalDateTime rather than datetime string
-     * @param dateTime LocalDateTime instance to construct AppointmentDate around
+     * Overloaded constructor that constructs a new instance using a LocalDateTime rather than datetime string.
+     * @param dateTime LocalDateTime instance to construct AppointmentDate around.
      */
     public AppointmentDateTime(LocalDateTime dateTime) {
         requireNonNull(dateTime);
@@ -41,9 +41,10 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Checks if a provided input date string is in a valid format
-     * @param dateStr input date string
-     * @return boolean indicating if format is valid or not
+     * Checks if a provided input date string is in a valid format.
+     *
+     * @param dateStr input date string.
+     * @return boolean indicating if format is valid or not.
      */
     public static boolean isValidDate(String dateStr) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -56,8 +57,9 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Returns string version of appointment date for printing
-     * @return String stringed appointment date
+     * Returns string version of appointment date for printing.
+     *
+     * @return String stringed appointment date.
      */
     @Override
     public String toString() {
@@ -65,9 +67,10 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Checks if input object is practically equal to this AppointmentDate object
-     * @param obj input object
-     * @return boolean indicating if compared objects are equal
+     * Checks if input object is practically equal to this AppointmentDate object.
+     *
+     * @param obj input object.
+     * @return boolean indicating if compared objects are equal.
      */
     @Override
     public boolean equals(Object obj) {
@@ -85,8 +88,9 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Returns hashcode of appointment date
-     * @return int hashcode
+     * Returns hashcode of appointment date.
+     *
+     * @return int hashcode.
      */
     @Override
     public int hashCode() {
@@ -94,9 +98,10 @@ public class AppointmentDateTime {
     }
 
     /**
-     * Compares two AppointmentDate instances together
-     * @param compareValue value to compare with current instance
-     * @return integer reflecting whether compareValue is greater, less, or equal
+     * Compares two AppointmentDate instances together.
+     *
+     * @param compareValue value to compare with current instance.
+     * @return integer reflecting whether compareValue is greater, less, or equal.
      */
     public int compareTo(AppointmentDateTime compareValue) {
         return this.appointmentDateTime.compareTo(compareValue.appointmentDateTime);
