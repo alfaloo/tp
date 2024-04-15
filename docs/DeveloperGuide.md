@@ -810,7 +810,11 @@ To decrease the learning curve for our system, we plan to replace all ambiguous 
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: MediCLI offers hospital clerks the ability to perform multiple commands without having to use a mouse, significantly speeding up the data entry/update/retrieval process. As clerks likely execute many such commands each day, this offers a significant amount of time savings when considered on the whole. While this would be beneficial in any case, this is especially important in a hospital setting where the stakes are much higher, and staff are required to perform at a very high level of efficiency with limited room for error
+**Value proposition**: 
+
+MediCLI is a hospital management system that offers clerks the ability to execute querying/updating/creating/deleting commands faster than a typical mouse/GUI driven hospital management system, significantly speeding up the data entry/update/retrieval process.
+
+As clerks likely execute many such commands each day, this offers a significant amount of time savings when considered on the whole. While this would be beneficial in any situation, this is especially important in a hospital setting where the stakes are much higher, and staff are required to perform at a very high level of efficiency with limited room for error
 
 
 ### User stories
