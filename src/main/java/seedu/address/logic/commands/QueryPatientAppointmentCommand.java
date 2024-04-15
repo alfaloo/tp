@@ -12,7 +12,7 @@ import seedu.address.model.appointment.AppointmentContainsPatientPredicate;
 
 /**
  * Represents a command for querying appointments for a specific patient.
- * The command searches for appointments of patients whose NRICs/names contain any of the specified keywords
+ * The command searches for appointments of patients whose NRICs contain any of the specified keywords
  * (case-insensitive) and displays them as a list with index numbers.
  */
 public class QueryPatientAppointmentCommand extends Command {
@@ -28,17 +28,27 @@ public class QueryPatientAppointmentCommand extends Command {
 
     private final AppointmentContainsPatientPredicate predicate;
 
+    /**
+     * Constructs a QueryPatientAppointmentCommand with the given predicate.
+     *
+     * @param predicate The predicate to be used for querying patient appointments.
+     * @throws NullPointerException if the predicate is null.
+     */
     public QueryPatientAppointmentCommand(AppointmentContainsPatientPredicate predicate) {
+        requireNonNull(predicate, "Predicate cannot be null in QueryPatientAppointmentCommand constructor.");
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
-        requireNonNull(model);
+        requireNonNull(model, "Model cannot be null in execute method of QueryPatientAppointmentCommand.");
+
         logger.log(Level.INFO, "Executing QueryPatientAppointmentCommand");
+
         model.updateFilteredAppointmentList(predicate);
         int numberOfAppointments = model.getFilteredAppointmentList().size();
         logger.log(Level.INFO, "Number of appointments found: " + numberOfAppointments);
+
         return new CommandResult(
                 String.format(Messages.MESSAGE_APPOINTMENTS_LISTED_OVERVIEW, numberOfAppointments));
     }
@@ -49,7 +59,6 @@ public class QueryPatientAppointmentCommand extends Command {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof QueryPatientAppointmentCommand)) {
             return false;
         }
