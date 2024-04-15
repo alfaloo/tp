@@ -16,7 +16,7 @@ public class PhoneTest {
     @Test
     public void constructor_invalidPhone_throwsIllegalArgumentException() {
         String invalidPhone = "";
-        assertThrows(IllegalArgumentException.class, () -> new Phone(invalidPhone));
+        assertThrows(AssertionError.class, () -> new Phone(invalidPhone));
     }
 
     @Test
