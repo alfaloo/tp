@@ -537,29 +537,29 @@ Furthermore, certain edits can cause the MediCLI to behave in unexpected ways (e
 
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## Frequently Asked Questions (FAQ)
 
-**Q**: How do I transfer my data to another Computer?<br>
+1. **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous MediCLI home folder.
 
-**Q**: Can I use MediCLI on different operating systems?<br>
+2. **Q**: Can I use MediCLI on different operating systems?<br>
 **A**: Yes, MediCLI is compatible with multiple operating systems as long as you have Java 11 or above installed. You can run it on Windows, macOS, or Linux.
 
-**Q**: Is there a limit to the number of patients, doctors, or appointments I can add to MediCLI?<br>
+3. **Q**: Is there a limit to the number of patients, doctors, or appointments I can add to MediCLI?<br>
 **A**: There is no built-in limit to the number of entries you can add to MediCLI. However, the performance may be affected if you add an extremely large number of entries.
 
-**Q**: Can I customise the appearance or theme of the interface in MediCLI?<br>
+4. **Q**: Can I customise the appearance or theme of the interface in MediCLI?<br>
 **A**: Currently, there is no option to customise the appearance or theme of the interface in MediCLI. It has a default interface optimised for efficiency and usability.
 
-**Q**: Does MediCLI support multi-user access or user authentication?<br>
+5. **Q**: Does MediCLI support multi-user access or user authentication?<br>
 **A**: No, MediCLI is designed for single-user access only. It does not have built-in support for multi-user access or user authentication.
 
-**Q**: Can I export data from MediCLI to other formats like CSV or Excel?<br>
+6. **Q**: Can I export data from MediCLI to other formats like CSV or Excel?<br>
 **A**: Currently, there is no built-in feature to export data from MediCLI to other formats. However, you can manually extract data from the JSON file if needed.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## Known Issues
 
 1. **Issue**: When using multiple screens, if the MediCLI application is moved to a secondary screen and later switched to using only the primary screen, the graphical user interface (GUI) may open off-screen upon application launch.
 
@@ -604,6 +604,51 @@ Furthermore, certain edits can cause the MediCLI to behave in unexpected ways (e
     **Impact**: Users may schedule two or more patients with the same doctor at the same time when the doctor can only see one patient at any given time.
 
     **Workaround**: Users can first look up the appointments of the doctor and visually confirm the doctor is free at a given time before scheduling a patient with them.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Glossary
+
+**Alphanumeric**: A combination of alphabetic characters and numerical digits. (e.g S1234567A)
+
+**Backend**: The part of a software system that handles data processing and logic execution, typically hidden from the user.
+
+**CLI (Command Line Interface)**: A text-based interface for interacting with a computer program through commands typed into a terminal or console.
+
+**Command Terminal**: A text-based interface where users can input commands to perform various tasks on a computer system.
+
+**Desktop Application**: Software designed to be run on desktop or laptop computers, providing functionality without requiring a web browser.
+
+**Entities**: Objects or elements with distinct and independent existence within a system, often represented in databases or software architectures. MediCLI has 3 entities; Patient, Doctor, Appointment.
+
+**GUI (Graphical User Interface)**: An interface that allows users to interact with electronic devices through graphical icons and visual indicators.
+
+**Hard Disk**: A component of a computer system responsible for long-term storage of data.
+
+**Home Folder**: The default directory or folder on a computer system where a user's personal files and data are stored.
+
+**Java 11**: A version of the Java programming language and platform, released in September 2018, known for its long-term support (LTS).
+
+**JavaFX**: A software platform and GUI toolkit for Java applications, providing a rich set of features for building interactive user interfaces.
+
+**Jar File**: A Java Archive file format used to package Java class files, associated metadata, and resources into a single file.
+
+**Json File**: A file format used for storing and exchanging data in a human-readable and machine-parseable format, based on JavaScript Object Notation (JSON).
+
+**Logging Files**: Files generated by software applications to record events, actions, or errors for troubleshooting and analysis purposes.
+
+**macOS**: The operating system developed by Apple Inc. for its Macintosh line of computers.
+
+**NRIC (National Registration Identity Card)**: A unique identification document issued to citizens and permanent residents of certain countries.
+
+**Recursively Deleted**: The process of removing entities from a filesystem in a recursive manner. (e.g If an Appointment ‘A’ was associated or ‘linked’ with Person ‘P’, the deletion of ‘P’ will also trigger the deletion of the Appointment ‘A’)
+
+**Ubuntu**: A popular Linux distribution based on Debian, known for its ease of use and community-driven development.
+
+**Windows**: A series of operating systems developed by Microsoft, widely used on personal computers and servers.
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
