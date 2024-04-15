@@ -19,18 +19,18 @@ end box
 activate AddPatientCommand
 
 
-AddPatientCommand -> Logger: log(Level.INFO, "Duplicate")
-activate Logger
-Logger -> Logger: log
-Logger -> AddPatientCommand
-deactivate Logger
-
-
 alt model.hasPerson(toAdd)
     AddPatientCommand -> Model: hasPerson(toAdd)
     activate Model
     Model -> AddPatientCommand
     deactivate Model
+
+    AddPatientCommand -> Logger: log(Level.INFO, "Duplicate")
+    activate Logger
+    Logger -> Logger: log
+    Logger -> AddPatientCommand
+    deactivate Logger
+
     [<--AddPatientCommand: throw CommandException()
 else else
     AddPatientCommand -> Model : hasPerson(toAdd)
