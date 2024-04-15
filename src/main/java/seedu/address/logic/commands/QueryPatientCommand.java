@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
@@ -15,6 +18,7 @@ import seedu.address.model.person.PatientContainsKeywordsPredicate;
 public class QueryPatientCommand extends Command {
 
     public static final String COMMAND_WORD = "patient";
+    private static final Logger logger = Logger.getLogger(QueryPatientCommand.class.getName());
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients whose name, "
             + "NRIC, DoB or phone number contains any of "
@@ -31,9 +35,12 @@ public class QueryPatientCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        logger.log(Level.INFO, "Executing QueryPatientCommand");
         model.updateFilteredPersonList(predicate);
+        int numberOfPatients = model.getFilteredPersonList().size();
+        logger.log(Level.INFO, "Number of patients found: " + numberOfPatients);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, numberOfPatients));
     }
 
     @Override
@@ -57,5 +64,4 @@ public class QueryPatientCommand extends Command {
                 .add("predicate", predicate)
                 .toString();
     }
-
 }

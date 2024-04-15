@@ -2,6 +2,8 @@ package seedu.address.model.appointment;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -10,6 +12,7 @@ import seedu.address.commons.util.ToStringBuilder;
  * Represents a Predicate used to test if an Appointment contains specified patient keywords.
  */
 public class AppointmentContainsPatientPredicate implements Predicate<Appointment> {
+    private static final Logger logger = Logger.getLogger(AppointmentContainsPatientPredicate.class.getName());
     private final List<String> keywords;
 
     public AppointmentContainsPatientPredicate(List<String> keywords) {
@@ -18,8 +21,14 @@ public class AppointmentContainsPatientPredicate implements Predicate<Appointmen
 
     @Override
     public boolean test(Appointment appointment) {
+        assert appointment != null : "Appointment cannot be null";
+        logger.log(Level.INFO, "Testing appointment: " + appointment);
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(appointment.getPatientNric().nric, keyword));
+                .anyMatch(keyword -> {
+                    boolean contains = StringUtil.containsWordIgnoreCase(appointment.getPatientNric().nric, keyword);
+                    logger.log(Level.INFO, "Keyword: " + keyword + " contains in appointment: " + contains);
+                    return contains;
+                });
     }
 
     @Override
@@ -42,4 +51,3 @@ public class AppointmentContainsPatientPredicate implements Predicate<Appointmen
         return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
 }
-

@@ -21,9 +21,16 @@ public class AppointmentContainsDoctorPredicate implements Predicate<Appointment
 
     @Override
     public boolean test(Appointment appointment) {
+        assert appointment != null : "Appointment cannot be null";
         logger.log(Level.INFO, "Testing appointment: " + appointment);
+
         boolean result = keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(appointment.getDoctorNric().nric, keyword));
+                .anyMatch(keyword -> {
+                    boolean contains = StringUtil.containsWordIgnoreCase(appointment.getDoctorNric().nric, keyword);
+                    logger.log(Level.INFO, "Keyword: " + keyword + " contains in appointment: " + contains);
+                    return contains;
+                });
+
         logger.log(Level.INFO, "Test result: " + result);
         return result;
     }
